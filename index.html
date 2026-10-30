@@ -5,220 +5,419 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Download Ghostrip — Aplikasi Harga Trip & Penawaran Truk</title>
 <meta name="description" content="Download aplikasi Ghostrip untuk Android. Hitung harga trip truk otomatis dan kirim surat penawaran PDF lengkap dengan kop, TTD, dan cap langsung dari HP.">
-<meta name="theme-color" content="#0a1a22">
+<meta name="theme-color" content="#f3fbf9">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ghostrip">
-<meta property="og:title" content="Download Ghostrip untuk Android">
-<meta property="og:description" content="Hitung harga trip truk & kirim surat penawaran PDF dari HP. Install dalam 1 menit.">
+<meta property="og:title" content="Ghostrip — Harga Pas, Penawaran Rapi.">
+<meta property="og:description" content="Hitung harga trip truk otomatis dan kirim surat penawaran PDF dengan kop, TTD, dan cap dari HP. Coba gratis 7 hari.">
+<meta property="og:url" content="https://ghostrip.id/">
 <meta property="og:image" content="https://ghostrip.id/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://ghostrip.id/">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/outfit-300.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@font-face{font-family:Outfit;font-weight:300;font-display:swap;src:url(fonts/outfit-300.woff2) format('woff2')}
+@font-face{font-family:Outfit;font-weight:400;font-display:swap;src:url(fonts/outfit-400.woff2) format('woff2')}
+@font-face{font-family:Outfit;font-weight:500;font-display:swap;src:url(fonts/outfit-500.woff2) format('woff2')}
+@font-face{font-family:Outfit;font-weight:600;font-display:swap;src:url(fonts/outfit-600.woff2) format('woff2')}
+@font-face{font-family:Outfit;font-weight:700;font-display:swap;src:url(fonts/outfit-700.woff2) format('woff2')}
 :root{
-  --bg:#0a1a22;--bg2:#0d2129;--card:#12262f;--card2:#163039;--line:rgba(143,227,208,.14);
-  --ink:#e8f6f3;--mute:#8fb0b3;--accent:#5fd8c4;--accent2:#8fe3d0;--deep:#0e8f84;--hl:#f4a261;--navy:#0b1f2a;
-  --r:22px;--max:1120px;
+  --bg:#f3fbf9;--white:#fff;--ink:#0b1f2a;--ink2:#3d555c;--mute:#6a8287;
+  --teal:#0b8a7e;--teal2:#0a7a70;--mint:#5fd8c4;--mint2:#bff0e6;--mint3:#e3f8f3;--orange:#f4a261;
+  --glass:rgba(255,255,255,.72);--edge:rgba(255,255,255,.9);
+  --sh:0 10px 30px rgba(11,60,60,.08),0 2px 6px rgba(11,60,60,.05);
+  --max:1160px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{font-family:Outfit,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-body:before{content:"";position:fixed;inset:-20vh -20vw auto;height:90vh;background:radial-gradient(50% 50% at 30% 30%,rgba(95,216,196,.20),transparent 70%),radial-gradient(40% 40% at 85% 10%,rgba(244,162,97,.10),transparent 70%);pointer-events:none;z-index:0}
-a{color:inherit}
 img{display:block;max-width:100%;height:auto}
-.wrap{position:relative;z-index:1;max-width:var(--max);margin:0 auto;padding:0 20px}
-/* nav */
-.nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:20px;letter-spacing:-.01em}
-.brand img{width:38px;height:38px;border-radius:11px;box-shadow:0 6px 18px rgba(95,216,196,.25)}
-.help{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:14px;color:var(--accent2);padding:9px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
-.help:hover{background:rgba(95,216,196,.08)}
-/* hero */
-.hero{display:grid;gap:36px;padding:18px 0 56px}
-.pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--accent2);background:rgba(95,216,196,.10);border:1px solid rgba(95,216,196,.25);padding:6px 12px;border-radius:999px}
-.pill i{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(95,216,196,.18)}
-h1{font-size:clamp(38px,9vw,64px);line-height:1.02;letter-spacing:-.035em;font-weight:800;margin:16px 0 14px}
-h1 span{background:linear-gradient(100deg,var(--accent2),var(--accent) 55%,#3fbfae);-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{font-size:18px;color:var(--mute);max-width:520px}
-.dl{margin-top:26px;padding:18px;border-radius:var(--r);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid var(--line);max-width:520px;display:grid;grid-template-columns:1fr;gap:14px;align-items:center}
-.btn{display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;font-weight:700;font-size:18px;color:#06231f;background:linear-gradient(180deg,#7fe6d4,var(--accent));padding:18px 22px;border-radius:18px;box-shadow:0 12px 30px rgba(95,216,196,.30),inset 0 1px 0 rgba(255,255,255,.5);transition:transform .15s,box-shadow .15s;min-height:62px}
-.btn:hover{transform:translateY(-1px);box-shadow:0 16px 36px rgba(95,216,196,.38),inset 0 1px 0 rgba(255,255,255,.5)}
-.btn:active{transform:translateY(1px)}
-.btn svg{flex:none}
-.btn small{display:block;font-weight:500;font-size:12.5px;opacity:.72;margin-top:1px}
-.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;color:var(--mute);justify-content:center}
-.meta b{color:var(--ink);font-weight:600}
-.meta span{display:inline-flex;align-items:center;gap:6px}
-.trial{font-size:14px;color:var(--mute);text-align:center}
-.trial a{color:var(--hl);font-weight:600;text-decoration:none}
-.qr{display:none}
-.ios{display:none;margin-top:12px;font-size:14px;color:var(--hl);background:rgba(244,162,97,.08);border:1px solid rgba(244,162,97,.25);padding:10px 14px;border-radius:14px;max-width:520px}
-/* phones */
-.shots{position:relative;height:540px;max-width:440px;margin:0 auto;width:100%}
-.ph{position:absolute;width:62%;border-radius:34px;padding:9px;background:linear-gradient(160deg,#25424c,#0c1b22);box-shadow:0 30px 60px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.06) inset}
-.ph img{border-radius:26px;width:100%}
-.ph.a{left:0;top:0;transform:rotate(-4deg);z-index:2}
-.ph.b{right:0;top:60px;transform:rotate(5deg);opacity:.96}
-.glow{position:absolute;inset:18% 8% 8%;background:radial-gradient(closest-side,rgba(95,216,196,.35),transparent);filter:blur(30px)}
-/* sections */
-section{padding:56px 0}
-.kick{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
-h2{font-size:clamp(28px,6vw,40px);letter-spacing:-.025em;line-height:1.1;margin:10px 0 12px;font-weight:800}
-.sub{color:var(--mute);max-width:560px;font-size:17px}
-.steps{display:grid;gap:14px;margin-top:28px;counter-reset:s}
-.step{position:relative;padding:22px 22px 22px 78px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
-.step:before{counter-increment:s;content:counter(s);position:absolute;left:20px;top:20px;width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:19px;color:#06231f;background:linear-gradient(180deg,#7fe6d4,var(--accent))}
-.step h3{font-size:18px;margin-bottom:4px}
-.step p{color:var(--mute);font-size:15.5px}
-.step em{font-style:normal;color:var(--ink);font-weight:600}
-.note{display:flex;gap:14px;margin-top:14px;padding:18px 20px;border-radius:var(--r);border:1px dashed rgba(244,162,97,.45);background:rgba(244,162,97,.07)}
-.note svg{flex:none;color:var(--hl);margin-top:2px}
-.note b{display:block;margin-bottom:2px}
-.note p{color:var(--mute);font-size:15px}
-.upd{display:flex;gap:14px;align-items:flex-start;margin-top:14px;padding:18px 20px;border-radius:var(--r);background:linear-gradient(120deg,rgba(95,216,196,.14),rgba(95,216,196,.04));border:1px solid rgba(95,216,196,.28)}
-.upd svg{flex:none;color:var(--accent);margin-top:2px}
-.upd p{color:var(--mute);font-size:15px}
-.feat{display:grid;gap:14px;margin-top:28px}
-.f{padding:22px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
-.f .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:rgba(95,216,196,.12);color:var(--accent);margin-bottom:14px}
-.f h3{font-size:18px;margin-bottom:4px}
-.f p{color:var(--mute);font-size:15.5px}
-.doc{margin-top:18px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:#fff;box-shadow:0 24px 50px rgba(0,0,0,.4);position:relative}
-.doc:after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(transparent,#fff)}
-.cap{font-size:13.5px;color:var(--mute);margin-top:10px;text-align:center}
-/* faq */
-.faq{margin-top:24px;display:grid;gap:10px}
-details{border-radius:18px;background:var(--card);border:1px solid var(--line);overflow:hidden}
-summary{list-style:none;cursor:pointer;padding:18px 54px 18px 20px;font-weight:600;font-size:16.5px;position:relative}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--mint);outline-offset:3px;border-radius:10px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px;position:relative}
+
+/* ---------- nav ---------- */
+.nav{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;height:84px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:22px;letter-spacing:-.01em}
+.brand img{width:36px;height:36px;border-radius:10px}
+.links{display:flex;gap:34px;font-size:15px;color:var(--ink2)}
+.links a{position:relative;transition:color .2s}
+.links a:hover{color:var(--ink)}
+.links a.on{color:var(--ink);font-weight:500}
+.pbtn{display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 22px;border-radius:999px;background:var(--teal);color:#fff;font-weight:500;font-size:15px;box-shadow:0 8px 22px rgba(11,138,126,.32),inset 0 1px 0 rgba(255,255,255,.25);transition:transform .2s,box-shadow .2s,background-color .2s}
+.pbtn:hover{background:var(--teal2);transform:translateY(-1px);box-shadow:0 12px 28px rgba(11,138,126,.38),inset 0 1px 0 rgba(255,255,255,.25)}
+.pbtn svg,.gbtn svg{transition:transform .2s}
+.pbtn:hover svg,.gbtn:hover svg{transform:translateX(3px)}
+.gbtn{display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 22px;border-radius:999px;background:var(--white);color:var(--ink);font-weight:500;font-size:15px;border:1px solid #dcebe8;transition:border-color .2s,transform .2s}
+.gbtn:hover{border-color:var(--mint);transform:translateY(-1px)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;background:var(--bg)}
+.hero:before{content:"";position:absolute;left:50%;top:38%;width:1500px;height:1100px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(95,216,196,.42),rgba(95,216,196,.16) 55%,rgba(243,251,249,0) 100%);pointer-events:none}
+.hero:after{content:"";position:absolute;left:50%;bottom:-260px;width:900px;height:520px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(95,216,196,.55),rgba(95,216,196,0));pointer-events:none;animation:breathe 7s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.7;transform:translateX(-50%) scale(1.05)}}
+.hc{position:relative;z-index:2;text-align:center;padding:34px 0 0}
+.badge{display:inline-flex;align-items:center;gap:10px;padding:5px 14px 5px 5px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid #dcefea;font-size:13.5px;color:var(--ink2)}
+.badge b{display:inline-flex;align-items:center;justify-content:center;gap:5px;width:30px;height:26px;padding:0;border-radius:999px;background:var(--mint3);color:var(--teal2);font-weight:500}
+h1{font-weight:300;font-size:clamp(46px,6.6vw,88px);line-height:1.04;letter-spacing:-.03em;margin:22px auto 22px;color:#40575d}
+h1 .t{color:var(--teal);font-weight:500}
+h1 .k{color:var(--ink);font-weight:600}
+.lead{text-wrap:pretty;font-size:18px;color:var(--ink2);max-width:600px;margin:0 auto}
+.acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.meta{margin-top:16px;font-size:13.5px;color:var(--mute)}
+.meta b{color:var(--ink2);font-weight:500}
+.ios{display:none;margin:14px auto 0;max-width:460px;font-size:14px;color:#7a4413;background:#fdf1e6;border-radius:14px;padding:10px 14px}
+
+/* stage: phone + floating cards */
+.stage{position:relative;height:440px;margin-top:34px}
+.phone{position:absolute;left:50%;bottom:-170px;width:300px;transform:translateX(-50%);border-radius:48px;padding:11px;background:#0d1c22;box-shadow:0 30px 70px rgba(11,60,60,.25),inset 0 0 0 2px #2b3e45;animation:rise 1.1s .2s cubic-bezier(.2,.75,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translate(-50%,60px)}to{opacity:1;transform:translate(-50%,0)}}
+.screen{position:relative;border-radius:38px;overflow:hidden;background:#0b2a30;aspect-ratio:640/1247}
+.screen img{width:100%;height:100%;object-fit:cover;object-position:top}
+.island{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:92px;height:26px;border-radius:20px;background:#05090b;z-index:2}
+.screen img{padding-top:26px;background:#0e2d33}
+
+.card{position:absolute;z-index:3;background:var(--glass);border:1px solid var(--edge);border-radius:22px;box-shadow:var(--sh);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);text-align:left;animation:pop .9s cubic-bezier(.2,.75,.2,1) both,float 6s ease-in-out infinite;animation-delay:var(--d,.5s),calc(var(--d,.5s) + .9s)}
+@keyframes pop{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes float{50%{transform:translateY(-8px)}}
+.duo{left:0;top:96px;display:flex;gap:8px;padding:8px;--d:.55s}
+.mini{width:176px;padding:14px 16px;border-radius:16px;background:var(--white)}
+.mini .lb{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--ink2);font-weight:500}
+.ic{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;flex:none}
+.ic.m{background:var(--mint3);color:var(--teal)}
+.ic.o{background:#fdeedd;color:#c66a1c}
+.mini .v{font-size:26px;font-weight:600;letter-spacing:-.02em;margin-top:6px;line-height:1.1}
+.mini .v small{font-size:13px;font-weight:500;color:var(--mute);margin-left:3px}
+.mini .ft{display:flex;justify-content:space-between;font-size:11.5px;color:var(--mute);margin-top:8px}
+.mini .ft b{font-weight:600;color:var(--teal)}
+.mini .ft b.o{color:#c66a1c}
+.sendc{right:0;top:76px;display:flex;align-items:center;gap:14px;padding:12px 12px 12px 14px;width:330px;--d:.75s}
+.sendc .av{width:50px;height:50px;border-radius:15px;flex:none}
+.sendc b{display:block;font-weight:600;font-size:16.5px;line-height:1.2}
+.sendc span{display:block;font-size:12.5px;color:var(--mute);margin-top:3px}
+.sendc .go{margin-left:auto;width:46px;height:46px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;flex:none;transition:transform .2s}
+.sendc .go:hover{transform:scale(1.06)}
+.chip{left:15%;top:300px;display:flex;align-items:center;gap:10px;padding:10px 16px 10px 10px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--ink2);--d:.95s}
+.chip i{width:26px;height:26px;border-radius:50%;background:var(--teal);display:grid;place-items:center;color:#fff}
+.qrc{right:12%;top:250px;display:none;align-items:center;gap:12px;padding:10px 14px 10px 10px;--d:1.1s}
+.qrc.ok{display:flex}
+.qrc .qb{width:84px;height:84px;padding:6px;background:#fff;border-radius:14px}
+.qrc .qb img,.qrc .qb canvas{width:72px!important;height:72px!important}
+.qrc span{font-size:13px;color:var(--ink2);max-width:13ch;line-height:1.35;font-weight:500}
+
+/* ---------- sections ---------- */
+section.s{padding:96px 0}
+.sh{text-align:center;max-width:640px;margin:0 auto 44px}
+.sh h2{font-weight:300;font-size:clamp(30px,4vw,46px);line-height:1.12;letter-spacing:-.025em;color:#40575d}
+.sh h2 b{font-weight:600;color:var(--ink)}
+.sh p{color:var(--ink2);font-size:17px;margin-top:12px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.step{background:var(--white);border-radius:24px;padding:26px;box-shadow:var(--sh)}
+.step .n{width:40px;height:40px;border-radius:12px;background:var(--mint3);color:var(--teal);display:grid;place-items:center;font-weight:600;margin-bottom:18px}
+.step h3{font-size:19px;font-weight:600;margin-bottom:6px}
+.step p{color:var(--ink2);font-size:15.5px}
+.step em{font-style:normal;font-weight:600;color:var(--ink)}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.note{display:flex;gap:14px;padding:20px 22px;border-radius:24px;background:rgba(255,255,255,.6);border:1px solid #dcefea}
+.note .ic{width:38px;height:38px}
+.note b{display:block;font-weight:600;margin-bottom:2px}
+.note p{color:var(--ink2);font-size:15px}
+
+.paper{position:relative;max-width:600px;margin:0 auto}
+.sheet{position:relative;border-radius:22px;background:var(--white);padding:12px;box-shadow:0 30px 70px rgba(11,60,60,.14)}
+.sheet img{border-radius:12px;width:100%}
+.pc{position:absolute;top:var(--y);display:flex;align-items:center;gap:12px;padding:10px 16px 10px 10px;border-radius:18px;background:var(--glass);border:1px solid var(--edge);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:var(--sh);white-space:nowrap;opacity:0;transform:translateY(-50%) scale(.92);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.75,.2,1);transition-delay:var(--cd)}
+.pc.r{left:calc(100% - 22px)}
+.pc.l{right:calc(100% - 22px)}
+.paper.vis .pc{opacity:1;transform:translateY(-50%)}
+.paper.vis .pc>*{animation:float 6s ease-in-out infinite;animation-delay:calc(var(--cd) * 4)}
+.pc .ic{width:34px;height:34px;border-radius:11px}
+.pc b{display:block;font-weight:600;font-size:15px;line-height:1.2}
+.pc span:not(.ic){display:block;font-size:12.5px;color:var(--mute);margin-top:2px}
+.pc:before{content:"";position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 5px rgba(95,216,196,.3);transform:translateY(-50%)}
+.pc.r:before{left:-22px}
+.pc.l:before{right:-22px}
+.pc .ic.o+div b{color:var(--ink)}
+.mk,.pc .no{display:none}
+.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:stretch}
+.plan{position:relative;display:flex;flex-direction:column;background:var(--white);border-radius:26px;padding:26px 22px 22px;box-shadow:var(--sh);transition:transform .25s}
+.plan:hover{transform:translateY(-4px)}
+.plan h3{font-size:17px;font-weight:600;color:var(--ink2)}
+.pm{font-size:36px;font-weight:600;letter-spacing:-.03em;line-height:1;margin:14px 0 10px;color:var(--ink)}
+.pm span{font-size:17px;font-weight:500;margin-right:3px;vertical-align:.7em}
+.pm small{font-size:14px;font-weight:400;color:var(--mute);letter-spacing:0;margin-left:3px}
+.tot{font-size:14px;color:var(--ink2)}
+.tot s{color:var(--mute)}
+.save{display:inline-block;align-self:flex-start;margin:14px 0 22px;padding:5px 11px;border-radius:999px;background:var(--mint3);color:var(--teal2);font-size:13px;font-weight:600}
+.save.muted{background:#eef3f2;color:var(--mute);font-weight:500}
+.plan a{margin-top:auto;justify-content:center;width:100%}
+.ptag{position:absolute;top:-12px;left:22px;padding:4px 12px;border-radius:999px;background:var(--orange);color:#fff;font-size:12.5px;font-weight:600}
+.plan.best{background:var(--ink);color:#e8f6f3;box-shadow:0 24px 50px rgba(11,31,42,.28)}
+.plan.best h3,.plan.best .tot{color:#a9c8c9}
+.plan.best .pm{color:#fff}
+.plan.best .pm small,.plan.best .tot s{color:#7f9ea0}
+.plan.best .save{background:rgba(95,216,196,.16);color:var(--mint)}
+.plan.best .ptag{background:var(--mint);color:#06231f}
+.plan.best .pbtn{background:var(--mint);color:#06231f;box-shadow:0 10px 26px rgba(95,216,196,.3)}
+.incl{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;margin-top:28px;font-size:15px;color:var(--ink2)}
+.incl span{display:inline-flex;align-items:center;gap:8px}
+.incl svg{color:var(--teal)}
+.trialbar{display:flex;align-items:center;gap:16px;max-width:760px;margin:30px auto 0;padding:14px 14px 14px 16px;border-radius:24px;background:var(--glass);border:1px solid var(--edge);box-shadow:var(--sh)}
+.trialbar img{width:44px;height:44px;border-radius:13px}
+.trialbar b{display:block;font-weight:600;font-size:17px}
+.trialbar span{display:block;font-size:14px;color:var(--mute)}
+.trialbar .pbtn{margin-left:auto;flex:none}
+.fl{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:56px}
+.f{display:flex;gap:16px;padding:20px 22px;background:var(--white);border-radius:22px;box-shadow:var(--sh)}
+.f .ic{width:44px;height:44px;border-radius:14px}
+.f h3{font-size:17.5px;font-weight:600;margin-bottom:3px}
+.f p{color:var(--ink2);font-size:15px}
+.cap{font-size:13.5px;color:var(--mute);text-align:center;margin-top:16px}
+
+.faq{max-width:760px;margin:0 auto;display:grid;gap:10px}
+details{background:var(--white);border-radius:18px;box-shadow:0 2px 8px rgba(11,60,60,.04)}
+summary{list-style:none;cursor:pointer;padding:19px 56px 19px 22px;font-weight:500;font-size:16.5px;position:relative}
 summary::-webkit-details-marker{display:none}
-summary:after{content:"";position:absolute;right:22px;top:50%;width:10px;height:10px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:translateY(-70%) rotate(45deg);transition:transform .2s}
+summary:after{content:"";position:absolute;right:24px;top:50%;width:9px;height:9px;border-right:2px solid var(--teal);border-bottom:2px solid var(--teal);transform:translateY(-70%) rotate(45deg);transition:transform .25s}
 details[open] summary:after{transform:translateY(-30%) rotate(-135deg)}
-details p{padding:0 20px 18px;color:var(--mute);font-size:15.5px}
-/* cta + footer */
-.cta{margin:20px 0 0;padding:34px 24px;border-radius:28px;text-align:center;background:radial-gradient(120% 140% at 50% 0%,rgba(95,216,196,.22),transparent 60%),var(--card2);border:1px solid rgba(95,216,196,.25)}
-.cta img{width:64px;height:64px;border-radius:18px;margin:0 auto 14px}
-.cta h2{margin-top:0}
-.cta .sub{margin:0 auto 20px}
-.cta .row{display:grid;gap:10px;max-width:420px;margin:0 auto}
-.btn2{display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;font-weight:700;font-size:16.5px;padding:16px 20px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);min-height:56px}
-.btn2.wa{background:#1fa855;border-color:#1fa855;color:#fff}
-footer{padding:34px 0 46px;color:var(--mute);font-size:13.5px;text-align:center}
-footer .brand{justify-content:center;font-size:16px;margin-bottom:8px;color:var(--ink)}
-footer .brand img{width:28px;height:28px;border-radius:8px;box-shadow:none}
-.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,140%);background:#f2fffb;color:#0b2a26;font-weight:600;font-size:15px;padding:14px 18px;border-radius:16px;box-shadow:0 14px 40px rgba(0,0,0,.4);transition:transform .3s,opacity .3s;opacity:0;visibility:hidden;z-index:9;max-width:calc(100% - 32px);text-align:center}
+details p{padding:0 22px 20px;color:var(--ink2);font-size:15.5px}
+
+.cta{position:relative;overflow:hidden;text-align:center;border-radius:36px;padding:72px 24px;background:var(--ink);color:#e8f6f3}
+.cta:before{content:"";position:absolute;left:50%;top:-180px;width:760px;height:420px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(95,216,196,.35),rgba(95,216,196,0));pointer-events:none}
+.cta>*{position:relative}
+.cta img{width:72px;height:72px;border-radius:20px;margin:0 auto 20px;animation:bob 5s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-3deg)}}
+.cta h2{font-weight:300;font-size:clamp(30px,4vw,46px);line-height:1.12;letter-spacing:-.025em}
+.cta h2 b{font-weight:600;color:var(--mint)}
+.cta p{color:#a9c8c9;max-width:520px;margin:14px auto 28px;font-size:17px}
+.cta .gbtn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#e8f6f3}
+.cta .pbtn{background:var(--mint);color:#06231f;box-shadow:0 10px 30px rgba(95,216,196,.35)}
+.cta .pbtn:hover{background:#7fe6d4}
+footer{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:34px 0 40px;font-size:14px;color:var(--mute)}
+footer .brand{font-size:17px;color:var(--ink)}
+footer .brand img{width:28px;height:28px;border-radius:8px}
+
+.rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--rd,0s)}
+.rv.vis{opacity:1;transform:none}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,140%);background:var(--ink);color:#e8f6f3;font-weight:500;font-size:15px;padding:14px 18px;border-radius:16px;transition:transform .3s,opacity .3s;opacity:0;visibility:hidden;z-index:20;max-width:calc(100% - 32px);text-align:center}
 .toast.on{transform:translate(-50%,0);opacity:1;visibility:visible}
-.sticky{position:fixed;left:12px;right:12px;bottom:12px;z-index:8;transform:translateY(160%);transition:transform .3s}
+.sticky{display:none;position:fixed;left:14px;right:14px;bottom:14px;z-index:15;transform:translateY(170%);transition:transform .35s}
 .sticky.on{transform:none}
-.sticky .btn{font-size:16.5px;min-height:56px;padding:14px 18px}
-@media (min-width:900px){
-  .hero{grid-template-columns:1.05fr .95fr;align-items:center;padding:40px 0 80px;gap:40px}
-  .dl{gap:18px}
-  .dl.q{grid-template-columns:1fr 132px}
-  .dl .meta,.dl .trial{justify-content:flex-start;text-align:left}
-  .qr.ok{display:block;grid-row:1 / span 3;grid-column:2;background:#fff;border-radius:16px;padding:10px;text-align:center}
-  .qr div{width:112px;height:112px}
-  .qr div img,.qr div canvas{width:112px!important;height:112px!important}
-  .qr span{display:block;font-size:11.5px;color:#25424c;font-weight:600;margin-top:6px;line-height:1.25}
-  .shots{height:600px;max-width:480px}
-  .steps{grid-template-columns:repeat(3,1fr)}
-  .step{padding:26px}
-  .step:before{position:static;margin-bottom:16px}
-  .feat{grid-template-columns:repeat(2,1fr)}
-  .split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-  .sticky{display:none}
-  .cta{padding:54px 24px}
-  .cta .row{grid-template-columns:1fr 1fr;max-width:560px}
+.sticky .pbtn{width:100%;justify-content:center;height:54px;font-size:16px}
+
+@media (max-width:1020px){
+  .links{display:none}
+  .duo{left:-10px;top:60px;transform-origin:left top}
+  .sendc{right:-10px;top:250px}
+  .chip,.qrc{display:none!important}
 }
-@media (max-width:899px){footer{padding-bottom:104px}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (max-width:1100px){
+  .plans{grid-template-columns:1fr 1fr;row-gap:24px}
+  .paper{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:600px}
+  .sheet{grid-column:1/-1;margin-bottom:8px}
+  .pc{position:relative;top:auto;left:auto!important;right:auto!important;white-space:normal;transform:translateY(12px)}
+  .paper.vis .pc{transform:none}
+  .pc:before{display:none}
+  .pc .no,.mk{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-style:normal;font-size:12px;font-weight:600;flex:none}
+  .pc .no{order:-1}
+  .mk{position:absolute;right:10px;top:var(--y);transform:translateY(-50%);box-shadow:0 0 0 4px rgba(95,216,196,.35)}
+}
+@media (max-width:760px){
+  .nav{height:70px}
+  .nav .pbtn{height:40px;padding:0 16px;font-size:14px}
+  .hc{padding-top:18px}
+  h1{font-size:clamp(38px,10.6vw,58px)}
+  .lead{font-size:16.5px}
+  .badge{font-size:12.5px;gap:8px}
+  .hc .acts a{min-width:236px;justify-content:center}
+  .stage{height:430px;margin-top:34px}
+  .phone{width:250px;bottom:-150px;border-radius:42px;padding:9px}
+  .screen{border-radius:34px}
+  .duo{left:0;top:10px;padding:6px;gap:6px}
+  .mini{width:146px;padding:11px 12px}
+  .mini .v{font-size:21px}
+  .mini:nth-child(2){display:none}
+  .sendc{right:-4px;top:318px;width:auto;padding:8px 8px 8px 9px;gap:10px;background:rgba(255,255,255,.94)}
+  .sendc b,.sendc span{white-space:nowrap}
+  .sendc span{font-size:11.5px}
+  .sendc .av{width:40px;height:40px;border-radius:12px}
+  .sendc b{font-size:14px}
+  .sendc .go{width:38px;height:38px}
+  section.s{padding:72px 0}
+  .steps,.notes,.fl,.plans{grid-template-columns:1fr}
+  .plan.best{order:-2}
+  .plan:nth-child(3){order:-1}
+  .trialbar{flex-wrap:wrap}
+  .trialbar .pbtn{width:100%;justify-content:center;margin-left:0}
+  .incl{flex-direction:column;align-items:flex-start;max-width:330px;margin-left:auto;margin-right:auto}
+  .paper{margin:0 4px}
+  .sheet{padding:6px;border-radius:16px}
+  .paper{margin:0;gap:8px}
+  .pc{padding:9px 10px;gap:8px;border-radius:14px;background:rgba(255,255,255,.94)}
+  .pc .ic{display:none}
+  .pc b{font-size:13.5px}
+  .pc span:not(.ic){font-size:11.5px}
+  .mk{width:18px;height:18px;font-size:10.5px;right:5px}
+  .pc .no{width:20px;height:20px;font-size:11px}
+  .cta{padding:56px 20px;border-radius:28px}
+  footer{flex-direction:column;text-align:center;padding-bottom:96px}
+  .sticky{display:block}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="nav">
-    <a class="brand" href="#top" aria-label="Ghostrip"><img src="logo.png" alt="" width="38" height="38">Ghostrip</a>
-    <a class="help" href="https://wa.me/6281517047930?text=Halo%20admin%20Ghostrip%2C%20saya%20butuh%20bantuan" target="_blank" rel="noopener">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.6-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg>Bantuan</a>
-  </header>
 
-  <main id="top">
-    <div class="hero">
-      <div>
-        <span class="pill"><i></i>Aplikasi Android resmi</span>
-        <h1>Download <span>Ghostrip</span></h1>
-        <p class="lead">Hitung harga trip truk otomatis dan kirim surat penawaran PDF lengkap dengan kop, TTD, dan cap, langsung dari HP.</p>
+<header class="hero" id="top">
+  <div class="wrap">
+    <nav class="nav" aria-label="Utama">
+      <a class="brand" href="#top"><img src="logo.png" alt="" width="36" height="36">Ghostrip</a>
+      <div class="links"><a class="on" href="#top">Beranda</a><a href="#install">Cara Install</a><a href="#fitur">Fitur</a><a href="#harga">Harga</a><a href="#faq">Pertanyaan</a><a href="https://wa.me/6281517047930?text=Halo%20admin%20Ghostrip%2C%20saya%20butuh%20bantuan" target="_blank" rel="noopener">Bantuan</a></div>
+      <a class="pbtn" href="#top" data-dl>Download App
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </nav>
 
-        <div class="dl" id="dl">
-          <a class="btn" id="dlBtn" href="https://naektxrebdwlgjsdikns.supabase.co/storage/v1/object/public/app-update/apk/Ghostrip.apk?download=Ghostrip.apk">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.4.4 0 0 0-.69-.4l-1.87 3.23a11.43 11.43 0 0 0-9.76 0L5.25 5.9a.4.4 0 0 0-.69.4L6.4 9.48A10.78 10.78 0 0 0 1 18h22a10.78 10.78 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg>
-            <span>Download untuk Android<small id="dlSub">File APK resmi Ghostrip</small></span>
-          </a>
-          <div class="meta" id="meta">
-            <span>Versi <b id="mV">terbaru</b></span>
-            <span id="mSz" hidden><b></b></span>
-            <span>Android 5.1 ke atas</span>
-          </div>
-          <div class="trial">Belum punya akun? <a href="https://wa.me/6281517047930?text=Halo%2C%20saya%20mau%20coba%20gratis%20Ghostrip%207%20hari" target="_blank" rel="noopener">Coba gratis 7 hari &rarr;</a></div>
-          <div class="qr" aria-hidden="true"><div id="qr"></div><span>Scan untuk download di HP</span></div>
-        </div>
-        <div class="ios" id="ios">Ghostrip saat ini tersedia untuk HP Android. Buka halaman ini dari HP Android untuk download.</div>
+    <div class="hc">
+      <span class="badge"><b><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3.5v5.2c0 4.6-3.4 8.3-8 9.3-4.6-1-8-4.7-8-9.3V6.5z"/><path d="M8.6 12.2l2.3 2.3 4.6-4.8"/></svg></b>Sudah diuji &amp; dipakai harian oleh admin logistik</span>
+      <h1><span class="t">Harga Pas,</span><br>Penawaran <span class="k">Rapi.</span></h1>
+      <p class="lead">Harga trip dihitung otomatis dari solar, tol, sampai markup. Surat penawaran PDF lengkap dengan kop, TTD, dan cap jadi dalam hitungan detik, langsung dari HP.</p>
+      <div class="acts">
+        <a class="pbtn" id="dlBtn" href="https://naektxrebdwlgjsdikns.supabase.co/storage/v1/object/public/app-update/apk/Ghostrip.apk?download=Ghostrip.apk">Download App
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="gbtn" href="https://wa.me/6281517047930?text=Halo%2C%20saya%20mau%20coba%20gratis%20Ghostrip%207%20hari" target="_blank" rel="noopener">Coba Gratis 7 Hari
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
+      <p class="meta" id="meta">Versi <b id="mV">terbaru</b><span id="mSz" hidden> · <b></b></span> · Android 5.1 ke atas</p>
+      <p class="ios" id="ios">Ghostrip saat ini tersedia untuk HP Android. Buka halaman ini dari HP Android untuk download.</p>
 
-      <div class="shots" aria-hidden="true">
-        <div class="glow"></div>
-        <div class="ph b"><img src="s_calc.webp" alt="" width="640" height="1280" loading="lazy"></div>
-        <div class="ph a"><img src="s_home.webp" alt="" width="640" height="1247"></div>
+      <div class="stage">
+        <div class="card duo" aria-hidden="true">
+          <div class="mini">
+            <div class="lb">Harga trip<span class="ic m"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span></div>
+            <div class="v">23,2<small>juta</small></div>
+            <div class="ft"><span>Sby → Jkt</span><b>+30%</b></div>
+          </div>
+          <div class="mini">
+            <div class="lb">Solar / liter<span class="ic o"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M3 21h12M7 8h4M14 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/></svg></span></div>
+            <div class="v">6.800<small>Rp</small></div>
+            <div class="ft"><span>Trailer 40ft</span><b class="o">Diatur</b></div>
+          </div>
+        </div>
+
+        <div class="card sendc" aria-hidden="true">
+          <img class="av" src="logo.png" alt="" width="50" height="50">
+          <div><b>Penawaran siap kirim</b><span>PDF + kop, TTD &amp; cap</span></div>
+          <span class="go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></span>
+        </div>
+
+        <div class="card chip" aria-hidden="true"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></i>Install dalam 1 menit</div>
+        <div class="card qrc" id="qrw"><div class="qb" id="qr"></div><span>Scan untuk download di HP</span></div>
+
+        <div class="phone">
+          <div class="screen">
+            <div class="island"></div>
+            <img src="home.webp" width="640" height="1247" alt="Menu utama aplikasi Ghostrip: kalkulator trip, riwayat, quotation, dan pengaturan">
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+</header>
 
-    <section id="install">
-      <div class="kick">Cara install</div>
-      <h2>Siap dipakai dalam 1 menit</h2>
-      <p class="sub">Ikuti 3 langkah ini setelah menekan tombol download.</p>
+<main>
+  <section class="s" id="install">
+    <div class="wrap">
+      <div class="sh rv"><h2>Siap dipakai <b>dalam 1 menit</b></h2><p>Ikuti 3 langkah ini setelah menekan tombol download.</p></div>
       <div class="steps">
-        <div class="step"><h3>Download</h3><p>Tekan tombol <em>Download untuk Android</em>. Tunggu sampai file <em>Ghostrip.apk</em> selesai terunduh.</p></div>
-        <div class="step"><h3>Buka &amp; izinkan</h3><p>Ketuk file dari notifikasi atau folder <em>Download</em>. Kalau diminta, aktifkan <em>Izinkan dari sumber ini</em>, lalu kembali.</p></div>
-        <div class="step"><h3>Install &amp; masuk</h3><p>Ketuk <em>Instal</em>, lalu <em>Buka</em>. Masuk dengan email dan password yang dikirim admin Ghostrip.</p></div>
+        <div class="step rv"><div class="n">1</div><h3>Download</h3><p>Tekan tombol <em>Download App</em>. Tunggu sampai file <em>Ghostrip.apk</em> selesai terunduh.</p></div>
+        <div class="step rv" style="--rd:.08s"><div class="n">2</div><h3>Buka &amp; izinkan</h3><p>Ketuk file dari notifikasi atau folder <em>Download</em>. Kalau diminta, aktifkan <em>Izinkan dari sumber ini</em>, lalu kembali.</p></div>
+        <div class="step rv" style="--rd:.16s"><div class="n">3</div><h3>Install &amp; masuk</h3><p>Ketuk <em>Instal</em>, lalu <em>Buka</em>. Masuk dengan email dan password yang dikirim admin Ghostrip.</p></div>
       </div>
-      <div class="note">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 4v5c0 5-3.8 8.6-9 9-5.2-.4-9-4-9-9V7z"/><path d="M12 8v5M12 16.5v.01"/></svg>
-        <div><b>Muncul peringatan Play Protect?</b><p>Itu wajar untuk aplikasi yang dipasang di luar Play Store. Ketuk <strong>Detail lainnya</strong> lalu <strong>Tetap instal</strong>. Ghostrip hanya dibagikan lewat halaman resmi ini.</p></div>
+      <div class="notes">
+        <div class="note rv"><span class="ic o"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 4v5c0 5-3.8 8.6-9 9-5.2-.4-9-4-9-9V7z"/><path d="M12 8v5M12 16.5v.01"/></svg></span><div><b>Muncul peringatan Play Protect?</b><p>Itu wajar untuk aplikasi di luar Play Store. Ketuk <strong>Detail lainnya</strong> lalu <strong>Tetap instal</strong>. Ghostrip hanya dibagikan lewat halaman resmi ini.</p></div></div>
+        <div class="note rv" style="--rd:.08s"><span class="ic m"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span><div><b>Sudah punya Ghostrip?</b><p>Tidak perlu download ulang. Fitur baru masuk otomatis setiap kali aplikasi dibuka dengan internet.</p></div></div>
       </div>
-      <div class="upd">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
-        <div><b>Sudah punya Ghostrip?</b><p>Tidak perlu download ulang. Fitur baru masuk otomatis setiap kali aplikasi dibuka dengan internet.</p></div>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <section>
-      <div class="split">
-        <div>
-          <div class="kick">Isi aplikasi</div>
-          <h2>Dari hitung harga sampai surat penawaran</h2>
-          <p class="sub">Dibuat untuk bos dan admin ekspedisi yang ingin penawaran cepat, rapi, dan tidak salah hitung.</p>
-          <div class="feat">
-            <div class="f"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="3"/><path d="M8.5 7h7M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15h.01M8.5 18.5h7"/></svg></div><h3>Hitung harga trip otomatis</h3><p>Solar, hari jalan, istirahat sopir, tol, dan biaya operasional dihitung sekaligus, lengkap dengan markup.</p></div>
-            <div class="f"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2.5H7a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5z"/><path d="M14 2.5v5h5M9 13h6M9 17h4"/></svg></div><h3>Surat penawaran PDF</h3><p>Kop perusahaan, nomor surat otomatis, tanda tangan, dan cap. Tinggal kirim ke customer.</p></div>
-            <div class="f"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Riwayat tersimpan di akun</h3><p>Hitungan dan penawaran tetap ada walaupun ganti HP. Cukup login dengan akun yang sama.</p></div>
-            <div class="f"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></div><h3>Data truk sendiri</h3><p>Atur jenis truk, rasio solar, tarif, dan harga solar sesuai armada perusahaan Anda.</p></div>
-          </div>
+  <section class="s" id="fitur">
+    <div class="wrap">
+      <div class="sh rv"><h2>Dari hitung harga sampai <b>surat penawaran</b></h2><p>Dibuat untuk bos dan admin ekspedisi yang ingin penawaran cepat, rapi, dan tidak salah hitung.</p></div>
+      <div class="paper rv">
+        <div class="sheet"><img src="quote.webp" width="1100" height="1599" alt="Contoh surat penawaran dari Ghostrip dengan harga per trip, per bulan, dan tonase, lengkap dengan pajak, terbilang, TTD, dan cap" loading="lazy"><i class="mk" style="--y:10%">1</i><i class="mk" style="--y:50%">2</i><i class="mk" style="--y:56%">3</i><i class="mk" style="--y:62.5%">4</i><i class="mk" style="--y:71%">5</i><i class="mk" style="--y:88%">6</i></div>
+          <div class="pc r" style="--y:10%;--cd:0.15s"><i class="no">1</i><span class="ic m"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h6M7 13h10M7 16h7"/></svg></span><div><b>Kop surat sendiri</b><span>Logo, alamat & kontak</span></div></div>
+          <div class="pc r" style="--y:50%;--cd:0.27s"><i class="no">2</i><span class="ic m"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span><div><b>Per trip</b><span>unit × trip × harga</span></div></div>
+          <div class="pc l" style="--y:56%;--cd:0.39s"><i class="no">3</i><span class="ic o"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></span><div><b>Bulan, hari, atau 1 paket</b><span>Satuan bisa dipilih</span></div></div>
+          <div class="pc r" style="--y:62.5%;--cd:0.51s"><i class="no">4</i><span class="ic m"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12l-2-11H8z"/><circle cx="12" cy="6" r="2.2"/></svg></span><div><b>Tonase</b><span>ton × harga × unit × trip</span></div></div>
+          <div class="pc l" style="--y:71%;--cd:0.63s"><i class="no">5</i><span class="ic o"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.3"/><circle cx="17" cy="17" r="2.3"/></svg></span><div><b>Pajak & terbilang</b><span>PPN, PPh, terbilang otomatis</span></div></div>
+          <div class="pc r" style="--y:88%;--cd:0.75s"><i class="no">6</i><span class="ic m"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17c3-6 5-10 6-7s-2 8 1 6 4-5 6-3 2 3 5 1"/><path d="M3 21h18"/></svg></span><div><b>TTD & cap</b><span>Pakai atau tanpa, tinggal pilih</span></div></div>
+      </div>
+      <p class="cap">Contoh surat penawaran asli dari Ghostrip (data contoh)</p>
+
+      <div class="fl">
+        <div class="f rv"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="3"/><path d="M8.5 7h7M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15h.01M8.5 18.5h7"/></svg></span><div><h3>Hitung harga trip otomatis</h3><p>Solar, hari jalan, istirahat sopir, tol, dan biaya operasional dihitung sekaligus, lengkap dengan markup.</p></div></div>
+        <div class="f rv" style="--rd:.06s"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2.5H7a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5z"/><path d="M14 2.5v5h5M9 13h6M9 17h4"/></svg></span><div><h3>Penawaran dari riwayat</h3><p>Hasil hitungan tinggal dipilih dari riwayat, langsung masuk ke surat penawaran.</p></div></div>
+        <div class="f rv" style="--rd:.12s"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><h3>Riwayat tersimpan di akun</h3><p>Hitungan dan penawaran tetap ada walaupun ganti HP. Cukup login dengan akun yang sama.</p></div></div>
+        <div class="f rv" style="--rd:.18s"><span class="ic o"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span><div><h3>Data truk sendiri</h3><p>Atur jenis truk, rasio solar, tarif, dan harga solar sesuai armada perusahaan Anda.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="harga">
+    <div class="wrap">
+      <div class="sh rv"><h2>Makin lama, <b>makin hemat</b></h2><p>Semua paket sama fiturnya. Belum yakin? Coba gratis 7 hari dulu, tanpa bayar.</p></div>
+      <div class="plans">
+        <div class="plan rv" style="--rd:0.00s">
+          <h3>1 Bulan</h3>
+          <div class="pm"><span>Rp</span>219.000<small>/bulan</small></div>
+          <p class="tot">Tanpa ikatan<br>Rp219.000 per bulan</p>
+          <p class="save muted">Bayar per bulan</p>
+          <a class="gbtn" href="https://wa.me/6281517047930?text=Halo%2C%20saya%20mau%20langganan%20Ghostrip%20paket%201%20bulan%20%28Rp219.000%29" target="_blank" rel="noopener">Pilih 1 bulan</a>
         </div>
-        <div>
-          <div class="doc"><img src="s_pdf.webp" alt="Contoh surat penawaran PDF dari Ghostrip" width="900" height="839" loading="lazy"></div>
-          <p class="cap">Contoh surat penawaran dari Ghostrip (data contoh)</p>
+        <div class="plan rv" style="--rd:0.06s">
+          <h3>3 Bulan</h3>
+          <div class="pm"><span>Rp</span>196.667<small>/bulan</small></div>
+          <p class="tot"><s>Rp657.000</s><br>Rp590.000 sekali bayar</p>
+          <p class="save">Hemat Rp67.000</p>
+          <a class="gbtn" href="https://wa.me/6281517047930?text=Halo%2C%20saya%20mau%20langganan%20Ghostrip%20paket%203%20bulan%20%28Rp590.000%29" target="_blank" rel="noopener">Pilih 3 bulan</a>
+        </div>
+        <div class="plan rv" style="--rd:0.12s">
+          <span class="ptag">Gratis 1 bulan</span><h3>6 Bulan</h3>
+          <div class="pm"><span>Rp</span>182.500<small>/bulan</small></div>
+          <p class="tot"><s>Rp1.314.000</s><br>Rp1.095.000 sekali bayar</p>
+          <p class="save">Bayar 5 bulan, GRATIS 1 bulan</p>
+          <a class="gbtn" href="https://wa.me/6281517047930?text=Halo%2C%20saya%20mau%20langganan%20Ghostrip%20paket%206%20bulan%20%28Rp1.095.000%29" target="_blank" rel="noopener">Pilih 6 bulan</a>
+        </div>
+        <div class="plan rv best" style="--rd:0.18s">
+          <span class="ptag">Paling hemat</span><h3>12 Bulan</h3>
+          <div class="pm"><span>Rp</span>158.250<small>/bulan</small></div>
+          <p class="tot"><s>Rp2.628.000</s><br>Rp1.899.000 sekali bayar</p>
+          <p class="save">Hemat Rp729.000 (±28%)</p>
+          <a class="pbtn" href="https://wa.me/6281517047930?text=Halo%2C%20saya%20mau%20langganan%20Ghostrip%20paket%2012%20bulan%20%28Rp1.899.000%29" target="_blank" rel="noopener">Pilih 12 bulan</a>
         </div>
       </div>
-    </section>
+      <div class="incl rv">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Hitung harga trip otomatis</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Surat penawaran PDF dengan kop, TTD &amp; cap</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Riwayat hitungan tersimpan di akun</span>
+      </div>
+      <div class="trialbar rv">
+        <img src="logo.png" alt="" width="44" height="44">
+        <div><b>Coba gratis 7 hari</b><span>Akun dibuatkan admin, langsung bisa dipakai.</span></div>
+        <a class="pbtn" href="https://wa.me/6281517047930?text=Halo%2C%20saya%20mau%20coba%20gratis%20Ghostrip%207%20hari" target="_blank" rel="noopener">Mulai coba gratis</a>
+      </div>
+    </div>
+  </section>
 
-    <section>
-      <div class="kick">Pertanyaan</div>
-      <h2>Yang sering ditanyakan</h2>
-      <div class="faq">
+  <section class="s" id="faq">
+    <div class="wrap">
+      <div class="sh rv"><h2>Yang sering <b>ditanyakan</b></h2></div>
+      <div class="faq rv">
         <details><summary>Apakah aplikasi ini aman?</summary><p>Ya. File APK dibuat dan dibagikan langsung oleh tim Ghostrip lewat halaman ini. Peringatan dari Android muncul karena aplikasi belum dipasang lewat Play Store, bukan karena ada masalah.</p></details>
         <details><summary>HP apa saja yang bisa dipakai?</summary><p>Semua HP Android versi 5.1 ke atas. Untuk iPhone belum tersedia.</p></details>
         <details><summary>Kalau ganti HP, data saya hilang?</summary><p>Tidak. Pengaturan kop surat, TTD, data truk, dan riwayat tersimpan di akun. Install Ghostrip di HP baru lalu masuk dengan akun yang sama.</p></details>
@@ -226,60 +425,64 @@ footer .brand img{width:28px;height:28px;border-radius:8px;box-shadow:none}
         <details><summary>Muncul tulisan "Aplikasi tidak terinstal"?</summary><p>Biasanya karena masih ada Ghostrip versi lama dengan tanda tangan berbeda. Hapus Ghostrip lama dulu, lalu install lagi. Data Anda aman karena tersimpan di akun.</p></details>
         <details><summary>Lupa password atau belum punya akun?</summary><p>Hubungi admin Ghostrip lewat WhatsApp. Akun dibuat oleh admin, dan Anda bisa mencoba gratis selama 7 hari.</p></details>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section>
-      <div class="cta">
-        <img src="logo.png" alt="" width="64" height="64">
-        <h2>Siap kirim penawaran lebih cepat?</h2>
-        <p class="sub">Download Ghostrip sekarang. Kalau butuh akun atau bantuan, admin kami siap membantu.</p>
-        <div class="row">
-          <a class="btn" href="#top" data-dl>Download APK</a>
-          <a class="btn2 wa" href="https://wa.me/6281517047930?text=Halo%2C%20saya%20mau%20coba%20gratis%20Ghostrip%207%20hari" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.1z"/></svg>
-            Chat admin WhatsApp</a>
+  <section class="s" style="padding-top:24px">
+    <div class="wrap">
+      <div class="cta rv">
+        <img src="logo.png" alt="" width="72" height="72">
+        <h2>Siap kirim penawaran <b>lebih cepat?</b></h2>
+        <p>Download Ghostrip sekarang. Kalau butuh akun atau bantuan, admin kami siap membantu.</p>
+        <div class="acts">
+          <a class="pbtn" href="#top" data-dl>Download App
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="gbtn" href="https://wa.me/6281517047930?text=Halo%2C%20saya%20mau%20coba%20gratis%20Ghostrip%207%20hari" target="_blank" rel="noopener">Chat Admin WhatsApp</a>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>
 
+<div class="wrap">
   <footer>
-    <div class="brand"><img src="logo.png" alt="" width="28" height="28">Ghostrip</div>
-    <div>Aplikasi harga trip &amp; surat penawaran untuk ekspedisi truk</div>
-    <div style="margin-top:6px">&copy; <span id="yr">2026</span> Ghostrip</div>
+    <span class="brand"><img src="logo.png" alt="" width="28" height="28">Ghostrip</span>
+    <span>Aplikasi harga trip &amp; surat penawaran untuk ekspedisi truk</span>
+    <span>&copy; <span id="yr">2026</span> Ghostrip</span>
   </footer>
 </div>
 
-<div class="sticky" id="sticky"><a class="btn" href="#top" data-dl>
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Download Ghostrip</a></div>
+<div class="sticky" id="sticky"><a class="pbtn" href="#top" data-dl>Download Ghostrip
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 <script>
 (function(){
   var BASE='https://naektxrebdwlgjsdikns.supabase.co/storage/v1/object/public/app-update/apk/';
-  var btn=document.getElementById('dlBtn'),href=btn.href;
   function $(i){return document.getElementById(i)}
-  function setHref(h){href=h;btn.href=h}
-  document.getElementById('yr').textContent=new Date().getFullYear();
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var btn=$('dlBtn'),href=btn.href;
+  $('yr').textContent=new Date().getFullYear();
   fetch(BASE+'latest.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
     if(!j||!j.version)return;
-    var nm='Ghostrip-v'+j.version+'.apk';
-    setHref(BASE+(j.file||'Ghostrip.apk')+'?download='+encodeURIComponent(nm));
+    href=BASE+(j.file||'Ghostrip.apk')+'?download='+encodeURIComponent('Ghostrip-v'+j.version+'.apk');btn.href=href;
     $('mV').textContent=j.version;
-    if(j.size){var mb=(j.size/1048576).toFixed(1).replace('.',',');$('mSz').hidden=false;$('mSz').querySelector('b').textContent=mb+' MB'}
-    if(j.date){try{$('dlSub').textContent='Diperbarui '+new Date(j.date).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}catch(e){}}
+    if(j.size){$('mSz').hidden=false;$('mSz').querySelector('b').textContent=(j.size/1048576).toFixed(1).replace('.',',')+' MB'}
   }).catch(function(){});
-  var t;function toast(m){var e=$('toast');e.textContent=m;e.classList.add('on');clearTimeout(t);t=setTimeout(function(){e.classList.remove('on')},5200)}
-  function started(){toast('Download dimulai. Setelah selesai, ketuk file Ghostrip di notifikasi.');setTimeout(function(){var s=$('install');if(s)s.scrollIntoView({behavior:'smooth'})},900)}
+  var tt;function toast(m){var e=$('toast');e.textContent=m;e.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){e.classList.remove('on')},5200)}
+  function started(){toast('Download dimulai. Setelah selesai, ketuk file Ghostrip di notifikasi.');setTimeout(function(){var s=$('install');if(s)s.scrollIntoView({behavior:RM?'auto':'smooth'})},900)}
   btn.addEventListener('click',started);
   [].forEach.call(document.querySelectorAll('[data-dl]'),function(a){a.addEventListener('click',function(e){e.preventDefault();window.location.href=href;started()})});
-  var ua=navigator.userAgent||'';
-  if(/iPhone|iPad|iPod/i.test(ua)){$('ios').style.display='block'}
-  // sticky button on phones after hero leaves view
+  if(/iPhone|iPad|iPod/i.test(navigator.userAgent||''))$('ios').style.display='block';
   var st=$('sticky');
-  if('IntersectionObserver' in window){new IntersectionObserver(function(es){st.classList.toggle('on',!es[0].isIntersecting)}).observe($('dl'))}
-  window.addEventListener('load',function(){try{if(window.QRCode&&window.matchMedia('(min-width:900px)').matches)new QRCode($('qr'),{text:location.href.split('#')[0],width:224,height:224,colorDark:'#0b1f2a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});$('qr').parentNode.classList.add('ok');$('dl').classList.add('q')}catch(e){}});
+  if('IntersectionObserver' in window)new IntersectionObserver(function(es){st.classList.toggle('on',!es[0].isIntersecting)}).observe(btn);
+  window.addEventListener('load',function(){try{if(window.QRCode&&matchMedia('(min-width:1021px)').matches){new QRCode($('qr'),{text:location.href.split('#')[0],width:144,height:144,colorDark:'#0b1f2a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});$('qrw').classList.add('ok')}}catch(e){}});
+  var rv=[].slice.call(document.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window&&!RM){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+    rv.forEach(function(e){io.observe(e)});
+  }else rv.forEach(function(e){e.classList.add('vis')});
 })();
 </script>
 </body>
