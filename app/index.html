@@ -554,6 +554,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 /* daftar (Terakhir dihitung, riwayat): nama rute panjang tidak melebarkan kartu */
 .list{grid-template-columns:minmax(0,1fr)}
 .list>.it{box-sizing:border-box;min-width:0;max-width:100%}
+#cPembF.bad input{border-color:#e5525a;box-shadow:0 0 0 3px rgba(229,82,90,.12)}
 </style>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -642,13 +643,16 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
     <div class="card" style="margin-top:10px">
       <div class="fld" style="display:flex;justify-content:space-between;align-items:center"><div><span>Jumlah unit</span><b style="font-weight:500;font-size:16.5px" id="cUnitV">1</b></div><div class="stepper"><button id="cUm">−</button><button id="cUp">+</button></div></div>
       <div class="pv2" id="cUnitTot"></div>
+      <div class="fld" style="display:flex;justify-content:space-between;align-items:center"><div><span>Lama trip</span><b style="font-weight:500;font-size:16.5px" id="cHariV">0 hari</b><small class="hnt" id="cHariS" style="display:block;margin:2px 0 0">Otomatis dari jarak &amp; truk</small></div><div class="stepper"><button id="cHm">−</button><button id="cHp">+</button></div></div>
+      <button class="lnk" id="cHa" style="display:none;margin:0 0 6px;background:none;border:0;padding:4px 0;color:var(--teal);font:inherit;font-size:13.5px;font-weight:600">Kembali ke hitungan otomatis</button>
     </div>
     <details class="card mob" id="cMob" style="margin-top:10px">
       <summary><span>Mobilisasi truk (opsional)</span><i id="cMobSum"></i></summary>
       <div class="in2">
         <div class="fld"><span>Jenis truk mobilisasi</span><div class="seg" id="cJM" style="margin-top:6px"></div></div>
         <label class="fld"><span>Jarak mobilisasi (km)</span><input id="cJarM" inputmode="numeric" placeholder="0"></label>
-        <div class="fld"><span>Kompresi BBM mobilisasi</span><div class="seg" id="cKomp" style="margin-top:6px"></div></div>
+        <label class="fld" id="cPembF"><span>Pembagi solar mobilisasi (wajib diisi)</span><input id="cPemb" inputmode="decimal" placeholder="Contoh: 2"></label>
+        <p class="hnt" id="cPembH">Solar mobilisasi = jarak mobilisasi ÷ angka ini.</p>
         <div class="mobs"><div><span>Solar</span><b id="mSolar">Rp0</b></div><div><span>Operasional</span><b id="mOps">Rp0</b></div><div><span>Total mobilisasi</span><b id="mTot">Rp0</b></div></div>
         <p class="hnt">Hanya solar dan operasional, tanpa tarif truk. Kalau jarak diisi, totalnya masuk ke harga trip.</p>
       </div>
@@ -1463,7 +1467,7 @@ var ST_FROM_STORE=false;
   ST.types=(ST.types||[]).filter(function(t){return t.nama!=="Truk baru"});
   if(!ST.types[ST.aktif])ST.aktif=0;if(ST.aktifM>=ST.types.length)ST.aktifM=-1})();
 function putST(){ss(K_ST,ST)}
-var SNAP=["customer","muat","bongkar","linkmaps","unit","jarak","jarakM","aktifM","kompM","harga","markup","tol","escort","kapal","lain"];
+var SNAP=["customer","muat","bongkar","linkmaps","unit","jarak","jarakM","aktifM","kompM","pembM","hariX","harga","markup","tol","escort","kapal","lain"];
 var NOTRUK={nama:'-',rasio:0,kecepatan:0,jamkerja:0,istirahat:0,ops:0,tarif:0,tambahan:0};
 
 /* rumus asli (jangan diubah) */
@@ -1481,8 +1485,14 @@ function hitung(st){
   var types=st.types||[],cur=types[st.aktif]||types[0]||NOTRUK;
   var h=+st.harga||0;
   var tm=(st.aktifM<0||!types[st.aktifM])?cur:types[st.aktifM],m=calcT(tm,+st.jarakM||0,h,st.kompM||1);
-  var kM=st.kompM||1;var mob=st.jarakM>0?m.solar+m.ops:0;
+  /* mobilisasi: solar = jarak ÷ pembagi yang diisi manual (wajib). Riwayat lama tanpa pembM tetap pakai rumus lama (rasio ÷ kompresi). */
+  var lamaM=st.pembM==null,pbM=+st.pembM||0,kM=st.kompM||1;
+  if(!lamaM){m.liter=pbM>0?(+st.jarakM||0)/pbM:0;m.solar=Math.round(m.liter*h)}
+  var mobKurang=st.jarakM>0&&!lamaM&&!(pbM>0);
+  var mob=st.jarakM>0&&!mobKurang?m.solar+m.ops:0;
   var t=cur,c=calcT(t,+st.jarak||0,h);
+  /* hari manual: menggantikan hari hasil hitungan untuk operasional & tarif trip (bukan mobilisasi) */
+  var hA=c.hb,hX=Math.round(+st.hariX||0);if(hX>0){c.hb=hX;c.ops=hX*t.ops}c.hbAuto=hA;c.manual=hX>0;
   var tarif=c.hb*t.tarif,tb=t.tambahan||0,tol=st.tol||0,esc_=st.escort||0,kap=st.kapal||0,lai=st.lain||0;
   var tot=c.solar+c.ops+tarif+tb+tol+esc_+kap+lai+mob,plus=tot*st.markup/100;
   var U=st.unit>0?st.unit:1,mkU=tot+plus;
@@ -1490,7 +1500,7 @@ function hitung(st){
   baris("Solar: "+num2(st.jarak,2)+" km ÷ "+num2(t.rasio,2)+" km/liter = "+num2(c.liter,2)+" liter × "+rp(h),rp(c.solar));
   baris("Waktu jalan: "+num2(st.jarak,2)+" km ÷ "+num2(t.kecepatan,2)+" km/jam = "+num2(c.jam,2)+" jam ÷ "+num2(t.jamkerja,2)+" jam/hari = "+num2(c.hJalan,3)+" hari",null,"info");
   baris("Waktu istirahat: "+num2(c.hJalan,3)+" hari × "+num2(t.istirahat,2)+" jam ÷ "+num2(t.jamkerja,2)+" jam/hari = "+num2(c.hIst,3)+" hari",null,"info");
-  baris("Total hari: "+num2(c.hJalan,3)+" + "+num2(c.hIst,3)+" = "+num2(c.hari,3)+" hari, dibulatkan ke atas jadi "+c.hb+" hari",null,"info");
+  baris("Total hari: "+num2(c.hJalan,3)+" + "+num2(c.hIst,3)+" = "+num2(c.hari,3)+" hari, dibulatkan ke atas jadi "+hA+" hari"+(hX>0?". Dipakai manual: "+hX+" hari":""),null,"info");
   baris("Operasional: "+c.hb+" hari × "+rp(t.ops),rp(c.ops));
   baris("Tarif "+t.nama+": "+c.hb+" hari × "+rp(t.tarif),rp(tarif));
   if(tb>0)baris("Tambahan driver (sekali per trip)",rp(tb));
@@ -1498,7 +1508,7 @@ function hitung(st){
   if(esc_>0)baris("Biaya escort",rp(esc_));
   if(kap>0)baris("Biaya kapal",rp(kap));
   if(lai>0)baris("Biaya lainnya",rp(lai));
-  if(mob>0)baris("Mobilisasi truck: "+tm.nama+", "+num2(st.jarakM,2)+" km (solar + operasional)"+(kM>1?", kompresi BBM 1:"+num2(kM,2):""),rp(mob));
+  if(mob>0)baris("Mobilisasi truck: "+tm.nama+", "+num2(st.jarakM,2)+" km (solar + operasional)"+(lamaM?(kM>1?", kompresi BBM 1:"+num2(kM,2):""):", solar "+num2(st.jarakM,2)+" km ÷ "+num2(pbM,2)),rp(mob));
   baris("Harga normal",rp(tot),"tot");
   baris("Harga markup: "+rp(tot)+" + "+num2(st.markup,2)+"% ("+rp(plus)+")",rp(tot+plus),"tot");
   if(U>1)baris("Total "+num2(U,2)+" unit × "+rp(mkU)+" (markup)",rp(U*mkU),"tot");
@@ -1509,10 +1519,11 @@ function hitung(st){
   K.push(D(st.jarak)+" km ÷ "+D(t.rasio)+" km/liter = "+D(c.liter)+" liter");
   K.push(D(c.liter)+" liter × "+rp(h)+" = "+rp(c.solar));
   sec("Lama perjalanan");
+  if(hX>0)K.push(hX+" hari");else{
   K.push(D(st.jarak)+" km ÷ "+D(t.kecepatan)+" km/jam = "+D(c.jam)+" jam");
   K.push(D(c.jam)+" jam ÷ "+D(t.jamkerja)+" jam/hari = "+D(c.hJalan)+" hari");
   K.push("Istirahat: "+D(c.hJalan)+" × "+D(t.istirahat)+" ÷ "+D(t.jamkerja)+" = "+D(c.hIst)+" hari");
-  K.push("Total "+D(c.hari)+" hari, dibulatkan = "+c.hb+" hari");
+  K.push("Total "+D(c.hari)+" hari, dibulatkan = "+hA+" hari")}
   sec("Operasional");
   K.push(c.hb+" hari × "+rp(t.ops)+" = "+rp(c.ops));
   sec("Tarif truk");
@@ -1525,7 +1536,8 @@ function hitung(st){
   if(lai>0){sec("Biaya lainnya");K.push(rp(lai));P.push(lai)}
   if(mob>0){
     sec("Mobilisasi ("+tm.nama+", "+D(st.jarakM)+" km)");
-    K.push("Solar: "+D(st.jarakM)+" km ÷ "+D(tm.rasio)+" km/liter"+(kM>1?" ÷ "+D(kM)+" (kompresi BBM 1:"+D(kM)+")":"")+" = "+D(m.liter)+" liter × "+rp(h)+" = "+rp(m.solar));
+    K.push(lamaM?"Solar: "+D(st.jarakM)+" km ÷ "+D(tm.rasio)+" km/liter"+(kM>1?" ÷ "+D(kM)+" (kompresi BBM 1:"+D(kM)+")":"")+" = "+D(m.liter)+" liter × "+rp(h)+" = "+rp(m.solar)
+      :"Solar: "+D(st.jarakM)+" km ÷ "+D(pbM)+" = "+D(m.liter)+" liter × "+rp(h)+" = "+rp(m.solar));
     K.push("Operasional: "+m.hb+" hari × "+rp(tm.ops)+" = "+rp(m.ops));
     K.push("Total: "+rp(mob));P.push(mob);
   }
@@ -1533,7 +1545,7 @@ function hitung(st){
   var cu=(st.customer||"").trim();var RT=[];if(cu)RT.push("Customer: "+cu);if(mu)RT.push("Muat: "+mu);if(bo)RT.push("Bongkar: "+bo);if(gm)RT.push("Maps: "+gm);
   var L=["*ESTIMASI TRIP*"].concat(RT,["Truk: "+t.nama+(U>1?" ("+D(U)+" unit)":""),"Jarak: "+D(st.jarak)+" km",S,""],K,["",S,"","*HARGA NORMAL*",P.map(pl).join(" + "),"= *"+rp(tot)+"*","",
     "*HARGA MARKUP "+D(st.markup)+"%*",pl(tot)+" × "+D(st.markup)+"% = "+pl(plus),pl(tot)+" + "+pl(plus),"= *"+rp(tot+plus)+"*"].concat(U>1?["","*TOTAL "+D(U)+" UNIT*",D(U)+" × "+pl(mkU),"= *"+rp(U*mkU)+"*"]:[]));
-  return {t:t,tm:tm,c:c,m:m,mob:mob,tarif:tarif,tb:tb,tot:tot,plus:plus,mkU:mkU,U:U,all:U*mkU,rows:rows,txt:L.join("\n"),mkStr:rp(tot+plus),totStr:rp(tot)};
+  return {t:t,tm:tm,c:c,m:m,mob:mob,mobKurang:mobKurang,pbM:pbM,tarif:tarif,tb:tb,tot:tot,plus:plus,mkU:mkU,U:U,all:U*mkU,rows:rows,txt:L.join("\n"),mkStr:rp(tot+plus),totStr:rp(tot)};
 }
 
 /* ---------- riwayat kalkulator: isa-riwayat-v1 (format tetap) ---------- */
@@ -1920,24 +1932,27 @@ function fillCalc(){var T=CS.types;if(!T[CS.aktif])CS.aktif=0;if(CS.aktifM>=T.le
   $('cJarM').value=CS.jarakM?nf2(CS.jarakM,2):'';$('cMk').value=CS.markup!=null?cm(CS.markup):'';$('cUnitV').textContent=CS.unit>0?CS.unit:1;
   $('cJenis').innerHTML=T.map(function(t,i){return '<button class="'+(i===CS.aktif?'on':'')+'" data-j="'+i+'">'+esc(t.nama||'Truk '+(i+1))+'</button>'}).join('')||'<span class="hnt">Belum ada jenis truk. Isi di Pengaturan OPS.</span>';
   $('cJM').innerHTML='<button class="'+(CS.aktifM<0?'on':'')+'" data-jm="-1">Sama dengan truk utama</button>'+T.map(function(t,i){return '<button class="'+(i===CS.aktifM?'on':'')+'" data-jm="'+i+'">'+esc(t.nama)+'</button>'}).join('');
-  $('cKomp').innerHTML=[1,1.5,2,2.5,3].map(function(k){return '<button class="'+(k===(+CS.kompM||1)?'on':'')+'" data-kp="'+k+'">1 : '+cm(k)+'</button>'}).join('');
+  if(CS.pembM==null)CS.pembM=0;$('cPemb').value=CS.pembM?nf2(CS.pembM,2):'';
   $('cMob').open=CS.jarakM>0;upd(true)}
 function upd(noSave){
   if(!noSave){if(HREF){writeHist(HREF,CS);putL()}else putST()}
   var r=hitung(CS);$('sbTot').textContent=rp(r.all);$('sbNorm').textContent='Normal '+rp(r.tot)+' · markup '+cm(CS.markup)+'%'+(r.U>1?' · '+r.U+' unit':'');
+  var hc=r.c;$('cHariV').textContent=hc.hb+' hari';$('cHariS').textContent=hc.manual?'Manual · hitungan otomatis '+hc.hbAuto+' hari':'Otomatis dari jarak & truk';$('cHariS').style.color=hc.manual?'#c66a1c':'';$('cHa').style.display=hc.manual?'':'none';
   $('cUnitTot').textContent=r.U>1?r.U+' unit × '+rp(r.mkU)+' = '+rp(r.all):'';
   $('pvTol').textContent=CS.tol?rp(CS.tol):'';$('pvKap').textContent=CS.kapal?rp(CS.kapal):'';$('pvEsc').textContent=CS.escort?rp(CS.escort):'';$('pvLain').textContent=CS.lain?rp(CS.lain):'';
-  $('mSolar').textContent=rp(r.m.solar)+' ('+nf2(r.m.liter,2)+' liter)';$('mOps').textContent=rp(r.m.ops)+' ('+r.m.hb+' hari)';$('mTot').textContent=rp(r.m.solar+r.m.ops);$('cMobSum').textContent=r.mob>0?rp(r.mob):'';
+  $('mSolar').textContent=rp(r.m.solar)+' ('+nf2(r.m.liter,2)+' liter)';$('mOps').textContent=rp(r.m.ops)+' ('+r.m.hb+' hari)';$('mTot').textContent=r.mobKurang?'Belum dihitung':rp(r.m.solar+r.m.ops);$('cMobSum').style.color=r.mobKurang?'#c0392b':'';$('cMobSum').textContent=r.mobKurang?'Isi pembagi solar':(r.mob>0?rp(r.mob):'');$('cPembF').classList.toggle('bad',!!r.mobKurang);
+  $('cPembH').textContent=r.mobKurang?'Jarak mobilisasi sudah diisi. Isi pembagi solar dulu supaya mobilisasi masuk ke harga.':(r.pbM>0&&CS.jarakM>0?'Solar: '+nf2(CS.jarakM,2)+' km ÷ '+nf2(r.pbM,2)+' = '+nf2(r.m.liter,2)+' liter':'Solar mobilisasi = jarak mobilisasi ÷ angka ini.');
   $('cSolarLine').textContent=rp(CS.harga)+'/liter'}
 R.calc=function(){$('cTitle').textContent=HREF?'Edit hitungan':'Kalkulator trip';$('cbtmRow').style.display=HREF?'none':'';fillCalc()};
-[['cCust','customer',0],['cMuat','muat',0],['cBongkar','bongkar',0],['cLink','linkmaps',0],['cJarak','jarak',3],['cJarM','jarakM',3],['cTol','tol',2],['cKap','kapal',2],['cEsc','escort',2],['cLain','lain',2],['cMk','markup',3]].forEach(function(f){
+[['cCust','customer',0],['cMuat','muat',0],['cBongkar','bongkar',0],['cLink','linkmaps',0],['cJarak','jarak',3],['cJarM','jarakM',3],['cPemb','pembM',3],['cTol','tol',2],['cKap','kapal',2],['cEsc','escort',2],['cLain','lain',2],['cMk','markup',3]].forEach(function(f){
   $(f[0]).addEventListener('input',function(){var v=this.value;if(f[2]===2){var n=num(v);CS[f[1]]=n;this.value=n?dot(n):''}else if(f[2]===3){CS[f[1]]=pr(v)}else CS[f[1]]=v;upd()})});
 $('cJenis').addEventListener('click',function(e){var b=e.target.closest('[data-j]');if(!b)return;CS.aktif=+b.getAttribute('data-j');Q('#cJenis button').forEach(function(x){x.classList.toggle('on',x===b)});upd()});
 $('cJM').addEventListener('click',function(e){var b=e.target.closest('[data-jm]');if(!b)return;CS.aktifM=+b.getAttribute('data-jm');Q('#cJM button').forEach(function(x){x.classList.toggle('on',x===b)});upd()});
-$('cKomp').addEventListener('click',function(e){var b=e.target.closest('[data-kp]');if(!b)return;CS.kompM=+b.getAttribute('data-kp');Q('#cKomp button').forEach(function(x){x.classList.toggle('on',x===b)});upd()});
 $('cUm').onclick=function(){if(CS.unit>1){CS.unit--;$('cUnitV').textContent=CS.unit;upd()}};
+function setHari(d){var a=hitung(CS).c,cur=a.hb;var n=Math.max(1,cur+d);CS.hariX=(n===a.hbAuto&&!a.manual)?0:n;if(CS.hariX===a.hbAuto)CS.hariX=0;upd()}
+$('cHm').onclick=function(){setHari(-1)};$('cHp').onclick=function(){setHari(1)};$('cHa').onclick=function(){CS.hariX=0;upd()};
 $('cUp').onclick=function(){CS.unit=(CS.unit>0?CS.unit:1)+1;$('cUnitV').textContent=CS.unit;upd()};
-function resetCalc(){CS.customer='';CS.muat='';CS.bongkar='';CS.linkmaps='';CS.unit=1;CS.jarak=0;CS.jarakM=0;CS.kompM=1;CS.tol=0;CS.escort=0;CS.kapal=0;CS.lain=0;CS.aktifM=-1;
+function resetCalc(){CS.customer='';CS.muat='';CS.bongkar='';CS.linkmaps='';CS.unit=1;CS.jarak=0;CS.jarakM=0;CS.kompM=1;CS.pembM=0;CS.hariX=0;CS.tol=0;CS.escort=0;CS.kapal=0;CS.lain=0;CS.aktifM=-1;
   $('cMob').open=false;fillCalc();upd();$('calc').querySelector('.body').scrollTop=0;toast('Semua isian kalkulator dikosongkan')}
 var cRT=null;$('cReset').onclick=function(){if(!HREF)return resetCalc();var b=this;if(b.classList.contains('r')){b.classList.remove('r');clearTimeout(cRT);resetCalc();return}b.classList.add('r');toast('Ketuk sekali lagi untuk mengosongkan hitungan ini');clearTimeout(cRT);cRT=setTimeout(function(){b.classList.remove('r')},3000)};
 function saveCalc(){if(HREF){writeHist(HREF,CS);putL();toast('Perubahan hitungan disimpan')}else{var x=newHistItem(CS);L.push(x);putL();try{localStorage.setItem(K_CUR,String(x.id))}catch(e){}HREF=x;CS=stFor(x);toast('Tersimpan di riwayat hitung')}$('rEdit').style.display='';$('cbtmRow').style.display='none';$('cTitle').textContent='Edit hitungan'}
@@ -1951,11 +1966,12 @@ R.hasil=function(){var r=hitung(CS),c=r.c;$('rEdit').style.display=HREF?'':'none
   $('rMkTag').textContent='Markup '+cm(CS.markup)+'% sudah termasuk';
   var Ln=function(a,s,b,k){return '<div class="ln'+(k?' '+k:'')+'"><span>'+a+(s?'<small>'+s+'</small>':'')+'</span><b>'+b+'</b></div>'};
   var h=Ln('Solar',nf2(c.liter,2)+' liter × '+rp(CS.harga),rp(c.solar))
-   +Ln('Lama perjalanan',nf2(c.hJalan,3)+' hari jalan + '+nf2(c.hIst,3)+' hari istirahat','<span style="font-weight:500">'+c.hb+' hari</span>')
+   +Ln('Lama perjalanan',nf2(c.hJalan,3)+' hari jalan + '+nf2(c.hIst,3)+' hari istirahat'+(c.manual?' · diatur manual (otomatis '+c.hbAuto+' hari)':''),'<span style="font-weight:500">'+c.hb+' hari</span>')
    +Ln('Operasional',c.hb+' hari × '+rp(r.t.ops),rp(c.ops))
    +Ln('Tarif '+esc(r.t.nama),c.hb+' hari × '+rp(r.t.tarif),rp(r.tarif))
    +(r.tb>0?Ln('Tambahan driver','sekali per trip',rp(r.tb)):'')
    +(r.mob>0?Ln('Mobilisasi truk',esc(r.tm.nama)+' · '+nf2(CS.jarakM,2)+' km · solar '+rp(r.m.solar)+' + ops '+rp(r.m.ops),rp(r.mob)):'')
+   +(r.mobKurang?Ln('Mobilisasi truk','belum dihitung: isi pembagi solar','<span style="color:#c0392b;font-weight:500">Rp0</span>'):'')
    +(CS.tol>0?Ln('Tol','',rp(CS.tol)):'')+(CS.escort>0?Ln('Biaya escort','',rp(CS.escort)):'')+(CS.kapal>0?Ln('Biaya kapal','',rp(CS.kapal)):'')+(CS.lain>0?Ln('Biaya lainnya','',rp(CS.lain)):'')
    +Ln('Harga normal','',rp(r.tot))+Ln('Markup '+cm(CS.markup)+'%','','+'+rp(r.plus),'mk')
    +(r.U>1?Ln('Per unit','',rp(r.mkU))+Ln('Total '+r.U+' unit','',rp(r.all),'tot'):Ln('Total','',rp(r.mkU),'tot'));
