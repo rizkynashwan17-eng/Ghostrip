@@ -1293,11 +1293,13 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
       var nv=j&&parseInt(j.version,10);if(!nv||nv<=V||!j.url)return;
       var p=null;try{p=localStorage.getItem(KEY)}catch(e){}
       if(p===String(nv))return;
-      return U.download({url:j.url,version:String(nv)}).then(function(b){return U.next({id:b.id})}).then(function(){
+      var dl={url:j.url,version:String(nv)};try{localStorage.removeItem('isa-ota-err')}catch(e){}
+      /* plugin v7+ wajib checksum SHA-256; plugin v6 (APK lama) memakai CRC32 sehingga checksum ini tidak boleh dikirim ke sana */
+      return (U.getPluginVersion?U.getPluginVersion().catch(function(){return null}):Promise.resolve(null)).then(function(pv){var mj=pv?parseInt(String(pv.version||'0'),10)||0:0;if(j.checksum&&mj>=7)dl.checksum=j.checksum;return U.download(dl)}).then(function(b){return U.next({id:b.id})}).then(function(){
         try{localStorage.setItem(KEY,String(nv))}catch(e){}
         note('Versi baru sudah diunduh. Tutup lalu buka lagi aplikasi untuk memakai versi terbaru.');
       });
-    }).catch(function(){}).then(function(){busy=false});
+    }).catch(function(e){try{localStorage.setItem('isa-ota-err',String((e&&(e.message||e.errorMessage))||e).slice(0,90))}catch(x){}}).then(function(){busy=false});
   }
   window.addEventListener('load',function(){setTimeout(check,2500)});
   document.addEventListener('visibilitychange',function(){if(!document.hidden)check()});
@@ -2448,7 +2450,7 @@ $('sSave').onclick=function(){var b=this;if(CFG_BUSY)return;markKop();var m=quoM
 /* ---------- akun & langganan ---------- */
 if(PLAY){$('aLgnT').textContent='Status akun';document.querySelector('#lgn .tb b').textContent='Status akun'}
 function paintAkun(){var s=A()&&A().sess(),p=(s&&s.prof)||{};$('aCo').textContent=profName();$('aEm').textContent=((s&&s.email)||'')+(ROLE()!=='pemilik'?' · '+peranT(ROLE()):'');$('aAdm').hidden=!p.is_admin;$('aTim').hidden=!(canCfg()&&s&&s.org);$('aTimN').textContent=s&&s.org?s.org.jumlah+'/'+s.org.maks_anggota:'›';var si=subInfo();$('aLgn').textContent=si.t;
-  var v=parseInt(window.APP_VERSION,10);$('appVer').textContent=v?'Ghostrip versi '+v:'Ghostrip (versi pengembangan)'}
+  var v=parseInt(window.APP_VERSION,10);var oe='';try{oe=localStorage.getItem('isa-ota-err')||''}catch(e){}$('appVer').textContent=(v?'Ghostrip versi '+v:'Ghostrip (versi pengembangan)')+(oe?' · update otomatis gagal: '+oe:'')}
 R.akun=function(){paintAkun();$('aSolar').textContent=rp((C&&C.harga)||ST.harga)};
 $('aOut').onclick=function(){var b=this;twoTap(b,function(){if(window.__logout)window.__logout()},'Ketuk lagi untuk keluar')};
 var LGP=[{m:1,n:'1 bulan',p:219000},{m:3,n:'3 bulan',p:590000},{m:6,n:'6 bulan',p:1095000,note:'Bayar 5 bulan, gratis 1'},{m:12,n:'12 bulan',p:1899000,tag:'Paling hemat'}],LGS=12;
