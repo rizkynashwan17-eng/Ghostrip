@@ -607,6 +607,10 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,body{touch-action:manipulation}
 /* area daftar selalu bisa digulir dengan jari (pengaman WebView Android lama) */
 .sc>.body{min-height:0;overscroll-behavior-y:contain}
+/* WebView Android tertentu (mis. Huawei) tidak memulai gulir bila jari mendarat di tombol bergaya bawaan:
+   matikan gaya bawaan tombol dan izinkan gulir vertikal dari kartu-kartu daftar */
+button{-webkit-appearance:none;appearance:none}
+.list,.list *,.hw,.hw *,.it,.it *{touch-action:pan-y}
 </style>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -3265,12 +3269,12 @@ document.getElementById('a2hsX').onclick=function(){e.style.display='none';try{l
     lab(home,'Beranda');lab(rH,'Riwayat hitung');lab(rQ,'Surat penawaran');lab(ak,'Akun');lab(fab,'Kalkulator trip');
     var brand=document.createElement('div');brand.className='sbBrand';
     var lg=document.querySelector('[data-logo]');brand.innerHTML='<img src="'+((lg&&lg.getAttribute('src'))||'')+'" alt=""><span>Ghostrip</span>';
-    var tim=mk('data-go','tim','Tim &amp; peran',svgOf('truk'),'tim');
+    var tim=mk('data-go','tim','Tim &amp; peran',svgOf('armada'),'tim');
     var items=[brand,fab,title('Menu'),home,rH,rQ,mk('data-go','inv','Invoice',svgOf('inv')),title('Data'),
       mk('data-go','muat','Cek muatan',svgOf('muat')),mk('data-go','armada','Data truk',svgOf('armada')),mk('data-go','news','News logistik',svgOf('news')),
       title('Pengaturan'),mk('data-go','kop','Pengaturan',svgOf('kop'),'cfg'),tim,ak];
     items.forEach(function(n){nav.appendChild(n)});
-    var tIc=document.querySelector('#aTim svg');if(tIc)tim.querySelector('svg').outerHTML=tIc.outerHTML;
+    var tIc=document.querySelector('#aTim svg'),tS=tim.querySelector('svg');if(tIc&&tS)tS.outerHTML=tIc.outerHTML;
     watch();sync();
   }
   var MAP={home:['data-tab','home'],riwH:['data-tab','riwH'],riwQ:['data-tab','riwQ'],akun:['data-tab','akun'],calc:['data-go','calc'],hasil:['data-go','calc'],quo:['data-tab','riwQ'],surat:['data-tab','riwQ'],
