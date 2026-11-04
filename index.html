@@ -176,6 +176,108 @@ section.s{padding:96px 0}
 .f .ic{width:44px;height:44px;border-radius:14px}
 .f h3{font-size:17.5px;font-weight:600;margin-bottom:3px}
 .f p{color:var(--ink2);font-size:15px}
+/* ---------- fitur utama (kartu + contoh) ---------- */
+.fsh{text-align:center;margin:72px 0 22px}
+.fsh h3{font-size:clamp(24px,3vw,32px);font-weight:600;letter-spacing:-.02em}
+.fsh p{color:var(--ink2);margin-top:4px}
+.fl2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.fc{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:stretch;gap:0;background:var(--white);border-radius:24px;box-shadow:var(--sh);overflow:hidden;position:relative;transition:transform .25s cubic-bezier(.2,.75,.2,1),box-shadow .25s}
+.fc:hover{transform:translateY(-3px);box-shadow:0 20px 44px rgba(11,60,60,.13),0 2px 6px rgba(11,60,60,.05)}
+.fc:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+.fcb{flex:1;display:flex;gap:14px;padding:22px 20px 20px 22px;min-width:0}
+.fcb .ic{width:44px;height:44px;border-radius:14px;flex:none}
+.fct{display:flex;flex-direction:column;min-width:0}
+.fct b{font-size:17.5px;font-weight:600;line-height:1.25}
+.fct>span{color:var(--ink2);font-size:14.5px;line-height:1.5;margin-top:5px}
+.fct em{font-style:normal;margin-top:auto;padding-top:12px;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--teal)}
+.fct em svg{transition:transform .2s}.fc:hover .fct em svg{transform:translateX(3px)}
+.fcm{order:2;width:150px;flex:none;position:relative;overflow:hidden;background:linear-gradient(160deg,#dff5ef,#bfece2)}
+.fcm img{position:absolute;left:50%;top:18px;width:112px;height:auto;transform:translateX(-50%) rotate(4deg);border-radius:16px;box-shadow:0 12px 26px rgba(11,60,60,.22);border:3px solid #0d1c22;transition:transform .35s cubic-bezier(.2,.75,.2,1)}
+.fcm.v-paper img{border:0;border-radius:6px;width:118px}
+.fcm.v-laptop img{width:210px;left:18px;transform:none;top:26px;border:4px solid #0d1c22;border-radius:10px}
+.fc:hover .fcm img{transform:translateX(-50%) rotate(0) translateY(-4px)}
+.fc:hover .fcm.v-laptop img{transform:translateY(-4px)}
+html.fxo{overflow:hidden}
+.fx{border:0;padding:0;margin:auto;width:min(1040px,calc(100vw - 48px));max-height:calc(100vh - 48px);border-radius:30px;background:var(--bg);color:var(--ink);box-shadow:0 40px 100px rgba(6,30,30,.35);overflow:hidden}
+.fx::backdrop{background:rgba(8,26,32,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.fx[open]{animation:fxin .35s cubic-bezier(.2,.75,.2,1)}
+@keyframes fxin{from{opacity:0;transform:translateY(18px) scale(.98)}}
+.fxi{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);height:min(720px,calc(100vh - 48px));position:relative}
+.fxx{position:absolute;right:16px;top:16px;z-index:3;width:42px;height:42px;border-radius:50%;border:1px solid #dcebe8;background:var(--white);font-size:24px;line-height:1;color:var(--ink);cursor:pointer}
+.fxm{position:relative;display:grid;place-items:center;padding:28px;background:radial-gradient(closest-side,rgba(95,216,196,.45),rgba(95,216,196,.08) 70%,transparent),linear-gradient(160deg,#e6f8f3,#cdeee6);overflow:hidden}
+.fxd{position:relative;max-height:100%}
+.fxd img{display:block;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
+.fxd img.in{opacity:1;transform:none}
+.fxd.v-phone{height:min(640px,calc(100vh - 110px));aspect-ratio:640/1248;padding:9px;border-radius:40px;background:#0d1c22;box-shadow:0 30px 60px rgba(11,60,60,.3),inset 0 0 0 2px #2b3e45}
+.fxd.v-phone img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:31px}
+.fxd.v-paper{height:min(640px,calc(100vh - 110px));aspect-ratio:1100/1599;padding:8px;border-radius:14px;background:#fff;box-shadow:0 30px 60px rgba(11,60,60,.2)}
+.fxd.v-paper img{width:100%;height:100%;object-fit:contain;border-radius:6px}
+.fxd.v-laptop{width:100%;padding:10px 10px 22px;border-radius:18px 18px 8px 8px;background:#0d1c22;box-shadow:0 30px 60px rgba(11,60,60,.3)}
+.fxd.v-laptop:after{content:"";position:absolute;left:-6%;right:-6%;bottom:-12px;height:14px;border-radius:0 0 14px 14px;background:linear-gradient(#c9d6d6,#a9b9ba)}
+.fxd.v-laptop img{width:100%;border-radius:6px}
+#fxK{position:absolute;inset:9px}
+.fxd.v-paper #fxK{inset:8px}.fxd.v-laptop #fxK{inset:10px 10px 22px}
+.fxk{position:absolute;top:var(--y);left:var(--x);transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;font-style:normal;font-weight:700;font-size:13.5px;display:grid;place-items:center;box-shadow:0 0 0 5px rgba(95,216,196,.45),0 6px 14px rgba(11,60,60,.3);cursor:pointer;transition:transform .2s,background .2s;animation:fxp 2.4s ease-in-out infinite}
+.fxk.hl{background:var(--orange);transform:translate(-50%,-50%) scale(1.25);animation:none}
+@keyframes fxp{50%{box-shadow:0 0 0 9px rgba(95,216,196,.18),0 6px 14px rgba(11,60,60,.3)}}
+.fxt{padding:40px 40px 28px;overflow:auto;display:flex;flex-direction:column}
+.fxn{font-size:13px;font-weight:600;color:var(--teal);letter-spacing:.08em}
+.fxt h3{font-size:clamp(24px,2.6vw,32px);line-height:1.15;letter-spacing:-.02em;font-weight:600;margin-top:6px;padding-right:40px}
+.fxt>p{color:var(--ink2);font-size:16px;margin-top:10px}
+.fxtab{display:flex;gap:8px;margin-top:16px}.fxtab:empty{display:none}
+.fxtab button{all:unset;cursor:pointer;padding:8px 14px;border-radius:999px;border:1px solid #dcebe8;background:var(--white);font-size:14px;font-weight:500;color:var(--ink2)}
+.fxtab button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.fxl{list-style:none;margin-top:16px;display:grid;gap:6px}
+.fxl li{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;border-radius:16px;background:var(--white);box-shadow:0 2px 8px rgba(11,60,60,.05);cursor:default;transition:box-shadow .2s,transform .2s}
+.fxl li.hl{box-shadow:0 0 0 2px var(--orange),0 8px 20px rgba(11,60,60,.08)}
+.fxl li>i{width:26px;height:26px;border-radius:50%;background:var(--mint3);color:var(--teal2);font-style:normal;font-weight:700;font-size:13px;display:grid;place-items:center;flex:none}
+.fxl b{display:block;font-weight:600;font-size:15.5px;line-height:1.3}
+.fxl span{display:block;font-size:14px;color:var(--mute);margin-top:1px}
+.fxc{font-size:12.5px;color:var(--mute);margin-top:12px}
+.fxnav{display:flex;gap:10px;margin-top:auto;padding-top:18px;position:sticky;bottom:-28px;padding-bottom:4px;background:linear-gradient(rgba(243,251,249,0),var(--bg) 35%)}
+.fxnav button{flex:1;justify-content:center;cursor:pointer;font-family:inherit}
+.fxnav button:disabled{opacity:.4;cursor:default;transform:none}
+@media (max-width:1100px){.fl2{grid-template-columns:1fr 1fr}.fcm{width:120px}.fcm img{width:94px}.fcm.v-paper img{width:98px}.fcm.v-laptop img{width:170px}}
+@media (max-width:760px){
+  .fsh{margin:56px 0 16px}
+  .fl2{grid-template-columns:1fr;gap:12px}
+  .fcb{padding:18px 14px 16px 16px;gap:12px}.fcb .ic{width:40px;height:40px}
+  .fct b{font-size:16.5px}.fct>span{font-size:14px}
+  .fcm{width:104px}.fcm img{width:84px;top:16px}.fcm.v-paper img{width:88px}.fcm.v-laptop img{width:150px;left:14px}
+  .fx{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;border-radius:0}
+  .fxi{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:100dvh}
+  .fxm{padding:16px 16px 18px}
+  .fxd.v-phone{height:min(44dvh,420px);border-radius:30px;padding:7px}.fxd.v-phone img{border-radius:24px}#fxK{inset:7px}
+  .fxd.v-paper{height:min(44dvh,440px)}
+  .fxd.v-laptop{padding:6px 6px 14px}.fxd.v-laptop #fxK{inset:6px 6px 14px}
+  .fxk{width:24px;height:24px;font-size:12px}
+  .fxx{right:12px;top:10px;width:40px;height:40px}
+  .fxt{padding:18px 18px 16px}
+  .fxt h3{font-size:23px}.fxt>p{font-size:15px}
+  .fxnav{position:sticky;bottom:0;background:linear-gradient(transparent,var(--bg) 30%);padding-top:18px;margin-top:12px}
+}
+.fxd{overflow:visible}
+.fxa{position:absolute;height:0;border-top:1.5px dotted var(--teal);z-index:2;cursor:pointer;filter:drop-shadow(0 0 1px rgba(255,255,255,.95))}
+.fxa.r{right:-30px}.fxa.l{left:-30px}
+.fxa .dt{display:none}
+.fxa.r .dt{left:-5px}.fxa.l .dt{right:-5px}
+.fxa b{position:absolute;top:0;width:24px;height:24px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;font-size:12.5px;display:grid;place-items:center;box-shadow:0 0 0 2px #fff,0 4px 10px rgba(11,60,60,.22);transition:transform .2s,background .2s}
+.fxa.r b{right:0;transform:translate(100%,-50%)}.fxa.l b{left:0;transform:translate(-100%,-50%)}
+.fxa.hl{border-top-color:var(--orange)}.fxa.hl b{background:var(--orange)}.fxa.hl .dt{background:var(--orange);animation:none}
+.fxa.r.hl b{transform:translate(100%,-50%) scale(1.15)}.fxa.l.hl b{transform:translate(-100%,-50%) scale(1.15)}
+@keyframes fxp2{50%{box-shadow:0 0 0 3px #fff,0 0 0 10px rgba(95,216,196,.18)}}
+.fxm{padding:28px 64px}
+.fxd.v-laptop{width:auto;max-width:100%}
+.fxd.v-paper{height:auto;width:min(100%,calc((100vh - 110px)*1100/1599),440px)}
+@media (max-width:760px){.fxd.v-paper{width:min(100%,calc(44dvh*1100/1599))}}
+@media (max-width:760px){
+  .fxm{padding:58px 48px 16px}
+  .fxa.r{right:-22px}.fxa.l{left:-22px}
+  .fxa b{width:21px;height:21px;font-size:11px}
+}
+
+@media (prefers-reduced-motion:reduce){.fxa .dt{animation:none}.fxk{animation:none}.fx[open]{animation:none}}
+
 .cap{font-size:13.5px;color:var(--mute);text-align:center;margin-top:16px}
 
 .faq{max-width:760px;margin:0 auto;display:grid;gap:10px}
@@ -208,6 +310,37 @@ footer .brand img{width:28px;height:28px;border-radius:8px}
 .sticky{display:none;position:fixed;left:14px;right:14px;bottom:14px;z-index:15;transform:translateY(170%);transition:transform .35s}
 .sticky.on{transform:none}
 .sticky .pbtn{width:100%;justify-content:center;height:54px;font-size:16px}
+
+/* kartu fitur di sekitar HP */
+.ic.r{background:#fde3e0;color:#c0392b}
+.invc,.mtc,.dcc{display:flex;align-items:center;gap:12px;padding:12px 16px 12px 12px;white-space:nowrap}
+.invc .ic,.mtc .ic,.dcc .ic{width:40px;height:40px;border-radius:13px}
+.invc div>b,.mtc div>b,.dcc div>b{display:block;font-weight:600;font-size:15px;line-height:1.2}
+.invc div>span,.mtc div>span,.dcc div>span{display:block;font-size:12.5px;color:var(--mute);margin-top:2px}
+.invc{left:4%;top:214px;--d:.85s}
+.invc em{font-style:normal;margin-left:6px;padding:4px 10px;border-radius:999px;background:#dff5ea;color:#1b8a55;font-size:12px;font-weight:700;letter-spacing:.04em;border:1.5px solid #8fd6b1}
+.mtc{right:1%;top:150px;--d:1s}
+.mtc .bar{display:block;width:150px;height:6px;border-radius:6px;background:#e2efed;margin-top:7px;overflow:hidden}
+.mtc .bar u{display:block;height:100%;width:72%;border-radius:6px;background:var(--mint)}
+.dcc{right:15%;top:276px;--d:1.15s}
+.dcc .dot{width:9px;height:9px;border-radius:50%;background:#d64541;box-shadow:0 0 0 4px rgba(214,69,65,.18);margin-left:4px}
+.duo{top:40px}.sendc{top:30px}.chip{top:338px}
+.chip{left:17%}.qrc{right:2%;top:372px}
+@media (min-width:1021px){.stage{height:470px}}
+@media (max-width:1020px){
+  .invc{left:auto;right:-10px;top:150px}
+  .mtc{right:auto;left:-10px;top:200px}
+  .dcc{display:none}
+  .duo{top:40px}.sendc{top:290px}
+}
+@media (max-width:760px){
+  .invc{right:-4px;top:112px;padding:8px 10px 8px 8px;gap:8px;background:rgba(255,255,255,.94)}
+  .mtc{left:-4px;top:214px;padding:8px 12px 8px 8px;gap:8px;background:rgba(255,255,255,.94)}
+  .invc .ic,.mtc .ic{width:32px;height:32px;border-radius:10px}
+  .invc div>b,.mtc div>b{font-size:13px}.invc div>span,.mtc div>span{font-size:11px}
+  .invc em{font-size:10.5px;padding:3px 7px;margin-left:2px}
+  .mtc .bar{width:110px;height:5px;margin-top:5px}
+}
 
 @media (max-width:1020px){
   .links{display:none}
@@ -326,6 +459,10 @@ footer .brand img{width:28px;height:28px;border-radius:8px}
 
         <div class="card chip" aria-hidden="true"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></i>Install dalam 1 menit</div>
         <div class="card qrc" id="qrw"><div class="qb" id="qr"></div><span>Scan untuk download di HP</span></div>
+        <div class="card invc" aria-hidden="true"><span class="ic o"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5h12v19l-3-2-3 2-3-2-3 2z"/><path d="M9 7.5h6M9 11h6M9 14.5h3.5"/></svg></span><div><b>Invoice 01/INV/MJL</b><span>Rp8.239.400</span></div><em>LUNAS</em></div>
+        <div class="card mtc" aria-hidden="true"><span class="ic m"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l8.5 4.5v10L12 21.5 3.5 17V7z"/><path d="M12 12l8.5-5M12 12v9.5M12 12L3.5 7"/></svg></span><div><b>7 dari 7 barang muat</b><i class="bar"><u></u></i><span>Volume 72% · berat aman</span></div></div>
+        <div class="card dcc" aria-hidden="true"><span class="ic r"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span><div><b>KIR B 9471 TQA</b><span>Habis 7 hari lagi</span></div><i class="dot"></i></div>
+
 
         <div class="phone">
           <div class="screen">
@@ -357,32 +494,21 @@ footer .brand img{width:28px;height:28px;border-radius:8px}
   <section class="s" id="fitur">
     <div class="wrap">
       <div class="sh rv"><h2>Dari hitung harga sampai <b>tagihan lunas</b></h2><p>Dibuat untuk bos dan admin ekspedisi yang ingin penawaran cepat, tagihan rapi, dan tidak salah hitung.</p></div>
-      <div class="paper rv">
-        <div class="sheet"><img src="quote.webp?v=2" width="1100" height="1599" alt="Contoh surat penawaran dari Ghostrip dengan harga per trip, per bulan, dan tonase, lengkap dengan pajak, terbilang, TTD, dan cap" loading="lazy"><i class="mk" style="--y:10%">1</i><i class="mk" style="--y:50%">2</i><i class="mk" style="--y:56%">3</i><i class="mk" style="--y:62.5%">4</i><i class="mk" style="--y:71%">5</i><i class="mk" style="--y:88%">6</i></div>
-          <div class="pc r" style="--y:10%;--cd:0.15s"><i class="no">1</i><span class="ic m"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h6M7 13h10M7 16h7"/></svg></span><div><b>Kop surat sendiri</b><span>Logo, alamat & kontak</span></div></div>
-          <div class="pc r" style="--y:50%;--cd:0.27s"><i class="no">2</i><span class="ic m"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span><div><b>Per trip</b><span>unit × trip × harga</span></div></div>
-          <div class="pc l" style="--y:56%;--cd:0.39s"><i class="no">3</i><span class="ic o"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></span><div><b>Bulan, hari, atau 1 paket</b><span>Satuan bisa dipilih</span></div></div>
-          <div class="pc r" style="--y:62.5%;--cd:0.51s"><i class="no">4</i><span class="ic m"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12l-2-11H8z"/><circle cx="12" cy="6" r="2.2"/></svg></span><div><b>Tonase</b><span>ton × harga × unit × trip</span></div></div>
-          <div class="pc l" style="--y:71%;--cd:0.63s"><i class="no">5</i><span class="ic o"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.3"/><circle cx="17" cy="17" r="2.3"/></svg></span><div><b>Pajak & terbilang</b><span>PPN, PPh, terbilang otomatis</span></div></div>
-          <div class="pc r" style="--y:88%;--cd:0.75s"><i class="no">6</i><span class="ic m"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17c3-6 5-10 6-7s-2 8 1 6 4-5 6-3 2 3 5 1"/><path d="M3 21h18"/></svg></span><div><b>TTD & cap</b><span>Pakai atau tanpa, tinggal pilih</span></div></div>
-      </div>
-      <p class="cap">Contoh surat penawaran asli dari Ghostrip (data contoh)</p>
 
-      <div class="fl">
-        <div class="f rv"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="3"/><path d="M8.5 7h7M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15h.01M8.5 18.5h7"/></svg></span><div><h3>Hitung harga trip otomatis</h3><p>Solar, hari jalan, istirahat sopir, tol, dan biaya operasional dihitung sekaligus, lengkap dengan markup.</p></div></div>
-        <div class="f rv" style="--rd:.06s"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2.5H7a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5z"/><path d="M14 2.5v5h5M9 13h6M9 17h4"/></svg></span><div><h3>Penawaran dari riwayat</h3><p>Hasil hitungan tinggal dipilih dari riwayat, langsung masuk ke surat penawaran.</p></div></div>
-        <div class="f rv" style="--rd:.12s"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><h3>Riwayat tersimpan di akun</h3><p>Hitungan dan penawaran tetap ada walaupun ganti HP. Cukup login dengan akun yang sama.</p></div></div>
-        <div class="f rv" style="--rd:.18s"><span class="ic o"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span><div><h3>Data truk sendiri</h3><p>Atur jenis truk, rasio solar, tarif, dan harga solar sesuai armada perusahaan Anda.</p></div></div>
-        <div class="f rv" style="--rd:.24s"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8.5 4.5v10L12 21.5 3.5 17V7z"/><path d="M12 12l8.5-5M12 12v9.5M12 12L3.5 7"/></svg></span><div><h3>Cek muatan 3D</h3><p>Masukkan ukuran dan berat barang, lihat langsung muat atau tidaknya lewat tampilan 3D dan 2D. Untuk flatbed dan lowbed ada pilihan muatan oversize.</p></div></div>
-        <div class="f rv" style="--rd:.30s"><span class="ic o"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg></span><div><h3>Warna tabel surat sendiri</h3><p>Pilih warna tabel penawaran dari palet atau ketik kode warnanya, sesuai warna perusahaan Anda.</p></div></div>
-        <div class="f rv" style="--rd:.36s"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><div><h3>Armada &amp; masa berlaku dokumen</h3><p>Catat armada, STNK, dan KIR, lalu lihat dokumen yang segera habis dengan satu filter.</p></div></div>
-        <div class="f rv" style="--rd:.42s"><span class="ic o"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></span><div><h3>Berita logistik terbaru</h3><p>Kabar solar, tarif, aturan ODOL, dan pelabuhan terbaru langsung di dalam aplikasi.</p></div></div>
-              <div class="f rv"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2.5h12v19l-3-2-3 2-3-2-3 2z"/><path d="M9 7.5h6M9 11h6M9 14.5h3.5"/></svg></span><div><h3>Invoice &amp; pembayaran</h3><p>Ubah penawaran jadi invoice sekali ketuk. Catat DP dan pelunasan, lihat tagihan yang lewat jatuh tempo, dan kirim PDF dengan stempel LUNAS.</p></div></div>
-        <div class="f rv" style="--rd:.06s"><span class="ic o"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.8a3.4 3.4 0 0 1 0 6.4M18.5 14.8c1.8.7 3 2.5 3.5 5.2"/></svg></span><div><h3>Satu akun untuk satu tim</h3><p>Ajak admin dan staf masuk ke data perusahaan yang sama. Pemilik mengatur siapa yang boleh mengubah pengaturan dan mencatat pembayaran.</p></div></div>
-        <div class="f rv" style="--rd:.12s"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span><div><h3>Cari cepat</h3><p>Ketik nama perusahaan, nomor surat, atau rute untuk menemukan hitungan, penawaran, dan invoice lama dalam sekejap.</p></div></div>
-        <div class="f rv" style="--rd:.18s"><span class="ic o"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="13" height="9.5" rx="1.5"/><path d="M6 17h6"/><rect x="16.5" y="7" width="5" height="11" rx="1.2"/></svg></span><div><h3>HP, iPhone, dan laptop</h3><p>Pakai aplikasi Android, atau buka di browser iPhone dan laptop dengan tampilan layar lebar. Datanya sama di semua perangkat.</p></div></div>
+      <div class="fsh rv"><p>Ketuk salah satu fitur untuk melihat contoh tampilannya.</p></div>
+      <div class="fl2">
+        <button type="button" class="fc rv" style="--rd:0.00s" data-fx="0" aria-haspopup="dialog"><span class="fcm v-phone"><img src="fitur/hitung.webp" alt="" loading="lazy" width="320" height="400"></span><span class="fcb"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="3"/><path d="M8.5 7h7M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15h.01M8.5 18.5h7"/></svg></span><span class="fct"><b>Hitung harga trip otomatis</b><span>Masukkan jarak, harga langsung keluar otomatis sesuai jenis truk kamu.</span><em>Lihat contoh<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></span></span></button>
+        <button type="button" class="fc rv" style="--rd:0.06s" data-fx="1" aria-haspopup="dialog"><span class="fcm v-paper"><img src="quote.webp?v=2" alt="" loading="lazy" width="320" height="400"></span><span class="fcb"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2.5H7a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5z"/><path d="M14 2.5v5h5M9 13h6M9 17h4"/></svg></span><span class="fct"><b>Surat penawaran PDF</b><span>Hasil hitungan langsung masuk ke surat. Kop, nomor surat, pajak, terbilang, TTD, dan cap tersusun rapi otomatis.</span><em>Lihat contoh<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></span></span></button>
+        <button type="button" class="fc rv" style="--rd:0.00s" data-fx="2" aria-haspopup="dialog"><span class="fcm v-paper"><img src="fitur/invoice.webp" alt="" loading="lazy" width="320" height="400"></span><span class="fcb"><span class="ic o"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2.5h12v19l-3-2-3 2-3-2-3 2z"/><path d="M9 7.5h6M9 11h6M9 14.5h3.5"/></svg></span><span class="fct"><b>Invoice &amp; pembayaran</b><span>Ubah penawaran jadi invoice sekali ketuk. Catat DP dan pelunasan, pantau yang lewat jatuh tempo, dan kirim PDF dengan stempel LUNAS.</span><em>Lihat contoh<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></span></span></button>
+        <button type="button" class="fc rv" style="--rd:0.06s" data-fx="3" aria-haspopup="dialog"><span class="fcm v-phone"><img src="fitur/muat.webp" alt="" loading="lazy" width="320" height="400"></span><span class="fcb"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8.5 4.5v10L12 21.5 3.5 17V7z"/><path d="M12 12l8.5-5M12 12v9.5M12 12L3.5 7"/></svg></span><span class="fct"><b>Cek muatan 3D</b><span>Masukkan ukuran, berat, dan jumlah barang. Lihat susunannya di truk dalam 3D dan 2D, termasuk mode oversize untuk flatbed dan lowbed.</span><em>Lihat contoh<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></span></span></button>
+        <button type="button" class="fc rv" style="--rd:0.00s" data-fx="4" aria-haspopup="dialog"><span class="fcm v-phone"><img src="fitur/armada.webp" alt="" loading="lazy" width="320" height="400"></span><span class="fcb"><span class="ic o"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg></span><span class="fct"><b>Data truk &amp; masa berlaku dokumen</b><span>Catat plat, STNK, dan KIR setiap truk. Ghostrip mengingatkan dokumen yang tinggal sebulan, tinggal 7 hari, atau sudah lewat.</span><em>Lihat contoh<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></span></span></button>
+        <button type="button" class="fc rv" style="--rd:0.06s" data-fx="5" aria-haspopup="dialog"><span class="fcm v-phone"><img src="fitur/ops.webp" alt="" loading="lazy" width="320" height="400"></span><span class="fcb"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></span><span class="fct"><b>Tarif &amp; biaya armada sendiri</b><span>Atur harga solar, markup, rasio solar, kecepatan, jam kerja, operasional, dan tarif untuk tiap jenis truk perusahaanmu.</span><em>Lihat contoh<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></span></span></button>
+        <button type="button" class="fc rv" style="--rd:0.00s" data-fx="6" aria-haspopup="dialog"><span class="fcm v-phone"><img src="fitur/cari.webp" alt="" loading="lazy" width="320" height="400"></span><span class="fcb"><span class="ic o"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span><span class="fct"><b>Riwayat tersimpan &amp; cari cepat</b><span>Semua hitungan, penawaran, dan invoice tersimpan di akun. Ketik nama perusahaan, nomor, atau rute untuk menemukannya lagi.</span><em>Lihat contoh<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></span></span></button>
+        <button type="button" class="fc rv" style="--rd:0.06s" data-fx="7" aria-haspopup="dialog"><span class="fcm v-phone"><img src="fitur/tim.webp" alt="" loading="lazy" width="320" height="400"></span><span class="fcb"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.8a3.4 3.4 0 0 1 0 6.4M18.5 14.8c1.8.7 3 2.5 3.5 5.2"/></svg></span><span class="fct"><b>Satu akun untuk satu tim</b><span>Ajak admin dan staf masuk ke data perusahaan yang sama. Pemilik mengatur siapa yang boleh mengubah pengaturan dan mencatat pembayaran.</span><em>Lihat contoh<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></span></span></button>
+        <button type="button" class="fc rv" style="--rd:0.00s" data-fx="8" aria-haspopup="dialog"><span class="fcm v-phone"><img src="fitur/berita.webp" alt="" loading="lazy" width="320" height="400"></span><span class="fcb"><span class="ic o"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></span><span class="fct"><b>Berita logistik terbaru</b><span>Kabar tarif dan BBM, kebijakan, pelabuhan, serta angkutan darat terbaru langsung di dalam aplikasi.</span><em>Lihat contoh<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></span></span></button>
+        <button type="button" class="fc rv" style="--rd:0.06s" data-fx="9" aria-haspopup="dialog"><span class="fcm v-laptop"><img src="fitur/laptop.webp" alt="" loading="lazy" width="320" height="400"></span><span class="fcb"><span class="ic m"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="13" height="9.5" rx="1.5"/><path d="M6 17h6"/><rect x="16.5" y="7" width="5" height="11" rx="1.2"/></svg></span><span class="fct"><b>HP, iPhone, dan laptop</b><span>Pakai aplikasi Android, atau buka lewat browser di iPhone dan laptop. Di layar lebar tampilannya menyesuaikan, datanya tetap sama.</span><em>Lihat contoh<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em></span></span></button>
       </div>
-    </div>
+        </div>
   </section>
 
   <section class="s" id="harga">
@@ -505,6 +631,53 @@ footer .brand img{width:28px;height:28px;border-radius:8px}
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
     rv.forEach(function(e){io.observe(e)});
   }else rv.forEach(function(e){e.classList.add('vis')});
+})();
+</script>
+<dialog class="fx" id="fx" aria-labelledby="fxT">
+  <div class="fxi">
+    <button type="button" class="fxx" id="fxX" aria-label="Tutup">&times;</button>
+    <div class="fxm"><div class="fxd" id="fxD"><img id="fxImg" alt=""><div id="fxK"></div></div></div>
+    <div class="fxt">
+      <span class="fxn" id="fxN"></span>
+      <h3 id="fxT"></h3>
+      <p id="fxP"></p>
+      <div class="fxtab" id="fxTab"></div>
+      <ol class="fxl" id="fxL"></ol>
+      <p class="fxc">Data di contoh ini fiktif.</p>
+      <div class="fxnav"><button type="button" class="gbtn" id="fxPrev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Sebelumnya</button><button type="button" class="pbtn" id="fxNext">Berikutnya<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+    </div>
+  </div>
+</dialog>
+<script>
+(function(){
+  var FX=[{"t": "Hitung harga trip otomatis", "d": "Masukkan jarak, harga langsung keluar otomatis sesuai jenis truk kamu.", "v": [{"l": "Hasil hitung", "f": "v-phone", "img": "fitur/hitung.webp", "p": [[27.4, 53, "Harga jual per trip", "Sudah termasuk markup yang kamu atur"], [63, 50, "Rincian biaya", "Solar, lama perjalanan, operasional, tarif, dan tol"], [83, 50, "Langsung jadi penawaran", "Satu ketuk ke surat penawaran PDF"]]}]}, {"t": "Surat penawaran PDF", "d": "Hasil hitungan langsung masuk ke surat. Kop, nomor surat, pajak, terbilang, TTD, dan cap tersusun rapi otomatis.", "v": [{"l": "Surat penawaran", "f": "v-paper", "img": "quote.webp?v=2", "p": [[10, 50, "Kop surat sendiri", "Logo, alamat, dan kontak perusahaan"], [50, 40, "Per trip", "Unit, jumlah trip, dan harga"], [56, 40, "Bulan, hari, atau 1 paket", "Satuan harga bisa dipilih"], [62.5, 40, "Tonase", "Ton, harga, unit, dan trip"], [71, 30, "Pajak & terbilang", "PPN, PPh, dan terbilang otomatis"], [88, 25, "TTD & cap", "Pakai atau tanpa, tinggal pilih"]]}]}, {"t": "Invoice & pembayaran", "d": "Ubah penawaran jadi invoice sekali ketuk. Catat DP dan pelunasan, pantau yang lewat jatuh tempo, dan kirim PDF dengan stempel LUNAS.", "v": [{"l": "PDF invoice", "f": "v-paper", "img": "fitur/invoice.webp", "p": [[24.9, 50, "Nomor invoice otomatis", "Urutan sendiri untuk tiap perusahaan"], [31.3, 76, "Tanggal & jatuh tempo", "Termin 7, 14, 30, atau 45 hari"], [47.3, 50, "DP tercatat", "Tanggal dan keterangan pembayaran ikut tampil"], [58.5, 30, "Rekening pembayaran", "Tersimpan otomatis untuk invoice berikutnya"], [76, 66, "TTD & cap", "Sama seperti surat penawaran"]]}, {"l": "Daftar tagihan", "f": "v-phone", "img": "fitur/tagihan.webp", "p": [[18.6, 19, "Belum dibayar", "Total sisa tagihan yang masih terbuka"], [18.6, 50, "Lewat jatuh tempo", "Langsung kelihatan mana yang harus ditagih"], [71.8, 40, "Status otomatis", "Draf, terkirim, dibayar sebagian, atau lunas"]]}]}, {"t": "Cek muatan 3D", "d": "Masukkan ukuran, berat, dan jumlah barang. Lihat susunannya di truk dalam 3D dan 2D, termasuk mode oversize untuk flatbed dan lowbed.", "v": [{"l": "Cek muatan", "f": "v-phone", "img": "fitur/muat.webp", "p": [[44.7, 50, "Tampilan 3D", "Putar untuk melihat susunan barang di truk"], [67.5, 50, "Muat atau tidak", "Jumlah barang, volume, dan berat dicek sekaligus"], [94, 50, "Mode oversize", "Untuk flatbed dan lowbed, lengkap dengan peringatan izin"]]}]}, {"t": "Data truk & masa berlaku dokumen", "d": "Catat plat, STNK, dan KIR setiap truk. Ghostrip mengingatkan dokumen yang tinggal sebulan, tinggal 7 hari, atau sudah lewat.", "v": [{"l": "Data truk", "f": "v-phone", "img": "fitur/armada.webp", "p": [[16.6, 50, "Ringkasan armada", "Jumlah truk dan dokumen yang perlu dicek"], [34.5, 50, "Filter dokumen", "STNK, KIR kepala, dan KIR buntut"], [48, 50, "Pengingat perpanjangan", "Muncul saat tinggal 1 bulan, 7 hari, atau lewat"]]}]}, {"t": "Tarif & biaya armada sendiri", "d": "Atur harga solar, markup, rasio solar, kecepatan, jam kerja, operasional, dan tarif untuk tiap jenis truk perusahaanmu.", "v": [{"l": "Pengaturan OPS", "f": "v-phone", "img": "fitur/ops.webp", "p": [[23.5, 50, "Harga solar & markup", "Berlaku untuk semua jenis truk"], [55, 29, "Rasio, kecepatan, jam kerja", "Sesuai kebiasaan armada kamu"], [75.8, 71, "Operasional & tarif", "Dasar hitungan biaya setiap trip"]]}]}, {"t": "Riwayat tersimpan & cari cepat", "d": "Semua hitungan, penawaran, dan invoice tersimpan di akun. Ketik nama perusahaan, nomor, atau rute untuk menemukannya lagi.", "v": [{"l": "Riwayat hitung", "f": "v-phone", "img": "fitur/cari.webp", "p": [[15.1, 54, "Kotak cari", "Nama perusahaan, rute, atau jenis truk"], [32.7, 50, "Hasil langsung muncul", "Tanpa perlu menggulir riwayat panjang"], [41.3, 62, "Edit, duplikat, hapus", "Hitungan lama bisa dipakai ulang"]]}]}, {"t": "Satu akun untuk satu tim", "d": "Ajak admin dan staf masuk ke data perusahaan yang sama. Pemilik mengatur siapa yang boleh mengubah pengaturan dan mencatat pembayaran.", "v": [{"l": "Tim & peran", "f": "v-phone", "img": "fitur/tim.webp", "p": [[17.1, 50, "Satu perusahaan", "Semua anggota memakai data yang sama"], [45.8, 86, "Peran tiap anggota", "Pemilik, admin, atau staf"], [78, 50, "Hak akses jelas", "Staf menghitung dan membuat surat, pengaturan dipegang admin"]]}]}, {"t": "Berita logistik terbaru", "d": "Kabar tarif dan BBM, kebijakan, pelabuhan, serta angkutan darat terbaru langsung di dalam aplikasi.", "v": [{"l": "News logistik", "f": "v-phone", "img": "fitur/berita.webp", "p": [[19.8, 50, "Kategori berita", "Tarif & BBM, kebijakan, pelabuhan, dan darat"], [36, 50, "Kabar terbaru", "Ketuk untuk membaca selengkapnya"]]}]}, {"t": "HP, iPhone, dan laptop", "d": "Pakai aplikasi Android, atau buka lewat browser di iPhone dan laptop. Di layar lebar tampilannya menyesuaikan, datanya tetap sama.", "v": [{"l": "Tampilan laptop", "f": "v-laptop", "img": "fitur/laptop.webp", "p": [[40, 8, "Menu samping", "Semua menu dalam satu klik"], [23, 60, "Indikator penting", "Tagihan, penawaran, armada, dan langganan"], [64, 60, "Akses cepat", "Kalkulator, surat, cek muatan, dan data"]]}]}],dlg=document.getElementById('fx'),$=function(i){return document.getElementById(i)},cur=0,vi=0,lastBtn=null;
+  if(!dlg||!dlg.showModal){return}
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function draw(){var f=FX[cur],v=f.v[vi];
+    $('fxN').textContent=(cur<9?'0':'')+(cur+1)+' / '+FX.length;$('fxT').textContent=f.t;$('fxP').textContent=f.d;
+    $('fxD').className='fxd '+v.f;var im=$('fxImg');im.classList.remove('in');im.onload=function(){im.classList.add('in')};im.src=v.img;im.alt='Contoh tampilan '+v.l;if(im.complete)im.classList.add('in');
+    $('fxTab').innerHTML=f.v.length>1?f.v.map(function(x,i){return '<button type="button" class="'+(i===vi?'on':'')+'" data-vi="'+i+'">'+esc(x.l)+'</button>'}).join(''):'';
+    $('fxK').innerHTML=v.p.map(function(p,i){var r=p[1]>=50;return '<span class="fxa '+(r?'r':'l')+'" data-i="'+i+'" style="top:'+p[0]+'%;'+(r?'left:'+p[1]+'%':'right:'+(100-p[1])+'%')+'"><i class="dt"></i><b>'+(i+1)+'</b></span>'}).join('');
+    $('fxL').innerHTML=v.p.map(function(p,i){return '<li data-i="'+i+'"><i>'+(i+1)+'</i><div><b>'+esc(p[2])+'</b><span>'+esc(p[3])+'</span></div></li>'}).join('');
+    $('fxPrev').disabled=cur===0;$('fxNext').innerHTML=(cur===FX.length-1?'Selesai':'Berikutnya')+'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    var t=dlg.querySelector('.fxt');if(t)t.scrollTop=0}
+  function open(i){cur=i;vi=0;draw();dlg.showModal();document.documentElement.classList.add('fxo')}
+  function close(){dlg.close()}
+  dlg.addEventListener('close',function(){document.documentElement.classList.remove('fxo');if(lastBtn)lastBtn.focus()});
+  [].forEach.call(document.querySelectorAll('[data-fx]'),function(b){b.addEventListener('click',function(){lastBtn=b;open(+b.getAttribute('data-fx'))})});
+  $('fxX').onclick=close;
+  dlg.addEventListener('click',function(e){if(e.target===dlg)close()});
+  $('fxPrev').onclick=function(){if(cur>0){cur--;vi=0;draw()}};
+  $('fxNext').onclick=function(){if(cur<FX.length-1){cur++;vi=0;draw()}else close()};
+  $('fxTab').addEventListener('click',function(e){var b=e.target.closest('[data-vi]');if(!b)return;vi=+b.getAttribute('data-vi');draw()});
+  function hl(i,on){[].forEach.call(dlg.querySelectorAll('[data-i="'+i+'"]'),function(x){x.classList.toggle('hl',on)})}
+  ['fxK','fxL'].forEach(function(id){var el=$(id);
+    el.addEventListener('mouseover',function(e){var x=e.target.closest('[data-i]');if(x)hl(x.getAttribute('data-i'),true)});
+    el.addEventListener('mouseout',function(e){var x=e.target.closest('[data-i]');if(x)hl(x.getAttribute('data-i'),false)});
+    el.addEventListener('click',function(e){var x=e.target.closest('[data-i]');if(!x)return;var i=x.getAttribute('data-i');[].forEach.call(dlg.querySelectorAll('.hl'),function(y){y.classList.remove('hl')});hl(i,true)})});
+  document.addEventListener('keydown',function(e){if(!dlg.open)return;if(e.key==='ArrowRight')$('fxNext').click();if(e.key==='ArrowLeft')$('fxPrev').click()});
+  var sx=null;dlg.addEventListener('touchstart',function(e){var t=e.target.closest('.fxm');sx=t?e.touches[0].clientX:null},{passive:true});
+  dlg.addEventListener('touchend',function(e){if(sx==null)return;var dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>60){if(dx<0)$('fxNext').click();else $('fxPrev').click()}},{passive:true});
 })();
 </script>
 </body>
