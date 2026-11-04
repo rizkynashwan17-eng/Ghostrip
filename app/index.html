@@ -598,6 +598,8 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 /* jarak aman bawah (tombol navigasi HP / garis home iPhone). Capacitor 8 mengisi --safe-area-inset-bottom; browser memakai env() */
 :root{--sab:var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px))}
 @media (max-width:500px){.app{height:calc(100% - var(--sab))}}
+/* menu yang ditandai hidden (Panel admin, Tim & peran) harus benar-benar hilang untuk akun yang tidak berhak */
+.mn[hidden],.qa[hidden]{display:none!important}
 </style>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
