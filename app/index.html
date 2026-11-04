@@ -644,19 +644,55 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
 #calc>.sumbar small,#quo>.sumbar small{font-size:13px}
 #calc>.sumbar .btn,#quo>.sumbar .btn{flex:1 1 0;height:46px}
 
-/* beranda: menu di kiri, daftar terakhir di kanan */
-#home>.hd{padding-left:max(24px,calc((100% - var(--cw))/2 + 18px));padding-right:max(24px,calc((100% - var(--cw))/2 + 18px))}
-#home>.body{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);column-gap:28px;align-items:start;align-content:start}
-#home .glass{margin:0;grid-column:1;grid-row:1 / span 3}
-#home #setupBox{grid-column:2;grid-row:1;margin-top:0!important}
-#home>.body>.pad{padding-left:0;padding-right:0}
-#home>.body>.pad:last-child{grid-column:2;grid-row:2}
-#setupBox:not(:empty){margin-top:76px!important}
-#setupBox:empty{display:none}
-#setupBox:empty+.pad{margin-top:76px}
-#setupBox:not(:empty)+.pad{margin-top:10px}
-#home .grid{grid-template-columns:repeat(3,1fr)}
-
+/* beranda desktop: header ringkas, indikator, menu */
+#home{--cw:1180px}
+#home>.hd{padding-left:max(28px,calc((100% - var(--cw))/2 + 18px));padding-right:max(28px,calc((100% - var(--cw))/2 + 18px));min-height:0;padding-top:26px;padding-bottom:30px}
+#home>.hd .bar{display:none}
+#home .wel{margin-top:0;align-items:center}
+#home .wel small{font-size:14px}
+#home #hCo{font-size:28px;margin-top:4px}
+#home .wel .meta.qt{font-size:13.5px;margin-top:6px}
+#home .wel .pill{height:44px;padding:0 20px;font-size:14.5px}
+#dkSolar{display:inline-block;margin-top:12px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);color:#bfdcdb;font-size:13px}
+#home #dkSolar b{display:inline;color:#fff;font-weight:600;font-size:13px;margin:0;-webkit-line-clamp:unset}
+#home>.body{margin-top:0;padding-top:26px}
+#home .glass,#home>.body>.pad:has(#homeList){display:none}
+#home #setupBox{padding:0;margin:0 0 18px!important}
+#home #setupBox:empty{display:none}
+#dkHome{display:block}
+.dkKs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.dkK{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:18px 20px 18px;border-radius:20px;background:#fff;border:1px solid var(--line);box-shadow:0 2px 10px rgba(11,60,60,.04);transition:box-shadow .15s,transform .15s;cursor:pointer;min-width:0}
+.dkK:hover{box-shadow:0 12px 26px rgba(11,60,60,.1);transform:translateY(-2px)}
+.dkK .dkI{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--mint3);color:var(--teal);margin-bottom:14px}
+.dkK .dkI svg{width:20px;height:20px}
+.dkK small{font-size:13px;color:var(--mute);font-weight:500}
+.dkK b{font-size:30px;font-weight:600;letter-spacing:-.02em;color:var(--navy);margin-top:2px;line-height:1.15}
+.dkK em{font-style:normal;font-size:13px;color:var(--ink2);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.dkK.warn .dkI{background:#fdeedd;color:#c66a1c}.dkK.warn em{color:#c66a1c;font-weight:600}
+.dkK.bad .dkI{background:#fde8e6;color:#c0392b}.dkK.bad b,.dkK.bad em{color:#c0392b}
+.dkH{font-size:15px;font-weight:600;color:var(--navy);margin:30px 2px 12px}
+.dkAs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.dkA{display:flex;align-items:center;gap:16px;text-align:left;padding:22px;border-radius:22px;background:#fff;border:1px solid var(--line);cursor:pointer;transition:box-shadow .15s,transform .15s;min-width:0}
+.dkA:hover{box-shadow:0 14px 30px rgba(11,60,60,.12);transform:translateY(-2px)}
+.dkA .dkI{flex:none;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:var(--mint3);color:var(--teal)}
+.dkA .dkI svg{width:24px;height:24px}
+.dkA .dkT{flex:1;min-width:0}
+.dkA b{display:block;font-size:17px;font-weight:600;color:var(--navy)}
+.dkA small{display:block;font-size:13px;color:var(--ink2);margin-top:4px;line-height:1.4}
+.dkA i{font-style:normal;font-size:20px;color:var(--mute);transition:transform .15s,color .15s}
+.dkA:hover i{transform:translateX(3px);color:var(--teal)}
+.dkA.p{background:linear-gradient(135deg,#0b8a7e,#0d6f66);border-color:transparent;box-shadow:0 12px 28px rgba(11,138,126,.3)}
+.dkA.p .dkI{background:rgba(255,255,255,.16);color:#fff}
+.dkA.p b{color:#fff}.dkA.p small{color:#d4f3ec}.dkA.p i{color:#bff0e6}
+.dkA.p:hover{box-shadow:0 18px 36px rgba(11,138,126,.38)}
+.dkSs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.dkS{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:14px;align-items:center;text-align:left;padding:14px 16px;border-radius:16px;background:#fff;border:1px solid var(--line);cursor:pointer;transition:box-shadow .15s,border-color .15s;min-width:0}
+.dkS:hover{box-shadow:0 8px 20px rgba(11,60,60,.08);border-color:#cfe5e1}
+.dkS .dkI{grid-row:1 / span 2;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--mint3);color:var(--teal)}
+.dkS .dkI svg{width:20px;height:20px}
+.dkS.o .dkI{background:#fdeedd;color:#c66a1c}
+.dkS b{font-size:14.5px;font-weight:600;color:var(--navy);align-self:end}
+.dkS small{font-size:12.5px;color:var(--mute);align-self:start;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* riwayat: dua kolom */
 #listH,#listQ{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;align-items:start}
 #listH .dg,#listQ .dg{grid-column:1/-1}
@@ -687,7 +723,9 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
   #calc>.sumbar>div,#quo>.sumbar>div{flex:1;margin-bottom:0}
   #calc>.sumbar b,#quo>.sumbar b{font-size:22px}
   #calc>.sumbar .btn,#quo>.sumbar .btn{flex:none;height:46px;padding:0 20px}
-  #home>.body{grid-template-columns:minmax(0,380px) minmax(0,1fr)}
+  .dkKs{gap:12px}.dkK{padding:14px 16px}.dkK .dkI{margin-bottom:10px;width:34px;height:34px}.dkK b{font-size:24px}.dkK em{font-size:12px}
+  .dkAs{gap:12px}.dkA{padding:16px;gap:12px;flex-direction:column;align-items:flex-start}.dkA i{display:none}.dkA .dkI{width:44px;height:44px}
+  .dkSs{gap:10px}
   #welcome h1{font-size:56px}
   #welcome .doc{scale:1.3;right:calc(var(--wl) + 30px)}
 }
@@ -2779,6 +2817,71 @@ document.getElementById('a2hsX').onclick=function(){e.style.display='none';try{l
     mo.observe(document.getElementById('akun'),{childList:true,subtree:true,attributes:true});
   }
   var n=0,iv=setInterval(function(){build();if(built||++n>40)clearInterval(iv)},150);build();
+})();
+/* Beranda desktop: indikator + menu (menggantikan "Terakhir dihitung" di layar lebar) */
+(function(){
+  var C=window.Capacitor;if(C&&C.isNativePlatform&&C.isNativePlatform())return;
+  if(!window.matchMedia('(min-width:1000px)').matches)return;
+  var G=function(){return window.__g||{}};
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function dots(n){return Math.round(n||0).toLocaleString('id-ID')}
+  function rpS(n){n=+n||0;if(n>=1e9)return 'Rp'+(n/1e9).toLocaleString('id-ID',{maximumFractionDigits:1})+' M';if(n>=1e6)return 'Rp'+(n/1e6).toLocaleString('id-ID',{maximumFractionDigits:1})+' jt';return 'Rp'+dots(n)}
+  function svg(go){var s=document.querySelector('.qa[data-go="'+go+'"] .ic svg');return s?s.outerHTML:''}
+  function sameMonth(t){if(!t)return false;var d=new Date(typeof t==='number'?t:String(t).length<=10?String(t)+'T00:00:00':t);var n=new Date();return !isNaN(d)&&d.getFullYear()===n.getFullYear()&&d.getMonth()===n.getMonth()}
+  var BULAN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  function data(){
+    var g=G(),L=(g.L&&g.L())||[],QH=(g.QH&&g.QH())||[],AR=(g.AR&&g.AR())||[],Cf=(g.C&&g.C())||{},T=(g.TRUK&&g.TRUK())||[];
+    var hc=0,hv=0;L.forEach(function(x){if(!sameMonth(x.t))return;hc++;try{hv+=g.hitung(g.stFor(x)).all||0}catch(e){}});
+    var qc=0,qv=0;QH.forEach(function(q){if(!sameMonth(q.t||q.tgl))return;qc++;try{qv+=g.qcalc(q).tot||0}catch(e){}});
+    var b=document.getElementById('armBadge'),al=b&&!b.hidden?(+b.textContent||0):0;
+    var s=window.__auth&&window.__auth.sess&&window.__auth.sess(),p=(s&&s.prof)||{},sub;
+    if(p.is_admin)sub={v:'Admin',d:'Akun pengelola Ghostrip',k:''};
+    else if(!p.berlaku_sampai)sub={v:'Aktif',d:'Tanpa batas waktu',k:''};
+    else{var a=new Date(String(p.berlaku_sampai).slice(0,10)+'T00:00:00'),n=new Date();n.setHours(0,0,0,0);var dl=Math.round((a-n)/864e5);
+      sub=dl<0?{v:'Habis',d:'Hubungi admin untuk perpanjang',k:'bad'}:{v:dl+' hari',d:'Sisa masa langganan',k:dl<=7?'warn':''}}
+    return {L:L,QH:QH,AR:AR,C:Cf,T:T,hc:hc,hv:hv,qc:qc,qv:qv,al:al,sub:sub,role:(g.ROLE&&g.ROLE())||'pemilik'};
+  }
+  function render(){
+    var home=document.getElementById('home');if(!home)return;var body=home.querySelector('.body');if(!body)return;
+    var box=document.getElementById('dkHome');if(!box){box=document.createElement('div');box.id='dkHome';body.appendChild(box)}
+    var d=data(),bln=BULAN[new Date().getMonth()];
+    var kpi=function(cls,go,attr,ic,lbl,val,sub){return '<button class="dkK '+cls+'" '+attr+'="'+go+'"><span class="dkI">'+ic+'</span><small>'+lbl+'</small><b>'+val+'</b><em>'+sub+'</em></button>'};
+    var h='';
+    h+='<div class="dkKs">'
+      +kpi('','riwH','data-tab',svg('riwH'),'Hitungan '+bln,dots(d.hc),d.hc?'Nilai '+rpS(d.hv):'Belum ada hitungan bulan ini')
+      +kpi('','riwQ','data-tab',svg('riwQ'),'Penawaran '+bln,dots(d.qc),d.qc?'Nilai '+rpS(d.qv):'Belum ada surat bulan ini')
+      +kpi(d.al?'warn':'','armada','data-go',svg('armada'),'Armada',dots(d.AR.length)+' truk',d.AR.length?(d.al?d.al+' dokumen perlu dicek':'Semua dokumen aman'):'Belum ada truk tercatat')
+      +kpi(d.sub.k,'akun','data-tab','<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3.5v5.2c0 4.6-3.4 8.3-8 9.3-4.6-1-8-4.7-8-9.3V6.5z"/><path d="M8.6 12.2l2.3 2.3 4.6-4.8"/></svg>','Langganan',esc(d.sub.v),esc(d.sub.d))
+      +'</div>';
+    var big=function(go,ic,t,s,k){return '<button class="dkA'+(k?' '+k:'')+'" data-go="'+go+'"><span class="dkI">'+ic+'</span><span class="dkT"><b>'+t+'</b><small>'+s+'</small></span><i>&rarr;</i></button>'};
+    h+='<h3 class="dkH">Mulai kerja</h3><div class="dkAs">'
+      +big('calc',svg('calc'),'Kalkulator trip','Hitung harga dari jarak, solar, hari, dan tarif truk','p')
+      +big('quo',svg('quo'),'Surat penawaran','PDF lengkap dengan kop, nomor surat, TTD, dan cap')
+      +big('muat',svg('muat'),'Cek muatan','Lihat perkiraan susunan barang di truk, 3D dan 2D')
+      +'</div>';
+    var cfg=d.role!=='staf';
+    var sm=function(attr,go,ic,t,s,o){return '<button class="dkS'+(o?' o':'')+'" '+attr+'="'+go+'"><span class="dkI">'+ic+'</span><b>'+t+'</b><small>'+s+'</small></button>'};
+    h+='<h3 class="dkH">Data &amp; pengaturan</h3><div class="dkSs">'
+      +sm('data-tab','riwH',svg('riwH'),'Riwayat hitung',dots(d.L.length)+' hitungan')
+      +sm('data-tab','riwQ',svg('riwQ'),'Riwayat surat',dots(d.QH.length)+' surat')
+      +sm('data-go','armada',svg('armada'),'Data truk',dots(d.AR.length)+' truk'+(d.al?' · '+d.al+' perlu dicek':''))
+      +sm('data-go','news',svg('news'),'News logistik','Kabar logistik terbaru')
+      +(cfg?sm('data-go','truk',svg('truk'),'Pengaturan OPS',d.T.length+' jenis truk · solar Rp'+dots(d.C.harga),1):'')
+      +(cfg?sm('data-go','kop',svg('kop'),'Pengaturan quotation','Kop, TTD, dan isi surat',1):'')
+      +'</div>';
+    box.innerHTML=h;
+    var hq=document.getElementById('dkSolar');
+    if(!hq){var wel=home.querySelector('.wel>div');if(wel){hq=document.createElement('span');hq.id='dkSolar';wel.appendChild(hq)}}
+    if(hq)hq.innerHTML='Solar <b>Rp'+dots(d.C.harga)+'</b>/liter &middot; markup default <b>'+(d.C.markup!=null?String(d.C.markup).replace('.',','):'-')+'%</b>';
+  }
+  function hook(){
+    var home=document.getElementById('home');if(!home||!window.__g){return setTimeout(hook,200)}
+    render();
+    new MutationObserver(function(){if(home.classList.contains('on'))render()}).observe(home,{attributes:true,attributeFilter:['class']});
+    var hl=document.getElementById('homeList');if(hl)new MutationObserver(function(){render()}).observe(hl,{childList:true});
+    var ab=document.getElementById('armBadge');if(ab)new MutationObserver(function(){render()}).observe(ab,{attributes:true,childList:true,characterData:true,subtree:true});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hook);else hook();
 })();
 </script>
 </body>
