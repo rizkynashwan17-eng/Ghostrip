@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#0b1f2a">
 <title>Ghostrip</title>
 <style>
@@ -600,6 +600,13 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 @media (max-width:500px){.app{height:calc(100% - var(--sab))}}
 /* menu yang ditandai hidden (Panel admin, Tim & peran) harus benar-benar hilang untuk akun yang tidak berhak */
 .mn[hidden],.qa[hidden]{display:none!important}
+
+.tmn{display:flex;align-items:center;gap:8px}.tmn input{width:70px;height:38px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:15px;font-weight:600;background:#fff;outline:0}.tmn input:focus{border-color:var(--mint)}.tmn em{font-style:normal;font-size:13px;color:var(--mute)}
+#isEx{font-size:13px;color:var(--ink2)}
+/* aplikasi tidak bisa di-zoom: ketuk dua kali tidak memperbesar layar */
+html,body{touch-action:manipulation}
+/* area daftar selalu bisa digulir dengan jari (pengaman WebView Android lama) */
+.sc>.body{min-height:0;overscroll-behavior-y:contain}
 </style>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -829,8 +836,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
         <button class="qa" data-go="riwQ"><span class="ic" data-i="docclock"></span>Riwayat surat</button>
         <button class="qa" data-go="armada"><span class="ic" data-i="truck"></span>Data truk<i class="ald" id="armBadge" hidden></i></button>
         <button class="qa" data-go="news"><span class="ic" data-i="globe"></span>News logistik</button>
-        <button class="qa o" data-go="truk"><span class="ic" data-i="gear"></span>Pengaturan OPS</button>
-        <button class="qa o" data-go="kop"><span class="ic" data-i="sign"></span>Pengaturan quotation</button>
+        <button class="qa o" data-go="kop"><span class="ic" data-i="gear"></span>Pengaturan</button>
       </div>
     </div>
     <div class="pad" id="setupBox" style="margin-top:14px"></div>
@@ -878,7 +884,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
     </div>
     <h3 class="t">Asumsi</h3>
     <div class="card">
-      <button class="mn" data-go="truk" style="padding:12px 16px"><span class="ic" data-i="fuel"></span><span style="font-size:14px">Harga solar<small style="display:block;font-size:12px;color:var(--mute)">Ubah di Pengaturan OPS</small></span><i id="cSolarLine">Rp6.800/liter</i></button>
+      <button class="mn" data-go="truk" style="padding:12px 16px"><span class="ic" data-i="fuel"></span><span style="font-size:14px">Harga solar<small style="display:block;font-size:12px;color:var(--mute)">Ubah di Pengaturan → OPS</small></span><i id="cSolarLine">Rp6.800/liter</i></button>
       <label class="fld" style="border-top:1px solid var(--line)"><span>Markup (%)</span><input id="cMk" inputmode="numeric"></label>
     </div>
   <div class="row2 cbtm" id="cbtmRow"><button class="btn g press" id="cSaveBtm">Simpan</button><button class="btn g press" id="cResetBtm">Reset</button></div>
@@ -924,11 +930,17 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
       <div class="tg" id="qPotRow"><div><b>PPh dipotong dari total</b><small>Matikan kalau PPh ditambahkan</small></div><button class="sw" data-tg="pot"></button></div>
       <div class="two" style="border-top:1px solid var(--line)"><label class="fld"><span>Tarif PPN (%)</span><input id="qRP" inputmode="decimal"></label><label class="fld"><span>Tarif PPh (%)</span><input id="qRH" inputmode="decimal"></label></div>
     </div>
+    <h3 class="t">Pembayaran ke rekening</h3>
+    <p class="hnt" style="padding:0 4px 8px;margin-top:-4px">Terisi otomatis dari Pengaturan, bagian Rekening pembayaran. Bisa diganti untuk surat ini saja. Kosongkan kalau tidak ingin dicantumkan.</p>
+    <div class="card">
+      <label class="fld"><span>Bank</span><input id="qBank" placeholder="Contoh: BCA"></label>
+      <div class="two" style="border-top:1px solid var(--line)"><label class="fld"><span>No. rekening</span><input id="qRek" inputmode="numeric" placeholder="1234567890"></label><label class="fld"><span>Atas nama</span><input id="qAn" placeholder="Contoh: PT. Maju Jaya"></label></div>
+    </div>
     <h3 class="t">Ketentuan &amp; tanda tangan</h3>
     <div class="card">
       <div class="fld" style="padding-bottom:6px"><span>Ketentuan (nomor otomatis)</span><div id="qKets"></div><button class="addk press" id="qKAdd">+ Tambah ketentuan</button><p class="hnt" style="margin-top:8px">Kalimat "belum termasuk PPN/PPh" ditambahkan otomatis dari pilihan pajak.</p></div>
       <div class="two" style="border-top:1px solid var(--line)"><label class="fld"><span>Penanda tangan</span><input id="qNttd"></label><label class="fld"><span>Jabatan</span><input id="qJab"></label></div>
-      <div class="tg" style="border-top:1px solid var(--line)"><div><b>Pakai TTD &amp; cap</b><small>Dari Pengaturan quotation</small></div><button class="sw on" data-tg="ttd"></button></div>
+      <div class="tg" style="border-top:1px solid var(--line)"><div><b>Pakai TTD &amp; cap</b><small>Dari Pengaturan</small></div><button class="sw on" data-tg="ttd"></button></div>
       <div class="tg" style="border-top:1px solid var(--line)" id="qHpRow"><div><b>Tampilkan HP/WA</b><small>Di bawah tanda tangan</small></div><button class="sw on" data-tg="hp"></button></div>
       <div class="tg" style="border-top:1px solid var(--line)" id="qEmRow"><div><b>Tampilkan email</b><small>Di bawah tanda tangan</small></div><button class="sw on" data-tg="em"></button></div>
     </div>
@@ -965,7 +977,8 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
     <div class="card">
       <label class="fld"><span>Nomor invoice</span><input id="ieNo"></label>
       <div class="two"><label class="fld"><span>Tanggal invoice</span><input id="ieTgl" type="date"></label><label class="fld"><span>Jatuh tempo</span><input id="ieDue" type="date"></label></div>
-      <div class="ivtm"><span>Termin</span><div class="sat" id="ieTm"></div></div>
+      <div class="ivtm"><span>Termin</span><div class="tmn"><input id="ieTmN" inputmode="numeric" maxlength="3" placeholder="0"><em>hari dari tanggal invoice</em></div></div>
+      <div class="ivtm"><span>Skema pembayaran</span><div class="sat" id="ieSk"></div></div>
     </div>
     <h3 class="t">Ditagihkan kepada</h3>
     <div class="card">
@@ -984,16 +997,16 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
       <div class="two" style="border-top:1px solid var(--line)"><label class="fld"><span>Tarif PPN (%)</span><input id="ieRP" inputmode="decimal"></label><label class="fld"><span>Tarif PPh (%)</span><input id="ieRH" inputmode="decimal"></label></div>
     </div>
     <h3 class="t">Pembayaran ke rekening</h3>
+    <p class="hnt" style="padding:0 4px 8px;margin-top:-4px">Terisi otomatis dari Pengaturan, bagian Rekening pembayaran. Bisa diganti untuk invoice ini saja.</p>
     <div class="card">
       <label class="fld" id="ieBankF"><span>Bank</span><input id="ieBank" placeholder="Contoh: BCA"></label>
       <div class="two"><label class="fld" id="ieRekF"><span>No. rekening</span><input id="ieRek" inputmode="numeric" placeholder="Contoh: 1234567890"></label><label class="fld" id="ieAnF"><span>Atas nama</span><input id="ieAn" placeholder="Contoh: PT Maju Jaya"></label></div>
     </div>
-    <p class="hnt" style="padding:6px 4px 0">Rekening tersimpan otomatis untuk invoice berikutnya.</p>
-    <h3 class="t">Catatan &amp; tanda tangan</h3>
+        <h3 class="t">Catatan &amp; tanda tangan</h3>
     <div class="card">
       <label class="fld"><span>Catatan (opsional)</span><textarea id="ieCat" rows="2" placeholder="Contoh: Mohon cantumkan nomor invoice saat transfer."></textarea></label>
       <div class="two" style="border-top:1px solid var(--line)"><label class="fld"><span>Penanda tangan</span><input id="ieTtd"></label><label class="fld"><span>Jabatan</span><input id="ieJab"></label></div>
-      <div class="tg" style="border-top:1px solid var(--line)"><div><b>Pakai TTD &amp; cap</b><small>Dari Pengaturan quotation</small></div><button class="sw on" data-iv="tc"></button></div>
+      <div class="tg" style="border-top:1px solid var(--line)"><div><b>Pakai TTD &amp; cap</b><small>Dari Pengaturan</small></div><button class="sw on" data-iv="tc"></button></div>
     </div>
     <div id="iePayBox"></div>
     <h3 class="t">Ringkasan</h3>
@@ -1149,7 +1162,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
 </section>
 <!-- TRUCKS -->
 <section class="sc" id="truk">
-  <div class="tb"><button class="ib l press" data-back><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><b>Pengaturan OPS</b><span style="width:40px"></span></div>
+  <div class="tb"><button class="ib l press" data-back><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><b>OPS &amp; tarif truk</b><span style="width:40px"></span></div>
   <div class="body pad" style="padding-bottom:110px">
     <div class="warnbox" id="opsWarn" style="display:none"></div>
     <h3 class="t" style="margin-top:4px">Harga solar &amp; markup</h3>
@@ -1162,15 +1175,17 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
     <button class="btn g press" id="tAdd" style="height:48px;font-size:15px">+ Tambah jenis truk</button>
     <p class="hnt" style="padding:12px 4px 0">Hari jalan = jarak ÷ kecepatan ÷ jam kerja. Hari istirahat = hari jalan × istirahat ÷ jam kerja. Tambahan driver dihitung sekali per trip (isi 0 kalau tidak ada).</p>
   </div>
-  <div class="sumbar"><div><small id="tInfo">Tersimpan per akun</small><b style="font-size:16px">Pengaturan OPS</b></div><button class="btn m press" id="tSave">Simpan</button></div>
+  <div class="sumbar"><div><small id="tInfo">Tersimpan per akun</small><b style="font-size:16px">OPS &amp; tarif truk</b></div><button class="btn m press" id="tSave">Simpan</button></div>
 </section>
 
 <!-- KOP -->
 <section class="sc" id="kop">
-  <div class="tb"><button class="ib l press" data-back><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><b>Pengaturan quotation</b><span style="width:40px"></span></div>
+  <div class="tb"><button class="ib l press" data-back><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><b>Pengaturan</b><span style="width:40px"></span></div>
   <div class="body pad" style="padding-bottom:110px">
     <div class="warnbox" id="kopWarn" style="display:none"></div>
-    <h3 class="t" style="margin-top:4px">Identitas perusahaan</h3>
+    <h3 class="t" style="margin-top:4px">Berlaku untuk quotation &amp; invoice</h3>
+    <p class="hnt" style="padding:0 4px 10px;margin-top:-4px">Cukup diisi sekali. Dipakai di surat penawaran dan invoice.</p>
+    <h3 class="t" style="margin-top:6px">Perusahaan &amp; penanda tangan</h3>
     <div class="card">
       <label class="fld"><span>Nama perusahaan *</span><input id="sCo" placeholder="Contoh: PT. Maju Jaya Logistik"></label>
       <div class="two"><label class="fld"><span>Singkatan (nomor surat) *</span><input id="sAbbr" placeholder="Contoh: MJL"></label><label class="fld"><span>Kota surat *</span><input id="sKota" placeholder="Contoh: Jakarta"></label></div>
@@ -1180,14 +1195,6 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
       <div class="tg" style="border-top:1px solid var(--line)"><div><b>Tampilkan HP/WA di surat</b><small>Default untuk surat baru</small></div><button class="sw on" id="sHpOn"></button></div>
       <div class="tg" style="border-top:1px solid var(--line)"><div><b>Tampilkan email di surat</b><small>Default untuk surat baru</small></div><button class="sw on" id="sEmOn"></button></div>
       <div class="two"><label class="fld"><span>PPN default (%)</span><input id="sPpn" inputmode="decimal"></label><label class="fld"><span>PPh default (%)</span><input id="sPph" inputmode="decimal"></label></div>
-    </div>
-    <h3 class="t">Isi surat</h3>
-    <div class="card">
-      <label class="fld"><span>Ketentuan default (satu baris per poin)</span><textarea id="sKet" rows="4" placeholder="Contoh: Pembayaran ke Rekening BCA a.n. PT. Maju Jaya, No. Rek. 1234567890."></textarea></label>
-      <p class="hnt" style="padding:0 16px 10px">Isi rekening bank di sini. Kalimat pajak ditambahkan otomatis.</p>
-      <label class="fld"><span>Kalimat pembuka</span><textarea id="sBuka" rows="3" placeholder="Kosongkan untuk kalimat bawaan"></textarea></label>
-      <label class="fld"><span>Kalimat penutup</span><textarea id="sTutup" rows="3" placeholder="Kosongkan untuk kalimat bawaan"></textarea></label>
-      <p class="hnt" style="padding:0 16px 12px">Tulis {perusahaan} untuk memasukkan nama perusahaan otomatis.</p>
     </div>
     <h3 class="t">Kop surat</h3>
     <div class="card"><div class="fld"><span>Kop atas (header) *</span><div class="pimg" id="pv_hdr"></div><div class="pbtn"><button data-pimg="hdr">Pilih gambar</button><button data-pdel="hdr" id="pd_hdr" hidden>Hapus</button></div><input type="file" accept="image/*" hidden id="pf_hdr"><p class="hnt" style="margin-top:8px">Foto atau screenshot kop surat (logo, nama, alamat). Otomatis disesuaikan ke lebar kertas A4.</p></div><div style="border-top:1px solid var(--line)"></div><div class="fld"><span>Kop bawah (footer) *</span><div class="pimg" id="pv_ftr"></div><div class="pbtn"><button data-pimg="ftr">Pilih gambar</button><button data-pdel="ftr" id="pd_ftr" hidden>Hapus</button></div><input type="file" accept="image/*" hidden id="pf_ftr"><p class="hnt" style="margin-top:8px">Alamat atau info di bagian bawah kertas. Ruang putih dipangkas otomatis.</p></div></div>
@@ -1199,8 +1206,53 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
       <p class="hnt" style="margin-top:8px">Warna judul tabel di surat dan PDF. Tulisan otomatis putih atau hitam supaya tetap terbaca.</p></div></div>
     <h3 class="t">TTD &amp; cap</h3>
     <div class="card"><div class="fld"><span>Gambar tanda tangan + cap</span><div class="pimg" id="pv_ttd"></div><div class="pbtn"><button data-pimg="ttd">Pilih gambar</button><button data-pdel="ttd" id="pd_ttd" hidden>Hapus</button></div><input type="file" accept="image/*" hidden id="pf_ttd"><p class="hnt" style="margin-top:8px">Foto TTD + cap di kertas putih, terang dan tidak miring. Bisa juga PNG transparan.</p></div><label class="cb" style="padding:0 16px 14px"><input type="checkbox" id="sWhite" checked> Hapus latar putih (untuk foto TTD di kertas)</label></div>
+    <h3 class="t">Rekening pembayaran</h3>
+    <div class="card">
+      <div class="two"><label class="fld"><span>Bank</span><input id="sBank" placeholder="Contoh: BCA"></label><label class="fld"><span>No. rekening</span><input id="sRek" inputmode="numeric" placeholder="1234567890"></label></div>
+      <label class="fld"><span>Atas nama</span><input id="sAn" placeholder="Contoh: PT. Maju Jaya Logistik"></label>
+      <div class="tg" style="border-top:1px solid var(--line)"><div><b>Isi otomatis di surat penawaran</b><small id="sRekQh">Untuk surat baru, tetap bisa diubah per surat</small></div><button class="sw on" id="sRekQ"></button></div>
+      <p class="hnt" style="padding:0 16px 12px">Otomatis dipakai di invoice baru, dan tetap bisa diganti per invoice. Kalau rekening sudah kamu tulis di Ketentuan, hapus dari sana supaya tidak dobel.</p>
+    </div>
+    <h3 class="t">Pengaturan khusus</h3>
+    <div class="card">
+      <button class="mn" data-go="kopQ"><span class="ic" data-i="sign"></span><span>Quotation<small style="display:block;font-size:12px;color:var(--mute);font-weight:400">Ketentuan, kalimat pembuka &amp; penutup</small></span><i>›</i></button>
+      <button class="mn" data-go="ivCfg"><span class="ic" data-i="inv"></span><span>Invoice<small style="display:block;font-size:12px;color:var(--mute);font-weight:400">Nomor berikutnya, termin, catatan</small></span><i>›</i></button>
+      <button class="mn" data-go="truk"><span class="ic" data-i="gear"></span><span>OPS &amp; tarif truk<small style="display:block;font-size:12px;color:var(--mute);font-weight:400">Harga solar, markup, jenis truk</small></span><i id="aSolar2">›</i></button>
+    </div>
   </div>
-  <div class="sumbar"><div><small id="sInfo">Tersimpan per akun</small><b style="font-size:16px">Pengaturan quotation</b></div><button class="btn m press" id="sSave">Simpan</button></div>
+  <div class="sumbar"><div><small id="sInfo">Tersimpan per akun</small><b style="font-size:16px">Pengaturan</b></div><button class="btn m press" id="sSave">Simpan</button></div>
+</section>
+
+<section class="sc" id="kopQ">
+  <div class="tb"><button class="ib l press" data-back><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><b>Pengaturan quotation</b><span style="width:40px"></span></div>
+  <div class="body pad" style="padding-bottom:110px">
+    <p class="hnt" style="padding:0 4px 4px">Perusahaan, kop, penanda tangan, rekening, dan pajak diatur di halaman Pengaturan utama.</p>
+    <h3 class="t">Isi surat</h3>
+    <div class="card">
+      <label class="fld"><span>Ketentuan default (satu baris per poin)</span><textarea id="sKet" rows="4" placeholder="Contoh: Harga berlaku 14 hari sejak tanggal surat."></textarea></label>
+      <p class="hnt" style="padding:0 16px 10px">Kalimat pajak ditambahkan otomatis. Rekening bank sekarang diatur di Pengaturan, bagian Rekening pembayaran.</p>
+      <label class="fld"><span>Kalimat pembuka</span><textarea id="sBuka" rows="3" placeholder="Kosongkan untuk kalimat bawaan"></textarea></label>
+      <label class="fld"><span>Kalimat penutup</span><textarea id="sTutup" rows="3" placeholder="Kosongkan untuk kalimat bawaan"></textarea></label>
+      <p class="hnt" style="padding:0 16px 12px">Tulis {perusahaan} untuk memasukkan nama perusahaan otomatis.</p>
+    </div>
+  </div>
+  <div class="sumbar"><div><small>Tersimpan per akun</small><b style="font-size:16px">Pengaturan quotation</b></div><button class="btn m press" id="sSaveQ">Simpan</button></div>
+</section>
+
+<section class="sc" id="ivCfg">
+  <div class="tb"><button class="ib l press" data-back><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><b>Pengaturan invoice</b><span style="width:40px"></span></div>
+  <div class="body pad" style="padding-bottom:110px">
+    <p class="hnt" style="padding:0 4px 4px">Rekening, penanda tangan, kop, dan pajak diambil dari halaman Pengaturan utama.</p>
+    <h3 class="t">Nomor &amp; termin</h3>
+    <div class="card">
+      <div class="two"><label class="fld"><span>Nomor berikutnya</span><input id="isSeq" inputmode="numeric"></label><label class="fld"><span>Contoh nomor</span><input id="isEx" disabled></label></div>
+      <label class="fld"><span>Termin default (hari)</span><input id="isTm" inputmode="numeric" maxlength="3" placeholder="Contoh: 14"></label>
+      <div class="ivtm"><span>Skema pembayaran default</span><div class="sat" id="isSk"></div></div>
+    </div>
+    <h3 class="t">Catatan</h3>
+    <div class="card"><label class="fld"><span>Catatan default (opsional)</span><textarea id="isCat" rows="3" placeholder="Contoh: Mohon cantumkan nomor invoice saat transfer."></textarea></label></div>
+  </div>
+  <div class="sumbar"><div><small>Tersimpan per akun</small><b style="font-size:16px">Pengaturan invoice</b></div><button class="btn m press" id="isSave">Simpan</button></div>
 </section>
 
 <!-- ACCOUNT -->
@@ -1209,8 +1261,8 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
   <div class="body pad">
     <div class="card prof" style="margin-top:4px"><img src="" data-logo alt=""><div><b id="aCo">Perusahaan Anda</b><small id="aEm"></small></div></div>
     <div class="card" style="margin-top:10px">
-      <button class="mn" data-go="kop"><span class="ic" data-i="sign"></span><span>Pengaturan quotation</span><i>›</i></button>
-      <button class="mn" data-go="truk"><span class="ic" data-i="gear"></span><span>Pengaturan OPS</span><i id="aSolar">Rp6.800</i></button>
+      <button class="mn" data-go="kop"><span class="ic" data-i="gear"></span><span>Pengaturan<small style="display:block;font-size:12px;color:var(--mute);font-weight:400">Perusahaan, surat, rekening, invoice, OPS</small></span><i>›</i></button>
+      <i id="aSolar" hidden></i>
       <button class="mn" data-go="tim" id="aTim" hidden><span class="ic" data-i="users"></span><span>Tim &amp; peran</span><i id="aTimN">›</i></button>
       <button class="mn" data-go="adm" id="aAdm" hidden><span class="ic" data-i="shield"></span><span>Panel admin</span><i>›</i></button>
       <button class="mn" data-go="lgn"><span class="ic" data-i="clock"></span><span id="aLgnT">Langganan &amp; harga</span><i id="aLgn"></i></button>
@@ -1706,6 +1758,8 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
 </script>
 <script>window.__LOGO='data:image/jpeg;base64,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';</script>
 <script>(function(){
+/* iPhone Safari mengabaikan user-scalable=no: cegah cubit-zoom secara manual */
+try{['gesturestart','gesturechange'].forEach(function(t){document.addEventListener(t,function(e){e.preventDefault()},{passive:false})})}catch(e){}
 /* ===== Ghostrip v2 — inti: util, data lama (format tetap), mesin hitung asli ===== */
 var $=function(i){return document.getElementById(i)},Q=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
 var clone=function(o){return JSON.parse(JSON.stringify(o))};
@@ -1867,7 +1921,7 @@ function putIVD(){ss(K_IVD,IVD);_hd()}
 
 /* ---------- sinkron riwayat: antarmuka untuk modul sinkron lama ---------- */
 var onHistSet=[];
-window.__hist={get:function(){return {calc:L,qt:QH,ar:AR,fak:INV,fakd:{seq:IVD.seq,bank:IVD.bank,rek:IVD.rek,an:IVD.an,termin:IVD.termin},qd:{seq:QD.seq,kota:QD.kota,ttd:QD.ttd,jab:QD.jab,ket:QD.ket}}},
+window.__hist={get:function(){return {calc:L,qt:QH,ar:AR,fak:INV,fakd:{seq:IVD.seq,bank:IVD.bank,rek:IVD.rek,an:IVD.an,termin:IVD.termin,cat:IVD.cat||'',sk:IVD.sk||''},qd:{seq:QD.seq,kota:QD.kota,ttd:QD.ttd,jab:QD.jab,ket:QD.ket}}},
   set:function(o){if(o.fresh)ST_FROM_STORE=false;L=o.calc||[];QH=o.qt||[];AR=o.ar||[];if(o.fak||o.fresh)INV=o.fak||[];if(o.fresh)IVD={seq:1,bank:'',rek:'',an:'',termin:14};if(o.fakd)Object.keys(o.fakd).forEach(function(k){if(o.fakd[k]!=null)IVD[k]=o.fakd[k]});if(o.qd)Object.keys(o.qd).forEach(function(k){if(o.qd[k]!=null)QD[k]=o.qd[k]});
     _hq=true;try{putL();putQH();putQD();putAR();putINV();putIVD()}finally{_hq=false}
     onHistSet.forEach(function(f){try{f()}catch(e){}})}};
@@ -1878,7 +1932,10 @@ var PDEF={buka:'Sehubungan dengan kebutuhan Bapak/Ibu, bersama ini {perusahaan} 
 var C=null,UID=null,CFG_BUSY=false;
 var TCOL0='#0e8f84',TCOL=TCOL0;function hexOk(h){return /^#[0-9a-f]{6}$/i.test(String(h||''))}
 var BRAND={co:'',abbr:''},HDR='',FTR='',TTD='',FD={x:0,w:210,h:9.65},FSRC=null;
-var PARA={buka:'',tutup:''},KONTAK={hp:'',email:''},DQ={rp:'1.1',rh:'2.5'};
+var PARA={buka:'',tutup:''},KONTAK={hp:'',email:''},DQ={rp:'1.1',rh:'2.5'},REK={bank:'',rek:'',an:'',q:false};
+/* rekening di surat penawaran: default tampil, kecuali Ketentuan lama sudah menyebut rekening (hindari dobel) */
+function rekQOn(c){return c.rekQ===true||(c.rekQ!==false&&!/rek/i.test(c.ket||''))}
+function rekLine(f){f=f||{};var b=String(f.qBank||'').trim(),r=String(f.qRek||'').trim(),a=String(f.qAn||'').trim();return r?'Pembayaran ditransfer ke rekening '+(b?b+' ':'')+r+(a?' a.n. '+a:'')+'.':''}
 var TRUK=[];           /* jenis truk dari pengaturan */
 var MS={},MU=[];       /* cek muatan: dimensi tersimpan & jenis unit buatan */
 function cfgCache(){return ls(K_CFG)}
@@ -1900,7 +1957,7 @@ function cfgApply(c,withAsumsi){
   if(!c.ftr){FTR='';FD={x:0,w:210,h:9.65};FSRC=null}
   else if(c.ftr!==FSRC){FSRC=c.ftr;FTR=c.ftr;trimFooter(c.ftr,function(u,dim){if(FSRC!==c.ftr)return;if(u){FTR=u;FD=dim}onCfg.forEach(function(f){try{f('ftr')}catch(e){}})})}
   if(c.kota)QD.kota=c.kota;if(c.nttd)QD.ttd=c.nttd;if(c.jab)QD.jab=c.jab;if(c.ket)QD.ket=c.ket;
-  PARA.buka=c.buka||'';PARA.tutup=c.tutup||'';KONTAK.hp=(c.hp||'').trim();KONTAK.email=(c.email||'').trim();
+  PARA.buka=c.buka||'';PARA.tutup=c.tutup||'';REK.bank=(c.bank||'').trim();REK.rek=(c.rek||'').trim();REK.an=(c.an||'').trim();REK.q=rekQOn(c);KONTAK.hp=(c.hp||'').trim();KONTAK.email=(c.email||'').trim();
   DQ.rp=(c.ppn!==''&&c.ppn!=null)?String(c.ppn):'1.1';DQ.rh=(c.pph!==''&&c.pph!=null)?String(c.pph):'2.5';
   var mu=c.muat||{};MS=mu.ms||{};MU=mu.mu||[];
   if(c.types&&c.types.length){var an=ST.types[ST.aktif]&&ST.types[ST.aktif].nama;
@@ -2010,7 +2067,7 @@ function qprev(D,pp,w,pvn){
   if(!pp||!w)return;
   var f=D.f,I=D.items,c=qcalc(D),tot=c.tot,sat=qsat(I),nf=function(n){return n.toLocaleString('id-ID')},v=function(k){return esc((f[k]||'').trim())};
   var QC=qcols(I),hasT=QC.hT,cw=QC.cw,ih=QC.ix.hg,iT=QC.ix.tt,cell=function(i,h,cls){return '<div'+(cls?' class="'+cls+'"':'')+' style="width:'+cw[i]+'mm">'+h+'</div>'};
-  var h=HDR?'<img class="hd" src="'+HDR+'" alt="">':'<img class="hd" src="'+KOPC.hdr+'" alt=""><div class="kdemo">CONTOH KOP · ganti di Pengaturan quotation</div>';
+  var h=HDR?'<img class="hd" src="'+HDR+'" alt="">':'<img class="hd" src="'+KOPC.hdr+'" alt=""><div class="kdemo">CONTOH KOP · ganti di Pengaturan</div>';
   h+='<div class="ti"><span>SURAT PENAWARAN</span></div><div style="text-align:center;font-size:9pt;line-height:4.4mm">No: '+v('qNo')+'</div>';
   h+='<div class="bd"><p style="text-align:right;margin-top:6mm">'+(v('qKota')?v('qKota')+', ':'')+esc(fl(f.qTgl))+'</p>';
   h+='<p style="margin-top:5mm">Kepada Yth.</p><p><b>'+(v('qKpd')||'-')+'</b></p>'+(v('qUp')?'<p>Up. <b>'+v('qUp')+'</b></p>':'')+'<p>Di tempat</p>';
@@ -2030,6 +2087,7 @@ function qprev(D,pp,w,pvn){
   h+=row('Total',nf(tot),true)+'</div>';
   h+='<p style="margin-top:3mm"><b>Terbilang: #'+esc(terb(tot))+'#'+(sat?' per '+esc(sat.toLowerCase()):'')+'</b></p>';
   h+='<p style="margin-top:3mm">Ketentuan:</p><ol>'+qket(D,c).map(function(t,i){return '<li><i>'+(i+1)+'.</i><span>'+esc(t.trim())+'</span></li>'}).join('')+'</ol>';
+  var rl=rekLine(f);if(rl)h+='<p style="margin-top:3mm">'+esc(rl)+'</p>';
   h+='<p class="j" style="margin-top:3mm">'+esc(ptext('tutup')).replace(/\n/g,'<br>')+'</p>';
   var sh=ktHp(D),se=ktEm(D);
   h+='<div style="display:flex;margin-top:3mm"><div style="width:91mm">Hormat kami<br>'+esc(BRAND.co||'PT. XXX')+'<div style="height:14mm;position:relative">'+(f.qTc!=='0'&&TTD?'<img src="'+TTD+'" alt="" style="position:absolute;left:-1mm;top:-1mm;width:50mm;height:17.6mm">':'')+'</div><span style="border-bottom:.3mm solid #000">'+v('qTtd')+'</span><br>'+v('qJab')+(sh?'<br><span class="kl">Hp/WA</span>: '+esc(KONTAK.hp):'')+(se?'<br><span class="kl">Email</span>: '+esc(KONTAK.email):'')+'</div><div>Menyetujui,<br>'+(v('qKpd')||'-')+'<div style="height:14mm"></div>( ........................................ )</div></div></div>';
@@ -2091,6 +2149,7 @@ function qpdf(D){
   para('Terbilang: #'+terb(tot)+'# '+(sat?' per '+sat.toLowerCase():''),X0,W,9.5,4.8,'bold');y+=3;
   var kt=qket(D,c);
   if(kt.length){para('Ketentuan:',X0,W,9.5,4.8);kt.forEach(function(t,i){f('normal',9.5);var KL=d.splitTextToSize(t.trim(),W-6);KL.forEach(function(l,j){ens(4.8);if(j===0)d.text((i+1)+'.',X0,y);jl(l,X0+6,y,W-6,j===KL.length-1);y+=4.8})});y+=3}
+  var rl=rekLine(F);if(rl){para(rl,X0,W,9.5,4.8);y+=3}
   ptext('tutup').split('\n').forEach(function(t){para(t,X0,W,9.5,4.8,null,true)});y+=3;
   var sh=ktHp(D),se=ktEm(D),SK=sh||se;ens(SK?46:36);f('normal',9.5);d.text('Hormat kami',X0,y);d.text('Menyetujui,',112,y);y+=4.8;d.text(BRAND.co||'PT. XXX',X0,y);d.text(v('qKpd')||'-',112,y);if(F.qTc!=='0'&&TTD)d.addImage(TTD,'PNG',X0-1,y+1,50,17.6);y+=19;
   var nm=v('qTtd');d.text(nm,X0,y);var nw=d.getTextWidth(nm);d.setDrawColor(0,0,0);d.setLineWidth(.3);d.line(X0,y+.9,X0+nw,y+.9);d.text('( ........................................ )',112,y);y+=4.8;d.text(v('qJab'),X0,y);if(sh){y+=4.8;d.text('Hp/WA',X0,y);d.text(': '+KONTAK.hp,X0+12,y)}if(se){y+=4.8;d.text('Email',X0,y);d.text(': '+KONTAK.email,X0+12,y)}
@@ -2192,7 +2251,7 @@ function trukValid(t){return !!(t&&String(t.nama||'').trim()&&+t.rasio>0&&+t.kec
 function trukOK(){return TRUK.some(trukValid)}
 function quoMissFor(c){var m=[];c=c||{};[['sCo','co','Nama perusahaan'],['sAbbr','abbr','Singkatan nomor surat'],['sKota','kota','Kota surat'],['sNttd','nttd','Penanda tangan'],['sJab','jab','Jabatan'],['pv_hdr','hdr','Kop atas'],['pv_ftr','ftr','Kop bawah']].forEach(function(x){if(!String(c[x[1]]||'').trim())m.push(x)});return m}
 function quoOK(){return !quoMissFor(C).length}
-function gate(kind){var t=kind==='truk';$('gTitle').textContent=t?'Isi jenis truk dulu':'Isi pengaturan quotation dulu';$('gMsg').textContent=t?'Isi minimal 1 jenis truk (nama, rasio solar, kecepatan, jam kerja, dan istirahat) di Pengaturan OPS supaya kalkulator bisa menghitung.':'Lengkapi nama perusahaan, singkatan nomor surat, kota, penanda tangan, jabatan, serta gambar kop surat atas dan bawah di Pengaturan quotation supaya surat penawaran bisa dibuat.';$('gGo').textContent=t?'Buka Pengaturan OPS':'Buka Pengaturan quotation';$('gGo').setAttribute('data-gk',kind);sheet('gate',true)}
+function gate(kind){var t=kind==='truk';$('gTitle').textContent=t?'Isi jenis truk dulu':'Isi pengaturan quotation dulu';$('gMsg').textContent=t?'Isi minimal 1 jenis truk (nama, rasio solar, kecepatan, jam kerja, dan istirahat) di Pengaturan, bagian OPS & tarif truk, supaya kalkulator bisa menghitung.':'Lengkapi nama perusahaan, singkatan nomor surat, kota, penanda tangan, jabatan, serta gambar kop surat atas dan bawah di Pengaturan supaya surat penawaran bisa dibuat.';$('gGo').textContent=t?'Buka OPS & tarif truk':'Buka Pengaturan';$('gGo').setAttribute('data-gk',kind);sheet('gate',true)}
 $('gGo').onclick=function(){var k=this.getAttribute('data-gk');sheet('gate',false);go(k==='truk'?'truk':'kop')};
 function twoTap(b,fn,lbl){if(b.classList.contains('r')){b.classList.remove('r');fn();return}var t0=b.textContent;b.classList.add('r');b.textContent=lbl||'Hapus?';setTimeout(function(){if(b.classList.contains('r')){b.classList.remove('r');b.textContent=t0}},3000)}
 function isAdmin(){var s=A()&&A().sess();return !!(s&&s.prof&&s.prof.is_admin)}
@@ -2209,7 +2268,7 @@ R.home=function(){TODAY=isoD(new Date());drawAlerts();
   drawSetup();$('hCo').textContent=profName();$('nDot').hidden=!(alertLines().length||subWarn())};
 function drawSetup(){var t=trukOK(),q=quoOK();if(!canCfg()){$('setupBox').innerHTML=(t&&q)?'':'<div class="setup"><b class="h">Menunggu admin perusahaan</b><span style="font-size:13px;color:var(--ink2)">Jenis truk dan pengaturan quotation belum lengkap. Minta admin perusahaan mengisinya.</span></div>';return}$('setupBox').innerHTML=(t&&q)?'':'<div class="setup"><b class="h">Lengkapi dulu untuk mulai</b>'
   +'<button class="sr2'+(t?' ok':'')+'" data-go="truk"><span>1. Jenis truk (minimal 1)</span><em>'+(t?'Selesai':'Wajib diisi')+'</em></button>'
-  +'<button class="sr2'+(q?' ok':'')+'" data-go="kop"><span>2. Pengaturan quotation</span><em>'+(q?'Selesai':'Wajib diisi')+'</em></button></div>'}
+  +'<button class="sr2'+(q?' ok':'')+'" data-go="kop"><span>2. Perusahaan, kop &amp; penanda tangan</span><em>'+(q?'Selesai':'Wajib diisi')+'</em></button></div>'}
 function subInfo(){var s=A()&&A().sess(),p=(s&&s.prof)||{};if(p.is_admin)return {k:'adm',t:'Admin'};if(!p.berlaku_sampai)return {k:'ok',t:'Aktif',n:null};var n=dleft(p.berlaku_sampai);return {k:n<=7?'wr':'ok',t:n<0?'Habis':'Aktif · '+n+' hari',n:n,d:p.berlaku_sampai}}
 function subWarn(){var s=subInfo();return s.n!=null&&s.n<=7}
 function drawNotif(){drawAlerts();var s=subInfo(),h='';
@@ -2228,7 +2287,7 @@ function fillCalc(){var T=CS.types;if(!T[CS.aktif])CS.aktif=0;if(CS.aktifM>=T.le
   $('cCust').value=CS.customer||'';$('cMuat').value=CS.muat||'';$('cBongkar').value=CS.bongkar||'';$('cLink').value=CS.linkmaps||'';$('cJarak').value=CS.jarak?nf2(CS.jarak,2):'';
   $('cTol').value=CS.tol?dot(CS.tol):'';$('cKap').value=CS.kapal?dot(CS.kapal):'';$('cEsc').value=CS.escort?dot(CS.escort):'';$('cLain').value=CS.lain?dot(CS.lain):'';
   $('cJarM').value=CS.jarakM?nf2(CS.jarakM,2):'';$('cMk').value=CS.markup!=null?cm(CS.markup):'';$('cUnitV').textContent=CS.unit>0?CS.unit:1;
-  $('cJenis').innerHTML=T.map(function(t,i){return '<button class="'+(i===CS.aktif?'on':'')+'" data-j="'+i+'">'+esc(t.nama||'Truk '+(i+1))+'</button>'}).join('')||'<span class="hnt">Belum ada jenis truk. Isi di Pengaturan OPS.</span>';
+  $('cJenis').innerHTML=T.map(function(t,i){return '<button class="'+(i===CS.aktif?'on':'')+'" data-j="'+i+'">'+esc(t.nama||'Truk '+(i+1))+'</button>'}).join('')||'<span class="hnt">Belum ada jenis truk. Isi di Pengaturan → OPS &amp; tarif truk.</span>';
   $('cJM').innerHTML='<button class="'+(CS.aktifM<0?'on':'')+'" data-jm="-1">Sama dengan truk utama</button>'+T.map(function(t,i){return '<button class="'+(i===CS.aktifM?'on':'')+'" data-jm="'+i+'">'+esc(t.nama)+'</button>'}).join('');
   if(CS.pembM==null)CS.pembM=0;$('cPemb').value=CS.pembM?nf2(CS.pembM,2):'';
   $('cMob').open=CS.jarakM>0;upd(true)}
@@ -2300,7 +2359,7 @@ function drawPick(){$('pickList').innerHTML=sortedL().map(function(x){return his
 /* ---------- quotation (form) ---------- */
 var QDOC=null,EDITQ=null,VIEW=null,NOMAN=false,KETS=[],QSW={};
 function blankDoc(){var hpOn=!(C&&C.hpOn===false),emOn=!(C&&C.emOn===false);
-  return {f:{qTc:'1',qKt:'1',qHp:hpOn?'1':'0',qEm:emOn?'1':'0',qNo:'',qKota:(C&&C.kota)||QD.kota||'',qTgl:TODAY,qKpd:'',qUp:'',qPer:'',qKet:(C&&C.ket!=null&&C.ket!=='')?C.ket:(QD.ket||''),qBrl:'',qTtd:(C&&C.nttd)||QD.ttd||'',qJab:(C&&C.jab)||QD.jab||'',qPjk:'0',qRP:DQ.rp,qRH:DQ.rh,qPhM:'tambah'},items:[qnew()]}}
+  return {f:{qTc:'1',qKt:'1',qHp:hpOn?'1':'0',qEm:emOn?'1':'0',qNo:'',qKota:(C&&C.kota)||QD.kota||'',qTgl:TODAY,qKpd:'',qUp:'',qPer:'',qKet:(C&&C.ket)||'',qBrl:'',qTtd:(C&&C.nttd)||QD.ttd||'',qJab:(C&&C.jab)||QD.jab||'',qPjk:'0',qRP:DQ.rp,qRH:DQ.rh,qPhM:'tambah',qBank:REK.q&&REK.rek?REK.bank:'',qRek:REK.q?REK.rek:'',qAn:REK.q&&REK.rek?REK.an:''},items:[qnew()]}}
 function quoNew(){TODAY=isoD(new Date());EDITQ=null;NOMAN=false;QDOC=blankDoc();QDOC.f.qNo=autoNo('');setQForm()}
 function itemFromCalc(st){var r=hitung(st),t=r.t,rt=(st.muat||st.bongkar)?(st.muat||'?')+' - '+(st.bongkar||'?'):'';
   return {ur:'Sewa '+t.nama+' + Driver + Uang Jalan',dt:rt?'Rute: '+rt:'',un:st.unit>0?st.unit:1,sat:'Trip',hg:Math.round(r.mkU),tr:''}}
@@ -2309,7 +2368,7 @@ function addRow(ni,kpd,jenis){var f0=QDOC.items[0];if(!QDOC.f.qKpd&&kpd)QDOC.f.q
 function quoFromCalc(st){quoNew();var ni=itemFromCalc(st);QDOC.f.qKpd=st.customer||'';QDOC.f.qPer='Penawaran Jasa Sewa '+((st.types[st.aktif]||{}).nama||'')+' beserta Driver dan Uang Jalan';QDOC.items=[ni];QDOC.f.qNo=autoNo(QDOC.f.qKpd);setQForm()}
 function addFromHist(x){var hgv=parseInt(String(x.mk).replace(/\D/g,''),10)||0,rt=(x.muat||x.bongkar)?(x.muat||'?')+' - '+(x.bongkar||'?'):'';
   qFromForm();addRow({ur:'Sewa '+x.jenis+' + Driver + Uang Jalan',dt:rt?'Rute: '+rt:'',un:(x.snap&&x.snap.unit>0)?x.snap.unit:1,sat:'Trip',hg:hgv,tr:''},x.customer||'',x.jenis)}
-var QIN=[['qNo','qNo'],['qKota','qKota'],['qTgl','qTgl'],['qKpd','qKpd'],['qUp','qUp'],['qHal','qPer'],['qNttd','qTtd'],['qJab','qJab'],['qRP','qRP'],['qRH','qRH']];
+var QIN=[['qNo','qNo'],['qKota','qKota'],['qTgl','qTgl'],['qKpd','qKpd'],['qUp','qUp'],['qHal','qPer'],['qNttd','qTtd'],['qJab','qJab'],['qRP','qRP'],['qRH','qRH'],['qBank','qBank'],['qRek','qRek'],['qAn','qAn']];
 function setQForm(){var f=QDOC.f;QIN.forEach(function(p){$(p[0]).value=(p[1]==='qRP'||p[1]==='qRH')?cm(f[p[1]]):(f[p[1]]||'')});
   KETS=String(f.qKet||'').split('\n').filter(function(t){return t.trim()});drawKets();
   var m=+f.qPjk||0;QSW={ppn:!!(m&1),pph:!!(m&2),pot:f.qPhM==='potong',ttd:f.qTc!=='0',hp:f.qKt!=='0'&&f.qHp!=='0',em:f.qKt!=='0'&&f.qEm!=='0'};
@@ -2349,7 +2408,7 @@ R.quoSum=function(){if(!QDOC)return;qFromForm();var c=qcalc(QDOC),Ln=function(a,
   var sat=qsat(QDOC.items);$('qTot').textContent=rp(c.tot);$('qTerb').textContent='Terbilang: '+terb(c.tot)+(sat?' per '+sat.toLowerCase():'')};
 function fitKets(){Q('#qKets textarea').forEach(function(t){t.style.height='auto';if(t.scrollHeight)t.style.height=t.scrollHeight+'px'})}
 function drawKets(){setTimeout(fitKets,60);$('qKets').innerHTML=KETS.map(function(t,i){return '<div class="kr"><span class="kn">'+(i+1)+'</span><textarea class="inp kt" rows="2" data-ki="'+i+'" placeholder="Tulis ketentuan">'+esc(t)+'</textarea><button class="kx press" data-kdel="'+i+'" aria-label="Hapus">×</button></div>'}).join('')||'<p class="hnt" style="margin:4px 0 8px">Belum ada ketentuan.</p>'}
-$('qKets').addEventListener('input',function(e){var i=e.target.getAttribute('data-ki');if(i!==null){KETS[+i]=e.target.value;e.target.style.height='auto';e.target.style.height=e.target.scrollHeight+'px';qFromForm();QD.ket=QDOC.f.qKet;putQD()}});
+$('qKets').addEventListener('input',function(e){var i=e.target.getAttribute('data-ki');if(i!==null){KETS[+i]=e.target.value;e.target.style.height='auto';e.target.style.height=e.target.scrollHeight+'px';qFromForm()}});
 $('qKets').addEventListener('click',function(e){var d=e.target.closest('[data-kdel]');if(!d)return;KETS.splice(+d.getAttribute('data-kdel'),1);drawKets();qFromForm()});
 $('qKAdd').onclick=function(){KETS.push('');drawKets();var ins=$('qKets').querySelectorAll('textarea');ins[ins.length-1].focus()};
 function saveQ(silent){qFromForm();var f=QDOC.f,kpd=(f.qKpd||'').trim();
@@ -2372,7 +2431,7 @@ R.surat=function(){var D=curDoc();if(!D)return;$('sEdit').style.visibility=VIEW?
   setTimeout(function(){qprev(D,$('pp'),$('pvw'),$('pvn'))},30)};
 window.addEventListener('resize',function(){if(stack[stack.length-1]==='surat')R.surat()});
 function pdfOut(mode){var D=curDoc(),rec=VIEW;if(!rec){rec=saveQ(true);if(!rec){toast('Isi nama perusahaan tujuan dulu');return}VIEW=null}
-  if(!HDR||!FTR){toast('Kop masih contoh. Ganti dulu dengan kop perusahaanmu di Pengaturan quotation',3600);return}
+  if(!HDR||!FTR){toast('Kop masih contoh. Ganti dulu dengan kop perusahaanmu di Pengaturan',3600);return}
   var d;try{d=qpdf(D)}catch(er){toast('Gagal membuat PDF');return}qdownload(d,pdfName(D),mode)}
 $('sSaveDev').onclick=function(){pdfOut('save')};
 $('sShare').onclick=function(){pdfOut('share')};
@@ -2403,12 +2462,12 @@ $('tSave').onclick=function(){var b=this;if(CFG_BUSY)return;
   if(!twValid()){toast('Lengkapi minimal 1 jenis truk (yang bertanda *)');return}
   var types=TW.map(function(t){var o={nama:String(t.nama).trim()};TF_NUM.forEach(function(k){o[k]=+t[k]||0});return o});
   CFG_BUSY=true;b.textContent='Menyimpan...';
-  cfgSave({types:types,harga:+TW_H||0,markup:+TW_M||0}).then(function(ok){if(ok)toast('Pengaturan OPS tersimpan');$('tInfo').textContent=ok?'Tersimpan per akun':'Belum terkirim, dikirim saat online';CFG_BUSY=false;b.textContent='Simpan';calcNew();setTimeout(uiBack,300)})};
+  cfgSave({types:types,harga:+TW_H||0,markup:+TW_M||0}).then(function(ok){if(ok)toast('OPS & tarif truk tersimpan');$('tInfo').textContent=ok?'Tersimpan per akun':'Belum terkirim, dikirim saat online';CFG_BUSY=false;b.textContent='Simpan';calcNew();setTimeout(uiBack,300)})};
 
 /* ---------- Pengaturan quotation ---------- */
 var KW=null;
 var KOP_R=210/61.2,TTD_R=50/17.6;
-var SF=[['sCo','co'],['sAbbr','abbr'],['sKota','kota'],['sNttd','nttd'],['sJab','jab'],['sHp','hp'],['sEmail','email'],['sKet','ket'],['sBuka','buka'],['sTutup','tutup'],['sPpn','ppn'],['sPph','pph']];
+var SF=[['sCo','co'],['sAbbr','abbr'],['sKota','kota'],['sNttd','nttd'],['sJab','jab'],['sHp','hp'],['sEmail','email'],['sKet','ket'],['sBuka','buka'],['sTutup','tutup'],['sPpn','ppn'],['sPph','pph'],['sBank','bank'],['sRek','rek'],['sAn','an']];
 function readImg(file){return new Promise(function(ok,no){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){ok(im)};im.onerror=function(){no(new Error('Gambar tidak bisa dibaca'))};im.src=r.result};r.onerror=no;r.readAsDataURL(file)})}
 function fit(im,W,ratio,bg,align){var H=Math.round(W/ratio),c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');
   if(bg){x.fillStyle=bg;x.fillRect(0,0,W,H)}
@@ -2420,11 +2479,12 @@ function noWhite(c){var x=c.getContext('2d'),d=x.getImageData(0,0,c.width,c.heig
 function pvImgs(){['hdr','ftr','ttd'].forEach(function(k){var v=KW[k];$('pv_'+k).innerHTML=v?'<img src="'+v+'" alt="">':(k==='ttd'?'<span>Belum ada gambar (opsional)</span>':'<div class="pdemo"><img src="'+KOPC[k]+'" alt=""><i>CONTOH</i></div><span class="pdn">Ini kop contoh. Wajib diganti dengan kop perusahaanmu sebelum membuat surat.</span>');$('pd_'+k).hidden=!v;
     if(k!=='ttd'){var pb=document.querySelector('[data-pimg="'+k+'"]');if(pb)pb.textContent=v?'Ganti gambar':'Ganti kop contoh'}});markKop()}
 function markKop(){var m=quoMissFor(KW);['sCo','sAbbr','sKota','sNttd','sJab','pv_hdr','pv_ftr'].forEach(function(id){var miss=m.some(function(x){return x[0]===id});$(id).closest('.fld').classList.toggle('miss',miss)});var w=$('kopWarn');if(m.length){w.style.display='';w.innerHTML='Tanda * wajib diisi sebelum membuat quotation: '+m.map(function(x){return x[2]}).join(', ')+'.'}else w.style.display='none'}
-R.kop=function(){var base=C||legacyCfg()||{};KW={};['co','abbr','kota','nttd','jab','hp','email','ket','buka','tutup','ppn','pph','hdr','ftr','ttd'].forEach(function(k){KW[k]=base[k]==null?'':base[k]});KW.tcol=hexOk(base.tcol)?base.tcol.toLowerCase():TCOL0;
+R.kop=function(){var base=C||legacyCfg()||{};KW={};['co','abbr','kota','nttd','jab','hp','email','ket','buka','tutup','ppn','pph','hdr','ftr','ttd','bank','rek','an'].forEach(function(k){KW[k]=base[k]==null?'':base[k]});
+  KW.rekQ=rekQOn(base);KW.tcol=hexOk(base.tcol)?base.tcol.toLowerCase():TCOL0;
   if(!String(KW.buka||'').trim())KW.buka=PDEF.buka;if(!String(KW.tutup||'').trim())KW.tutup=PDEF.tutup;if(KW.ppn==='')KW.ppn='1.1';if(KW.pph==='')KW.pph='2.5';
   KW.hpOn=base.hpOn!==false;KW.emOn=base.emOn!==false;
   SF.forEach(function(f){$(f[0]).value=(f[1]==='ppn'||f[1]==='pph')?cm(KW[f[1]]):KW[f[1]]});
-  $('sHpOn').classList.toggle('on',KW.hpOn);$('sEmOn').classList.toggle('on',KW.emOn);pvImgs();drawTcol(true);
+  $('sHpOn').classList.toggle('on',KW.hpOn);$('sEmOn').classList.toggle('on',KW.emOn);$('sRekQ').classList.toggle('on',KW.rekQ);pvImgs();drawTcol(true);
   $('sInfo').textContent=cfgDirty()?'Belum terkirim, dikirim saat online':'Tersimpan per akun'};
 SF.forEach(function(f){$(f[0]).addEventListener('input',function(){KW[f[1]]=(f[1]==='ppn'||f[1]==='pph')?String(pr(this.value)):this.value;markKop()})});
 var TCS=[['#0e8f84','Teal (bawaan)'],['#0b1f2a','Navy'],['#1f5fa8','Biru'],['#2e7d32','Hijau'],['#8e1b1b','Merah marun'],['#c66a1c','Oranye'],['#b8892e','Emas'],['#4a5560','Abu'],['#111111','Hitam']];
@@ -2433,6 +2493,14 @@ function drawTcol(setInput){var c=KW.tcol;$('sTcs').innerHTML=TCS.map(function(x
 $('sTcs').addEventListener('click',function(e){var b=e.target.closest('[data-tc]');if(!b)return;KW.tcol=b.getAttribute('data-tc');drawTcol(true)});
 $('sTc').addEventListener('input',function(){var v=this.value.trim();if(v&&v[0]!=='#')v='#'+v;if(/^#[0-9a-f]{3}$/i.test(v))v='#'+v[1]+v[1]+v[2]+v[2]+v[3]+v[3];if(hexOk(v)){KW.tcol=v.toLowerCase();drawTcol(false)}else this.classList.add('bad')});
 $('sTcP').addEventListener('input',function(){KW.tcol=this.value.toLowerCase();drawTcol(true)});
+$('sRekQ').onclick=function(){KW.rekQ=!KW.rekQ;this.classList.toggle('on',KW.rekQ);markKop()};
+$('sSaveQ').onclick=function(){$('sSave').click()};
+/* ---------- Pengaturan invoice ---------- */
+function isEx(){var n=parseInt($('isSeq').value,10);$('isEx').value=ivNo(n>0?n:1)}
+R.ivCfg=function(){$('isSeq').value=IVD.seq||1;$('isTm').value=IVD.termin==null||IVD.termin===''?14:+IVD.termin;ISK=IVD.sk||'';$('isSk').innerHTML=skBtns(ISK);$('isCat').value=IVD.cat||'';isEx()};
+$('isSeq').addEventListener('input',isEx);var ISK='';
+$('isSk').addEventListener('click',function(e){var b=e.target.closest('[data-sk]');if(!b)return;var k=b.getAttribute('data-sk');ISK=ISK===k?'':k;this.innerHTML=skBtns(ISK)});
+$('isSave').onclick=function(){var n=parseInt($('isSeq').value,10);if(!(n>0)){toast('Nomor berikutnya minimal 1');return}IVD.seq=n;var tm=parseInt($('isTm').value,10);if(!(tm>=0)){toast('Isi termin dalam hari, misalnya 14');return}IVD.termin=tm;IVD.sk=ISK;IVD.cat=$('isCat').value.trim();putIVD();toast('Pengaturan invoice tersimpan');uiBack()};
 $('sHpOn').onclick=function(){KW.hpOn=!KW.hpOn;this.classList.toggle('on',KW.hpOn)};$('sEmOn').onclick=function(){KW.emOn=!KW.emOn;this.classList.toggle('on',KW.emOn)};
 document.addEventListener('click',function(e){var b=e.target.closest('[data-pimg]');if(b){$('pf_'+b.getAttribute('data-pimg')).click();return}var d=e.target.closest('[data-pdel]');if(d&&KW){KW[d.getAttribute('data-pdel')]='';pvImgs()}});
 [['hdr',1600,KOP_R,'#ffffff','top','image/jpeg'],['ttd',900,TTD_R,null,'left','image/png']].forEach(function(a){var k=a[0];
@@ -2445,7 +2513,7 @@ $('sSave').onclick=function(){var b=this;if(CFG_BUSY)return;markKop();var m=quoM
   var p={};Object.keys(KW).forEach(function(k){p[k]=KW[k]});p.co=String(p.co||'').trim();p.abbr=String(p.abbr||'').trim().toUpperCase();
   if(String(p.buka).trim()===PDEF.buka)p.buka='';if(String(p.tutup).trim()===PDEF.tutup)p.tutup='';
   CFG_BUSY=true;b.textContent='Menyimpan...';
-  cfgSave(p).then(function(ok){if(ok)toast('Pengaturan quotation tersimpan');CFG_BUSY=false;b.textContent='Simpan';setTimeout(uiBack,300)})};
+  cfgSave(p).then(function(ok){if(ok)toast('Pengaturan tersimpan');CFG_BUSY=false;b.textContent='Simpan';setTimeout(uiBack,300)})};
 
 /* ---------- akun & langganan ---------- */
 if(PLAY){$('aLgnT').textContent='Status akun';document.querySelector('#lgn .tb b').textContent='Status akun'}
@@ -2503,7 +2571,7 @@ function phHtml(k,src,has){var nm=(DOCS.filter(function(x){return x[0]===k})[0]|
 R.armadaE=function(){var isNew=AEI==null;$('aeTitle').textContent=isNew?'Truk baru':'Edit truk';$('aeDel').classList.remove('r');
   $('aePlat').value=AE.plat;$('aeTahun').value=AE.tahun||'';
   var names=TRUK.map(function(t){return t.nama});if(AE.jenis&&names.indexOf(AE.jenis)<0)names.push(AE.jenis);
-  $('aeJenis').innerHTML=names.map(function(n){return '<option'+(n===AE.jenis?' selected':'')+'>'+esc(n)+'</option>'}).join('')||'<option value="">Isi jenis truk di Pengaturan OPS</option>';
+  $('aeJenis').innerHTML=names.map(function(n){return '<option'+(n===AE.jenis?' selected':'')+'>'+esc(n)+'</option>'}).join('')||'<option value="">Isi jenis truk di Pengaturan → OPS</option>';
   $('aeDocs').innerHTML=DOCS.map(function(x){var d=docOf(AE,x[0]);return '<section class="card dcard" data-doc="'+x[0]+'"><div class="dh"><b>'+x[1]+'</b><span data-dst="'+x[0]+'"></span></div>'
     +'<div class="dphoto" data-ph="'+x[0]+'">'+phHtml(x[0],'',!!d.foto)+'</div>'
     +'<div class="dd"><div><label>Berlaku dari</label><input type="date" data-dt="'+x[0]+'" data-k="dari" value="'+(d.dari||'')+'"></div><div><label>Sampai</label><input type="date" data-dt="'+x[0]+'" data-k="sampai" value="'+(d.sampai||'')+'"></div></div></section>'}).join('');
@@ -2602,7 +2670,7 @@ $('anGo').onclick=function(){var b=this,co=$('anCo').value.trim(),em=$('anEm').v
   var exp=ANPK==='0'?null:ANPK==='c'?$('anTgl').value:ANPK==='7'?addDay(TODAY,7):addM(TODAY,+ANPK);
   b.disabled=true;b.textContent='Membuat akun…';
   adCall('create',{email:em,password:pw,perusahaan:co,nama:$('anNm').value.trim(),berlaku_sampai:exp}).then(function(){
-    $('anMsg').textContent='Halo, berikut akun Ghostrip untuk '+co+':\n\nEmail: '+em+'\nPassword: '+pw+'\nBerlaku: '+(exp?'sampai '+fd(exp):'tanpa batas waktu')+'\n\nPasang aplikasinya dari https://ghostrip.id, masuk dengan akun di atas, lalu isi Pengaturan OPS (minimal 1 jenis truk) dan Pengaturan quotation (kop atas, kop bawah, penanda tangan).';
+    $('anMsg').textContent='Halo, berikut akun Ghostrip untuk '+co+':\n\nEmail: '+em+'\nPassword: '+pw+'\nBerlaku: '+(exp?'sampai '+fd(exp):'tanpa batas waktu')+'\n\nPasang aplikasinya dari https://ghostrip.id, masuk dengan akun di atas, lalu buka Pengaturan: isi data perusahaan, kop atas, kop bawah, dan penanda tangan, lalu OPS & tarif truk (minimal 1 jenis truk).';
     $('anForm').style.display='none';$('anDone').style.display='';toast('Akun '+co+' dibuat');CL=[];adLoad()
   }).catch(function(er){e.textContent=er.message}).then(function(){b.disabled=false;b.textContent='Buat akun'})};
 $('anCopy').onclick=function(){copyText($('anMsg').textContent,'Pesan disalin')};
@@ -2856,7 +2924,10 @@ $('tnWa').onclick=function(){openUrl('https://wa.me/?text='+encodeURIComponent($
 
 /* ===== invoice: daftar, isi, pembayaran, pratinjau A4, PDF ===== */
 /* rec = {id,t,no,tgl,due,kpd,up,ref,alm,qid,items:[{ur,dt,qty,sat,hg}],pjk,rp,rh,pot,bank,rek,an,cat,ttd,jab,tc,pays:[{id,tgl,jml,cat}],sent} */
-var IV=null,IVNOMAN=false,IVF='semua',IVSW={},IVTM=[7,14,30,45];
+var IV=null,IVNOMAN=false,IVF='semua',IVSW={},IVSK=[['cash','Cash'],['70:30','70:30'],['50:50','50:50']];
+/* skema pembayaran: kalimat untuk surat & WA */
+function ivSkLine(v,tot){var k=v.sk||'';if(k==='cash')return 'Pembayaran: cash (lunas sekaligus).';var m=/^(\d+):(\d+)$/.exec(k);if(!m)return '';var a=+m[1],b=+m[2],n1=Math.round(tot*a/(a+b)),n2=tot-n1;return 'Pembayaran 2 tahap: '+a+'% sebesar '+rp(n1)+' dan '+b+'% sebesar '+rp(n2)+'.'}
+function skBtns(cur){return IVSK.map(function(x){return '<button class="'+(cur===x[0]?'on':'')+'" data-sk="'+x[0]+'">'+x[1]+'</button>'}).join('')}
 function ivItem(){return {ur:'',dt:'',qty:'1',sat:'Trip',hg:''}}
 function ivLine(it){return Math.round(pr(it.qty)*qnum(it.hg))}
 function ivcalc(v){var base=(v.items||[]).reduce(function(a,it){return a+ivLine(it)},0),m=+v.pjk||0,rp_=parseFloat(v.rp)||0,rh=parseFloat(v.rh)||0,pot=!!v.pot;
@@ -2870,9 +2941,9 @@ var IVSL={draf:'Draf',kirim:'Terkirim',sebagian:'Dibayar sebagian',lunas:'Lunas'
 function ivPill(v){var s=ivst(v);return '<i class="ivs '+(s.telat?'telat':s.k)+'">'+(s.telat?'Lewat jatuh tempo':IVSL[s.k])+'</i>'}
 function ivNo(seq){var n=new Date();return pad(seq==null?IVD.seq:seq)+'/INV/'+(BRAND.abbr||'XXX')+'/'+ROM[n.getMonth()]+'/'+n.getFullYear()}
 function findIV(id){return INV.filter(function(x){return String(x.id)===String(id)})[0]}
-function ivBlank(){TODAY=isoD(new Date());var tm=+IVD.termin||14;
+function ivBlank(){TODAY=isoD(new Date());var tm=IVD.termin==null||IVD.termin===''?14:+IVD.termin;
   return {no:ivNo(),tgl:TODAY,due:addDay(TODAY,tm),tm:tm,kpd:'',up:'',ref:'',alm:'',qid:null,items:[ivItem()],pjk:'0',rp:DQ.rp,rh:DQ.rh,pot:false,
-    bank:IVD.bank||'',rek:IVD.rek||'',an:IVD.an||BRAND.co||'',cat:'',ttd:(C&&C.nttd)||QD.ttd||'',jab:(C&&C.jab)||QD.jab||'',tc:true,pays:[],sent:false}}
+    bank:REK.rek?REK.bank:'',rek:REK.rek||'',an:REK.rek?REK.an:'',cat:IVD.cat||'',sk:IVD.sk||'',ttd:(C&&C.nttd)||QD.ttd||'',jab:(C&&C.jab)||QD.jab||'',tc:true,pays:[],sent:false}}
 /* penawaran -> baris invoice */
 function ivFromQItem(it){var un=qnum(it.un)>0?qnum(it.un):1,tr=qnum(it.tr)>0?qnum(it.tr):1,dt=String(it.dt||'');
   if(qpk(it))return {ur:it.ur||'',dt:dt,qty:'1',sat:'Paket',hg:String(Math.round(qnum(it.hg)))};
@@ -2924,7 +2995,8 @@ function ivSet(){var v=IV;IEIN.forEach(function(p){var x=v[p[1]];$(p[0]).value=(
 function ivForm(){if(!IV)return;IEIN.forEach(function(p){var x=$(p[0]).value;IV[p[1]]=(p[1]==='rp'||p[1]==='rh')?String(pr(x)):x});
   IV.pjk=String((IVSW.ppn?1:0)+(IVSW.pph?2:0));IV.pot=!!IVSW.pot;IV.tc=!!IVSW.tc;$('iePotRow').style.display=IVSW.pph?'':'none'}
 function ivTm(){var d=IV.tgl&&IV.due?Math.round((new Date(IV.due+'T00:00:00Z')-new Date(IV.tgl+'T00:00:00Z'))/864e5):null;
-  $('ieTm').innerHTML=IVTM.map(function(n){return '<button class="'+(d===n?'on':'')+'" data-tm="'+n+'">'+n+' hari</button>'}).join('')}
+  var inp=$('ieTmN');if(document.activeElement!==inp)inp.value=d==null||d<0?'':d;$('ieSk').innerHTML=skBtns(IV.sk||'')}
+$('ieTmN').addEventListener('input',function(){if(!IV)return;var n=parseInt(this.value,10);if(!(n>=0))return;ivForm();IV.tm=n;IV.due=addDay(IV.tgl||TODAY,n);$('ieDue').value=IV.due;ivSumUI()});
 function ivState(){var s=IV.id?ivst(IV):null,e=$('ieSt');
   if(!s){e.innerHTML='';return}var c=s.c;
   e.innerHTML=ivPill(IV)+(s.k==='lunas'?'<span>Lunas, total '+rp(c.tot)+'</span>':'<span>Sisa '+rp(c.sisa)+(IV.due?' · jatuh tempo '+esc(fd(IV.due)):'')+'</span>')}
@@ -2945,7 +3017,7 @@ function ivPays(){var box=$('iePayBox');if(!IV.id){box.innerHTML='';return}var c
     +(staf?'<p class="hnt" style="margin:6px 0 0">Hanya pemilik dan admin yang mencatat pembayaran.</p>':c.sisa>0?'<button class="btn g press" id="iePay" style="height:44px;font-size:14px;margin-top:8px">+ Catat pembayaran</button>':'')+'</div>'}
 IEIN.forEach(function(p){$(p[0]).addEventListener('input',function(){if(p[1]==='no')IVNOMAN=true;ivForm();if(p[1]==='tgl'||p[1]==='due')ivTm();if(p[1]==='tgl'&&IV.tm&&IV.tgl){IV.due=addDay(IV.tgl,+IV.tm);$('ieDue').value=IV.due;ivTm()}if(p[1]==='due')IV.tm=null;ivSumUI()})});
 $('invE').addEventListener('click',function(e){var t=e.target.closest('[data-iv]');if(t){t.classList.toggle('on');IVSW[t.getAttribute('data-iv')]=t.classList.contains('on');ivSumUI();return}
-  var tm=e.target.closest('[data-tm]');if(tm){ivForm();var n=+tm.getAttribute('data-tm');IV.tm=n;IV.due=addDay(IV.tgl||TODAY,n);$('ieDue').value=IV.due;ivTm();return}
+  var sk=e.target.closest('#ieSk [data-sk]');if(sk){var k=sk.getAttribute('data-sk');IV.sk=IV.sk===k?'':k;ivTm();return}
   var pd=e.target.closest('[data-pdel]');if(pd){twoTap(pd,function(){var id=pd.getAttribute('data-pdel');IV.pays=IV.pays.filter(function(p){return String(p.id)!==String(id)});ivCommit(true);ivPays();ivSumUI();ivState();toast('Pembayaran dihapus')});return}
   if(e.target.closest('#iePay')){ivPayOpen()}});
 $('ieItems').addEventListener('input',function(e){var t=e.target,f=t.getAttribute('data-f');if(!f)return;var card=t.closest('[data-k]'),it=IV.items[+card.getAttribute('data-k')];
@@ -2961,7 +3033,7 @@ function ivCommit(silent){var rec=IV.id&&findIV(IV.id),data=clone(IV);data.t=Dat
   data.items=data.items.filter(function(it){return it.ur||it.dt||ivLine(it)>0});if(!data.items.length)data.items=[ivItem()];
   if(rec)Object.keys(data).forEach(function(k){rec[k]=data[k]});
   else{data.id=Date.now();INV.push(data);IV.id=data.id;if(!IVNOMAN)IVD.seq++;IVNOMAN=true}
-  if(data.bank||data.rek||data.an){IVD.bank=data.bank;IVD.rek=data.rek;IVD.an=data.an}if(data.tm)IVD.termin=data.tm;putIVD();
+  if(data.bank||data.rek||data.an){IVD.bank=data.bank;IVD.rek=data.rek;IVD.an=data.an}putIVD();
   putINV();if(!silent)toast('Invoice disimpan');return findIV(IV.id)}
 $('ieSave').onclick=function(){var m=ivValid();if(m){toast(m);return}var n=!IV.id;ivCommit(false);if(n)ivSet()};
 $('ieCek').onclick=function(){var m=ivValid();if(m){toast(m);return}ivCommit(true);go('invP')};
@@ -2990,7 +3062,7 @@ var IVCW=[10,69,25,32,33];
 function ivSatTxt(it){return pr(it.qty).toLocaleString('id-ID')+' '+(it.sat||'')}
 function ivPrev(v,pp,w,pvn){var c=ivcalc(v),s=ivst(v),nf=function(n){return n.toLocaleString('id-ID')},e=function(k){return esc(String(v[k]||'').trim())};
   var cell=function(i,h,cls,st){return '<div'+(cls?' class="'+cls+'"':'')+' style="width:'+IVCW[i]+'mm'+(st||'')+'">'+h+'</div>'};
-  var h=HDR?'<img class="hd" src="'+HDR+'" alt="">':'<img class="hd" src="'+KOPC.hdr+'" alt=""><div class="kdemo">CONTOH KOP · ganti di Pengaturan quotation</div>';
+  var h=HDR?'<img class="hd" src="'+HDR+'" alt="">':'<img class="hd" src="'+KOPC.hdr+'" alt=""><div class="kdemo">CONTOH KOP · ganti di Pengaturan</div>';
   h+='<div class="ti" style="font-size:14pt;line-height:6mm;letter-spacing:.6mm"><span>INVOICE</span></div><div style="text-align:center;font-size:9pt;line-height:4.4mm">No: '+e('no')+'</div>';
   h+='<div class="bd"><div style="display:flex;justify-content:space-between;margin-top:6mm;gap:6mm"><div style="flex:1;min-width:0"><p style="font-size:8.5pt;color:#555">Ditagihkan kepada</p><p><b>'+(e('kpd')||'-')+'</b></p>'+(e('up')?'<p>Up. '+e('up')+'</p>':'')+(e('alm')?'<p style="font-size:9pt;line-height:4.3mm">'+e('alm').replace(/\n/g,'<br>')+'</p>':'')+'</div>'
     +'<div style="width:64mm;font-size:9pt"><div class="tr"><div style="width:26mm;padding:0">Tanggal</div><div style="padding:0"><span>: '+esc(fl(v.tgl))+'</span></div></div><div class="tr"><div style="width:26mm;padding:0">Jatuh tempo</div><div style="padding:0"><span>: <b>'+esc(fl(v.due))+'</b></span></div></div>'+'</div></div>';
@@ -3003,7 +3075,7 @@ function ivPrev(v,pp,w,pvn){var c=ivcalc(v),s=ivst(v),nf=function(n){return n.to
   h+=row('Total tagihan',nf(c.tot),true,'#eef5f4');
   if(c.paid){ivPayRows(v).forEach(function(q){h+=row('Sudah dibayar','- '+nf(q.jml),false,null,q.nt)});h+=row('Sisa tagihan',nf(c.sisa),true)}
   if(s.k==='lunas')h+='<div class="ivlunas">LUNAS</div>';
-  h+='</div><p style="margin-top:3mm"><b>Terbilang: #'+esc(terb(c.tot))+'#</b></p>';
+  h+='</div><p style="margin-top:3mm"><b>Terbilang: #'+esc(terb(c.tot))+'#</b></p>';var skl=ivSkLine(v,c.tot);if(skl)h+='<p style="margin-top:2mm">'+esc(skl)+'</p>';
   if(e('bank')||e('rek')){h+='<div style="margin-top:4mm;border:.3mm solid #c8dedb;border-radius:1.5mm;padding:2.5mm 3.5mm;font-size:9pt;line-height:4.6mm"><b>Pembayaran ditransfer ke</b><div class="tr"><div style="width:26mm;padding:0">Bank</div><div style="padding:0"><span>: '+e('bank')+'</span></div></div><div class="tr"><div style="width:26mm;padding:0">No. rekening</div><div style="padding:0"><span>: <b>'+e('rek')+'</b></span></div></div><div class="tr"><div style="width:26mm;padding:0">Atas nama</div><div style="padding:0"><span>: '+e('an')+'</span></div></div></div>'}
   if(e('cat'))h+='<p style="margin-top:3mm;font-size:9pt">Catatan:<br>'+e('cat').replace(/\n/g,'<br>')+'</p>';
   var kt=(C&&C.kota)||QD.kota||'';
@@ -3047,7 +3119,7 @@ function ivpdf(v){var J=window.jspdf.jsPDF,d=new J({unit:'mm',format:'a4',orient
   ens(rows.length*6+14);var y0=y;
   rows.forEach(function(r){if(r[3]){d.setFillColor(238,245,244);d.rect(cx[3],y,IVCW[3]+IVCW[4],6,'F')}if(r[4]){f('normal',8.5);d.setTextColor(85,85,85);var nl=d.splitTextToSize(r[4],55)[0];if(nl!==r[4])nl=nl.replace(/\s*\S*$/,'')+'…';d.text(nl,cx[3]-3,y+4.2,{align:'right'});d.setTextColor(0,0,0)}f(r[2]?'bold':'normal',9);d.text(r[0],cx[3]+1.5,y+4.2);d.text(r[1],mid(4),y+4.2,{align:'center'});y+=6});
   if(s.k==='lunas'){d.setDrawColor(30,150,90);d.setTextColor(30,150,90);d.setLineWidth(.8);f('bold',20);var lx=cx[0]+2,ly=y0+2;d.roundedRect(lx,ly,40,13,2,2);d.text('LUNAS',lx+20,ly+9.3,{align:'center'});d.setTextColor(0,0,0);d.setDrawColor(0,0,0)}
-  y+=5;f('bold',9.5);d.splitTextToSize('Terbilang: #'+terb(c.tot)+'#',W).forEach(function(l){ens(4.8);d.text(l,X0,y);y+=4.8});y+=3;
+  y+=5;f('bold',9.5);d.splitTextToSize('Terbilang: #'+terb(c.tot)+'#',W).forEach(function(l){ens(4.8);d.text(l,X0,y);y+=4.8});y+=3;var skl=ivSkLine(v,c.tot);if(skl){f('normal',9.5);d.splitTextToSize(skl,W).forEach(function(l){ens(4.8);d.text(l,X0,y);y+=4.8});y+=3}
   if(t('bank')||t('rek')){ens(24);d.setDrawColor(200,222,218);d.setLineWidth(.3);d.roundedRect(X0,y,W,21,1.5,1.5);var by=y+5;f('bold',9);d.text('Pembayaran ditransfer ke',X0+3.5,by);by+=4.7;
     [['Bank',t('bank'),0],['No. rekening',t('rek'),1],['Atas nama',t('an'),0]].forEach(function(r){f('normal',9);d.text(r[0],X0+3.5,by);f(r[2]?'bold':'normal',9);d.text(': '+r[1],X0+29.5,by);by+=4.6});y+=28}
   if(t('cat')){ens(10);f('normal',9);d.text('Catatan:',X0,y);y+=4.6;t('cat').split('\n').forEach(function(a){d.splitTextToSize(a,W).forEach(function(l){ens(4.6);d.text(l,X0,y);y+=4.6})});y+=2}
@@ -3057,14 +3129,14 @@ function ivpdf(v){var J=window.jspdf.jsPDF,d=new J({unit:'mm',format:'a4',orient
   return d}
 function ivPdfName(v){return 'Invoice_'+String(v.no||'').replace(/[^\w]+/g,'-').replace(/^-|-$/g,'')+'_'+String(v.kpd||'customer').replace(/[^\w]+/g,'_')+'.pdf'}
 function ivOut(mode){if(!IV)return;var m=ivValid();if(m){toast(m);return}
-  if(!HDR||!FTR){toast('Kop masih contoh. Ganti dulu dengan kop perusahaanmu di Pengaturan quotation',3600);return}
+  if(!HDR||!FTR){toast('Kop masih contoh. Ganti dulu dengan kop perusahaanmu di Pengaturan',3600);return}
   if(!String(IV.bank||'').trim()||!String(IV.rek||'').trim()){toast('Isi bank dan nomor rekening pembayaran dulu',3000);return}
   var d;try{d=ivpdf(IV)}catch(er){toast('Gagal membuat PDF');return}
   IV.sent=true;ivCommit(true);qdownload(d,ivPdfName(IV),mode)}
 $('ipSave').onclick=function(){ivOut('save')};
 $('ipShare').onclick=function(){ivOut('share')};
 $('ipWa').onclick=function(){if(!IV)return;var c=ivcalc(IV);
-  var tx='Yth. '+(IV.up?'Bapak/Ibu '+IV.up+'\n'+IV.kpd:IV.kpd)+'\n\nBerikut kami kirimkan invoice '+IV.no+' sebesar '+rp(c.tot)+(c.paid?' (sisa '+rp(c.sisa)+')':'')+', jatuh tempo '+fl(IV.due)+'.'
+  var tx='Yth. '+(IV.up?'Bapak/Ibu '+IV.up+'\n'+IV.kpd:IV.kpd)+'\n\nBerikut kami kirimkan invoice '+IV.no+' sebesar '+rp(c.tot)+(c.paid?' (sisa '+rp(c.sisa)+')':'')+', jatuh tempo '+fl(IV.due)+'.'+(ivSkLine(IV,c.tot)?'\n'+ivSkLine(IV,c.tot):'')
     +(IV.bank||IV.rek?'\n\nPembayaran ke:\n'+IV.bank+' '+IV.rek+'\na.n. '+IV.an:'')+'\n\nTerima kasih.\n'+(BRAND.co||'');
   copyText(tx,'Teks WhatsApp disalin. Kirim bersama PDF invoice')};
 
@@ -3196,13 +3268,13 @@ document.getElementById('a2hsX').onclick=function(){e.style.display='none';try{l
     var tim=mk('data-go','tim','Tim &amp; peran',svgOf('truk'),'tim');
     var items=[brand,fab,title('Menu'),home,rH,rQ,mk('data-go','inv','Invoice',svgOf('inv')),title('Data'),
       mk('data-go','muat','Cek muatan',svgOf('muat')),mk('data-go','armada','Data truk',svgOf('armada')),mk('data-go','news','News logistik',svgOf('news')),
-      title('Pengaturan'),mk('data-go','kop','Pengaturan quotation',svgOf('kop'),'cfg'),mk('data-go','truk','Pengaturan OPS',svgOf('truk'),'cfg'),tim,ak];
+      title('Pengaturan'),mk('data-go','kop','Pengaturan',svgOf('kop'),'cfg'),tim,ak];
     items.forEach(function(n){nav.appendChild(n)});
     var tIc=document.querySelector('#aTim svg');if(tIc)tim.querySelector('svg').outerHTML=tIc.outerHTML;
     watch();sync();
   }
   var MAP={home:['data-tab','home'],riwH:['data-tab','riwH'],riwQ:['data-tab','riwQ'],akun:['data-tab','akun'],calc:['data-go','calc'],hasil:['data-go','calc'],quo:['data-tab','riwQ'],surat:['data-tab','riwQ'],
-    muat:['data-go','muat'],armada:['data-go','armada'],armadaE:['data-go','armada'],news:['data-go','news'],truk:['data-go','truk'],kop:['data-go','kop'],
+    muat:['data-go','muat'],armada:['data-go','armada'],armadaE:['data-go','armada'],news:['data-go','news'],truk:['data-go','kop'],kop:['data-go','kop'],kopQ:['data-go','kop'],ivCfg:['data-go','kop'],
     inv:['data-go','inv'],invE:['data-go','inv'],invP:['data-go','inv'],tim:['data-go','tim'],timN:['data-go','tim'],timE:['data-go','tim'],adm:['data-tab','akun'],admE:['data-tab','akun'],admN:['data-tab','akun']};
   function sync(){
     var cur=document.querySelector('.sc.on');var id=cur&&cur.id,m=MAP[id];
@@ -3271,8 +3343,8 @@ document.getElementById('a2hsX').onclick=function(){e.style.display='none';try{l
       +sm('data-go','inv',svg('inv'),'Invoice',dots(d.IV.length)+' invoice')
       +sm('data-go','armada',svg('armada'),'Data truk',dots(d.AR.length)+' truk'+(d.al?' · '+d.al+' perlu dicek':''))
       +sm('data-go','news',svg('news'),'News logistik','Kabar logistik terbaru')
-      +(cfg?sm('data-go','truk',svg('truk'),'Pengaturan OPS',d.T.length+' jenis truk · solar Rp'+dots(d.C.harga),1):'')
-      +(cfg?sm('data-go','kop',svg('kop'),'Pengaturan quotation','Kop, TTD, dan isi surat',1):'')
+      +(cfg?sm('data-go','truk',svg('truk'),'OPS & tarif truk',d.T.length+' jenis truk · solar Rp'+dots(d.C.harga),1):'')
+      +(cfg?sm('data-go','kop',svg('kop'),'Pengaturan','Perusahaan, kop, TTD, rekening',1):'')
       +'</div>';
     box.innerHTML=h;
     var hq=document.getElementById('dkSolar');
