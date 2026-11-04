@@ -271,6 +271,11 @@ footer .brand img{width:28px;height:28px;border-radius:8px}
   *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .rv{opacity:1;transform:none}
 }
+.nr{display:flex;align-items:center;gap:10px}
+.web{margin:10px auto 0;font-size:14px;color:#5b6f77}
+.web a{color:var(--teal);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+@media (max-width:760px){.nav .gbtn.in{height:40px;padding:0 14px;font-size:14px}.nr{gap:8px}}
+@media (max-width:400px){.nav .brand{font-size:0;gap:0}}
 </style>
 </head>
 <body>
@@ -280,8 +285,9 @@ footer .brand img{width:28px;height:28px;border-radius:8px}
     <nav class="nav" aria-label="Utama">
       <a class="brand" href="#top"><img src="logo.png" alt="" width="36" height="36">Ghostrip</a>
       <div class="links"><a class="on" href="#top">Beranda</a><a href="#install">Cara Install</a><a href="#fitur">Fitur</a><a href="#harga">Harga</a><a href="#faq">Pertanyaan</a><a href="https://wa.me/6281517047930?text=Halo%20admin%20Ghostrip%2C%20saya%20butuh%20bantuan" target="_blank" rel="noopener">Bantuan</a></div>
+      <div class="nr"><a class="gbtn in" href="app/">Masuk</a>
       <a class="pbtn" href="#top" data-dl>Download App
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
     </nav>
 
     <div class="hc">
@@ -295,7 +301,8 @@ footer .brand img{width:28px;height:28px;border-radius:8px}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
       <p class="meta" id="meta">Versi <b id="mV">terbaru</b><span id="mSz" hidden> · <b></b></span> · Android 5.1 ke atas</p>
-      <p class="ios" id="ios">Ghostrip saat ini tersedia untuk HP Android. Buka halaman ini dari HP Android untuk download.</p>
+      <p class="web" id="web">Pakai iPhone atau laptop? <a href="app/">Buka Ghostrip di browser</a></p>
+      <p class="ios" id="ios">Di iPhone, Ghostrip dibuka lewat Safari. Setelah terbuka, ketuk <b>Bagikan</b> lalu <b>Tambahkan ke Layar Utama</b> supaya ada ikonnya.</p>
 
       <div class="stage">
         <div class="card duo" aria-hidden="true">
@@ -423,7 +430,7 @@ footer .brand img{width:28px;height:28px;border-radius:8px}
       <div class="sh rv"><h2>Yang sering <b>ditanyakan</b></h2></div>
       <div class="faq rv">
         <details><summary>Apakah aplikasi ini aman?</summary><p>Ya. File APK dibuat dan dibagikan langsung oleh tim Ghostrip lewat halaman ini. Peringatan dari Android muncul karena aplikasi belum dipasang lewat Play Store, bukan karena ada masalah.</p></details>
-        <details><summary>HP apa saja yang bisa dipakai?</summary><p>Semua HP Android versi 5.1 ke atas. Untuk iPhone belum tersedia.</p></details>
+        <details><summary>HP apa saja yang bisa dipakai?</summary><p>Semua HP Android versi 5.1 ke atas lewat aplikasi. Di iPhone dan laptop, buka lewat tombol <a href="app/">Masuk</a> di browser. Akun dan datanya sama, jadi bisa ganti-ganti perangkat.</p></details>
         <details><summary>Kalau ganti HP, data saya hilang?</summary><p>Tidak. Pengaturan kop surat, TTD, data truk, dan riwayat tersimpan di akun. Install Ghostrip di HP baru lalu masuk dengan akun yang sama.</p></details>
         <details><summary>Apakah harus selalu pakai internet?</summary><p>Internet dibutuhkan saat pertama masuk dan untuk menyimpan data ke akun. Setelah itu menghitung dan membuat penawaran tetap bisa saat sinyal lemah; data terkirim sendiri saat internet tersambung.</p></details>
         <details><summary>Muncul tulisan "Aplikasi tidak terinstal"?</summary><p>Biasanya karena masih ada Ghostrip versi lama dengan tanda tangan berbeda. Hapus Ghostrip lama dulu, lalu install lagi. Data Anda aman karena tersimpan di akun.</p></details>
@@ -470,15 +477,21 @@ footer .brand img{width:28px;height:28px;border-radius:8px}
   $('yr').textContent=new Date().getFullYear();
   fetch(BASE+'latest.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
     if(!j||!j.version)return;
-    href=BASE+(j.file||'Ghostrip.apk')+'?download='+encodeURIComponent('Ghostrip-v'+j.version+'.apk');btn.href=href;
+    href=BASE+(j.file||'Ghostrip.apk')+'?download='+encodeURIComponent('Ghostrip-v'+j.version+'.apk');if(!IOS)btn.href=href;
     $('mV').textContent=j.version;
     if(j.size){$('mSz').hidden=false;$('mSz').querySelector('b').textContent=(j.size/1048576).toFixed(1).replace('.',',')+' MB'}
   }).catch(function(){});
   var tt;function toast(m){var e=$('toast');e.textContent=m;e.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){e.classList.remove('on')},5200)}
   function started(){toast('Download dimulai. Setelah selesai, ketuk file Ghostrip di notifikasi.');setTimeout(function(){var s=$('install');if(s)s.scrollIntoView({behavior:RM?'auto':'smooth'})},900)}
-  btn.addEventListener('click',started);
-  [].forEach.call(document.querySelectorAll('[data-dl]'),function(a){a.addEventListener('click',function(e){e.preventDefault();window.location.href=href;started()})});
-  if(/iPhone|iPad|iPod/i.test(navigator.userAgent||''))$('ios').style.display='block';
+  var IOS=/iPhone|iPad|iPod/i.test(navigator.userAgent||'')||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  if(IOS){
+    $('ios').style.display='block';$('web').style.display='none';var nm=document.querySelector('.nav .gbtn.in');if(nm)nm.style.display='none';$('meta').style.display='none';
+    [btn].concat([].slice.call(document.querySelectorAll('[data-dl]'))).forEach(function(a){a.href='app/';
+      var t=[].filter.call(a.childNodes,function(n){return n.nodeType===3&&n.textContent.trim()})[0];if(t)t.textContent='Buka Ghostrip\n'});
+  }else{
+    btn.addEventListener('click',started);
+    [].forEach.call(document.querySelectorAll('[data-dl]'),function(a){a.addEventListener('click',function(e){e.preventDefault();window.location.href=href;started()})});
+  }
   var st=$('sticky');
   if('IntersectionObserver' in window)new IntersectionObserver(function(es){st.classList.toggle('on',!es[0].isIntersecting)}).observe(btn);
   window.addEventListener('load',function(){try{if(window.QRCode&&matchMedia('(min-width:1021px)').matches){new QRCode($('qr'),{text:location.href.split('#')[0],width:144,height:144,colorDark:'#0b1f2a',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});$('qrw').classList.add('ok')}}catch(e){}});
