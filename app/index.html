@@ -569,6 +569,129 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="icon" href="../favicon.png">
 <link rel="manifest" href="manifest.webmanifest">
+<style>
+/* Tampilan DESKTOP (hanya versi web, layar >= 1000px). Aplikasi Android tidak memuat file ini. */
+@media (min-width:1000px){
+:root{--sb:264px;--cw:1080px}
+body{display:block;background:var(--paper);overflow:hidden}
+.hint-top{display:none}
+.dev{width:100vw;height:100vh;border-radius:0;padding:0;border:0;box-shadow:none;background:none}
+.app{border-radius:0;background:var(--paper)}
+
+/* ---------- sidebar (pengganti navigasi bawah) ---------- */
+.nav,.nav.hide{position:absolute;left:0;top:0;bottom:0;right:auto;width:var(--sb);height:auto;border-radius:0;transform:none;opacity:1;pointer-events:auto;z-index:30;
+  display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;padding:20px 14px 18px;overflow-y:auto;
+  background:linear-gradient(180deg,#0b1f2a,#0d2a31);border:0;border-right:1px solid rgba(255,255,255,.06);box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.app:has(#welcome.on,#login.on,#lgn.on) .nav{display:none}
+.nav .sbBrand{display:flex;align-items:center;gap:10px;padding:2px 8px 18px;color:#fff;font-size:19px;font-weight:600;letter-spacing:.01em}
+.nav .sbBrand img{width:34px;height:34px;border-radius:10px}
+.nav .sbT{padding:16px 12px 6px;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#6f9aa0}
+.nav button{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:12px;width:100%;padding:10px 12px;border-radius:12px;font-size:14.5px;font-weight:500;color:#b4d2d3;text-align:left;transition:background-color .15s,color .15s}
+.nav button svg{flex:none;width:19px;height:19px}
+.nav button:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav button.on{background:rgba(95,216,196,.16);color:#fff;font-weight:600}
+.nav button.on svg{color:#5fd8c4}
+.nav .fab{width:100%!important;height:46px;border-radius:14px;margin:0 0 6px;justify-content:center;gap:10px;font-weight:600;font-size:15px;
+  background:var(--teal);color:#fff;box-shadow:0 8px 20px rgba(11,138,126,.4);display:flex!important}
+.nav .fab:after{display:none}
+.nav .fab:hover{background:#0da091}
+.nav .fab::after{content:none}
+.nav .fabL{display:inline}
+.nav .sp{flex:1}
+.nav .sbFoot{padding:10px 12px 0;font-size:12px;color:#6f9aa0}
+
+/* ---------- layar: fade, di sebelah kanan sidebar ---------- */
+.sc{inset:0 0 0 var(--sb);transform:none!important;transition:opacity .2s;}
+.sc.left{opacity:0}
+#welcome,#login,#lgn{inset:0}
+.sc>.body,.sc>.tb{padding-left:max(24px,calc((100% - var(--cw))/2 + 18px));padding-right:max(24px,calc((100% - var(--cw))/2 + 18px))}
+.sc>.body{padding-bottom:56px}
+.sc>.tb{padding-top:22px;padding-bottom:14px}
+.sc>.tb b{font-size:19px}
+.sc>.body.pad{padding-left:max(24px,calc((100% - var(--cw))/2 + 18px));padding-right:max(24px,calc((100% - var(--cw))/2 + 18px))}
+.body::-webkit-scrollbar{display:block;width:10px}
+.body::-webkit-scrollbar-thumb{background:#c9dcd9;border-radius:10px;border:2px solid var(--paper)}
+.body::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- jendela (pengganti sheet bawah) ---------- */
+.sheet{display:grid;place-items:center;background:rgba(7,22,29,.5)}
+.sheet .in{position:relative;left:auto;right:auto;bottom:auto;width:min(500px,92%);max-height:86vh;overflow-y:auto;border-radius:24px;padding:22px 24px 26px;
+  transform:translateY(14px) scale(.98);opacity:0;transition:transform .22s,opacity .22s;box-shadow:0 30px 70px rgba(0,0,0,.35)}
+.sheet.on .in{transform:none;opacity:1}
+.sheet .grab{display:none}
+
+/* ---------- interaksi mouse ---------- */
+.it,.qa,.seg button,.ha button,.btn,.pill,.ib{cursor:pointer}
+.it:hover{background:#fff;box-shadow:0 6px 18px rgba(11,60,60,.09)}
+.press:active{transform:none}
+.qa:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(11,60,60,.1)}
+.qa{transition:transform .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);outline-offset:1px;border-radius:8px}
+
+/* ---------- lebar konten per layar ---------- */
+#akun,#truk,#kop,#armada,#armadaE,#news,#tim,#timN,#timE,#adm,#admE,#admN,#hasil{--cw:820px}
+#muat{--cw:980px}
+#home,#riwH,#riwQ{--cw:1180px}
+#calc,#quo{--cw:1180px}
+#surat{--cw:860px}
+/* bar simpan melayang: sejajar dengan konten */
+.sc>.sumbar{left:max(24px,calc((100% - var(--cw))/2 + 18px));right:max(24px,calc((100% - var(--cw))/2 + 18px));bottom:20px}
+/* kalkulator & quotation: form di kiri, ringkasan total jadi kartu di kanan */
+#calc>.body,#quo>.body{padding-right:calc(max(24px,(100% - var(--cw))/2 + 18px) + 376px)}
+#calc>.sumbar,#quo>.sumbar{left:auto;bottom:auto;top:84px;width:350px;flex-wrap:wrap;gap:10px;padding:22px;border-radius:24px}
+#calc>.sumbar>div,#quo>.sumbar>div{flex:1 1 100%;margin-bottom:6px}
+#calc>.sumbar b,#quo>.sumbar b{font-size:30px;margin-top:2px}
+#calc>.sumbar small,#quo>.sumbar small{font-size:13px}
+#calc>.sumbar .btn,#quo>.sumbar .btn{flex:1 1 0;height:46px}
+
+/* beranda: menu di kiri, daftar terakhir di kanan */
+#home>.hd{padding-left:max(24px,calc((100% - var(--cw))/2 + 18px));padding-right:max(24px,calc((100% - var(--cw))/2 + 18px))}
+#home>.body{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);column-gap:28px;align-items:start;align-content:start}
+#home .glass{margin:0;grid-column:1;grid-row:1 / span 3}
+#home #setupBox{grid-column:2;grid-row:1;margin-top:0!important}
+#home>.body>.pad{padding-left:0;padding-right:0}
+#home>.body>.pad:last-child{grid-column:2;grid-row:2}
+#setupBox:not(:empty){margin-top:76px!important}
+#setupBox:empty{display:none}
+#setupBox:empty+.pad{margin-top:76px}
+#setupBox:not(:empty)+.pad{margin-top:10px}
+#home .grid{grid-template-columns:repeat(3,1fr)}
+
+/* riwayat: dua kolom */
+#listH,#listQ{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;align-items:start}
+#listH .dg,#listQ .dg{grid-column:1/-1}
+#qNew{max-width:340px}
+
+/* login: kartu di tengah */
+#login>.tb,#lgn>.tb{padding-left:28px;padding-right:28px}
+#login>.body,#lgn>.body{width:min(440px,calc(100% - 48px));margin:0 auto;padding-left:0;padding-right:0;flex:none;overflow:visible;padding-top:4vh}
+
+/* layar sambutan: teks di kiri, kartu contoh di kanan */
+#welcome{--wl:max(56px,calc((100% - 1120px)/2))}
+#welcome .brand{padding:44px var(--wl) 0}
+#welcome h1{padding:15vh 0 0 var(--wl);font-size:68px;line-height:1.02}
+#welcome .sub{padding:16px 0 0 var(--wl);font-size:22px}
+#welcome .cta{left:var(--wl);right:auto;width:380px;bottom:auto;top:calc(15vh + 270px)}
+#welcome .doc{left:auto;right:calc(var(--wl) + 60px);top:24vh;scale:1.6}
+
+/* hasil: tombol aksi sejajar dengan tabel */
+#hasil>.dacts{left:0;right:0;width:min(784px,calc(100% - 48px));align-self:center;bottom:28px}
+#hasil>.body{padding-bottom:24px}
+}
+
+/* layar desktop sempit (1000-1279px): total kalkulator/quotation kembali jadi bar bawah */
+@media (max-width:1279px){
+  :root{--sb:236px}
+  #calc>.body,#quo>.body{padding-right:max(24px,calc((100% - var(--cw))/2 + 18px));padding-bottom:110px}
+  #calc>.sumbar,#quo>.sumbar{left:max(24px,calc((100% - var(--cw))/2 + 18px));top:auto;bottom:20px;width:auto;flex-wrap:nowrap;padding:12px 12px 12px 18px;border-radius:24px}
+  #calc>.sumbar>div,#quo>.sumbar>div{flex:1;margin-bottom:0}
+  #calc>.sumbar b,#quo>.sumbar b{font-size:22px}
+  #calc>.sumbar .btn,#quo>.sumbar .btn{flex:none;height:46px;padding:0 20px}
+  #home>.body{grid-template-columns:minmax(0,380px) minmax(0,1fr)}
+  #welcome h1{font-size:56px}
+  #welcome .doc{scale:1.3;right:calc(var(--wl) + 30px)}
+}
+</style>
 </head>
 <body>
 <div class="dev"><div class="app" id="app">
@@ -2609,5 +2732,54 @@ var inst=navigator.standalone===true||matchMedia('(display-mode: standalone)').m
 if(!ios||inst||localStorage.getItem('gr-a2hs'))return;var e=document.getElementById('a2hs');
 setTimeout(function(){e.style.display='block'},2500);
 document.getElementById('a2hsX').onclick=function(){e.style.display='none';try{localStorage.setItem('gr-a2hs','1')}catch(_){}}}catch(_){}})();</script>
+<script>
+/* Sidebar desktop (hanya versi web >= 1000px). Memakai tombol navigasi yang sudah ada, ditambah menu lain. */
+(function(){
+  var C=window.Capacitor;if(C&&C.isNativePlatform&&C.isNativePlatform())return;
+  var mq=window.matchMedia('(min-width:1000px)');if(!mq.matches){mq.addEventListener&&mq.addEventListener('change',function(){location.reload()});return}
+  mq.addEventListener&&mq.addEventListener('change',function(){location.reload()});
+  var nav=document.getElementById('nav');if(!nav)return;
+  function svgOf(go){var s=document.querySelector('.qa[data-go="'+go+'"] .ic svg');return s?s.outerHTML:''}
+  function mk(attr,val,label,svg,extra){var b=document.createElement('button');b.setAttribute(attr,val);if(extra)b.setAttribute('data-x',extra);b.innerHTML=svg+'<span>'+label+'</span>';return b}
+  function title(t){var d=document.createElement('div');d.className='sbT';d.textContent=t;return d}
+  var built=false;
+  function build(){
+    if(built)return;
+    var q=function(s){return nav.querySelector(s)};
+    var home=q('[data-tab="home"]'),rH=q('[data-tab="riwH"]'),rQ=q('[data-tab="riwQ"]'),ak=q('[data-tab="akun"]'),fab=q('.fab');
+    if(!home||!rH||!rQ||!ak||!fab||!svgOf('muat'))return;
+    built=true;
+    var lab=function(b,t){var s=b.querySelector('svg');b.innerHTML=(s?s.outerHTML:'')+'<span>'+t+'</span>'};
+    lab(home,'Beranda');lab(rH,'Riwayat hitung');lab(rQ,'Surat penawaran');lab(ak,'Akun');lab(fab,'Kalkulator trip');
+    var brand=document.createElement('div');brand.className='sbBrand';
+    var lg=document.querySelector('[data-logo]');brand.innerHTML='<img src="'+((lg&&lg.getAttribute('src'))||'')+'" alt=""><span>Ghostrip</span>';
+    var tim=mk('data-go','tim','Tim &amp; peran',svgOf('truk'),'tim');
+    var items=[brand,fab,title('Menu'),home,rH,rQ,title('Data'),
+      mk('data-go','muat','Cek muatan',svgOf('muat')),mk('data-go','armada','Data truk',svgOf('armada')),mk('data-go','news','News logistik',svgOf('news')),
+      title('Pengaturan'),mk('data-go','kop','Pengaturan quotation',svgOf('kop'),'cfg'),mk('data-go','truk','Pengaturan OPS',svgOf('truk'),'cfg'),tim,ak];
+    items.forEach(function(n){nav.appendChild(n)});
+    var tIc=document.querySelector('#aTim svg');if(tIc)tim.querySelector('svg').outerHTML=tIc.outerHTML;
+    watch();sync();
+  }
+  var MAP={home:['data-tab','home'],riwH:['data-tab','riwH'],riwQ:['data-tab','riwQ'],akun:['data-tab','akun'],calc:['data-go','calc'],hasil:['data-go','calc'],quo:['data-tab','riwQ'],surat:['data-tab','riwQ'],
+    muat:['data-go','muat'],armada:['data-go','armada'],armadaE:['data-go','armada'],news:['data-go','news'],truk:['data-go','truk'],kop:['data-go','kop'],
+    tim:['data-go','tim'],timN:['data-go','tim'],timE:['data-go','tim'],adm:['data-tab','akun'],admE:['data-tab','akun'],admN:['data-tab','akun']};
+  function sync(){
+    var cur=document.querySelector('.sc.on');var id=cur&&cur.id,m=MAP[id];
+    [].forEach.call(nav.querySelectorAll('button'),function(b){b.classList.remove('on')});
+    if(m){var t=nav.querySelector('['+m[0]+'="'+m[1]+'"]');if(t)t.classList.add('on')}
+    var role='pemilik';try{role=window.__g.ROLE()}catch(e){}
+    [].forEach.call(nav.querySelectorAll('[data-x=cfg]'),function(b){b.style.display=role==='staf'?'none':''});
+    var at=document.getElementById('aTim'),tm=nav.querySelector('[data-x=tim]');
+    if(tm)tm.style.display=(at&&at.offsetParent!==null||id==='tim'||id==='timN'||id==='timE')?'':'none';
+  }
+  function watch(){
+    var mo=new MutationObserver(sync);
+    [].forEach.call(document.querySelectorAll('.sc'),function(s){mo.observe(s,{attributes:true,attributeFilter:['class']})});
+    mo.observe(document.getElementById('akun'),{childList:true,subtree:true,attributes:true});
+  }
+  var n=0,iv=setInterval(function(){build();if(built||++n>40)clearInterval(iv)},150);build();
+})();
+</script>
 </body>
 </html>
