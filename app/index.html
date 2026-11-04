@@ -1072,8 +1072,8 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(11,138,126,.35);o
     <h3 class="t" style="margin-top:4px">Identitas perusahaan</h3>
     <div class="card">
       <label class="fld"><span>Nama perusahaan *</span><input id="sCo" placeholder="Contoh: PT. Maju Jaya Logistik"></label>
-      <div class="two"><label class="fld"><span>Singkatan (nomor surat) *</span><input id="sAbbr" placeholder="MJL"></label><label class="fld"><span>Kota surat *</span><input id="sKota" placeholder="Palembang"></label></div>
-      <div class="two"><label class="fld"><span>Penanda tangan *</span><input id="sNttd"></label><label class="fld"><span>Jabatan *</span><input id="sJab" placeholder="Direktur"></label></div>
+      <div class="two"><label class="fld"><span>Singkatan (nomor surat) *</span><input id="sAbbr" placeholder="Contoh: MJL"></label><label class="fld"><span>Kota surat *</span><input id="sKota" placeholder="Contoh: Jakarta"></label></div>
+      <div class="two"><label class="fld"><span>Penanda tangan *</span><input id="sNttd" placeholder="Contoh: Ibu Gadis"></label><label class="fld"><span>Jabatan *</span><input id="sJab" placeholder="Contoh: Direktur"></label></div>
       <label class="fld"><span>HP/WA di bawah TTD (opsional)</span><input id="sHp" inputmode="tel" placeholder="0812-xxxx-xxxx"></label>
       <label class="fld"><span>Email di bawah TTD (opsional)</span><input id="sEmail" type="email" placeholder="nama@perusahaan.com"></label>
       <div class="tg" style="border-top:1px solid var(--line)"><div><b>Tampilkan HP/WA di surat</b><small>Default untuk surat baru</small></div><button class="sw on" id="sHpOn"></button></div>
@@ -1752,7 +1752,7 @@ function putAR(){ss(K_AR,AR);_hd()}
 /* ---------- sinkron riwayat: antarmuka untuk modul sinkron lama ---------- */
 var onHistSet=[];
 window.__hist={get:function(){return {calc:L,qt:QH,ar:AR,qd:{seq:QD.seq,kota:QD.kota,ttd:QD.ttd,jab:QD.jab,ket:QD.ket}}},
-  set:function(o){L=o.calc||[];QH=o.qt||[];AR=o.ar||[];if(o.qd)Object.keys(o.qd).forEach(function(k){if(o.qd[k]!=null)QD[k]=o.qd[k]});
+  set:function(o){if(o.fresh)ST_FROM_STORE=false;L=o.calc||[];QH=o.qt||[];AR=o.ar||[];if(o.qd)Object.keys(o.qd).forEach(function(k){if(o.qd[k]!=null)QD[k]=o.qd[k]});
     _hq=true;try{putL();putQH();putQD();putAR()}finally{_hq=false}
     onHistSet.forEach(function(f){try{f()}catch(e){}})}};
 
@@ -1798,7 +1798,8 @@ function cfgApply(c,withAsumsi){
 function legacyCfg(){var hasData=L.length||QH.length;
   if(!hasData&&!ST_FROM_STORE)return null;
   if(!hasData&&JSON.stringify(ST.types)===JSON.stringify(PRESET))return null;
-  return {co:'',abbr:'',kota:QD.kota||'',nttd:QD.ttd||'',jab:QD.jab||'',ket:QD.ket||'',ppn:'1.1',pph:'2.5',hdr:'',ftr:'',ttd:'',harga:ST.harga,markup:ST.markup,types:clone(ST.types)}}
+  /* kota, penanda tangan, jabatan, ketentuan sengaja kosong: data di HP bisa milik akun lain */
+  return {co:'',abbr:'',kota:'',nttd:'',jab:'',ket:'',ppn:'1.1',pph:'2.5',hdr:'',ftr:'',ttd:'',harga:ST.harga,markup:ST.markup,types:clone(ST.types)}}
 function A(){return window.__auth}
 function DID(s){return s.oid||s.uid}
 function ROLE(){var s=A()&&A().sess();return (s&&s.org&&s.org.peran)||'pemilik'}
@@ -2712,7 +2713,7 @@ function later(){clearTimeout(T);T=setTimeout(sync,1500)}
 window.__histDirty=function(){ss(DK,Date.now());if(uid)later()};
 function onAuth(){var a=A(),s=a&&a.sess(),H=window.__hist;if(!s||!H)return;
   if(uid!==did(s)){uid=did(s);var ow=ls(OK);
-    if(ow&&ow!==uid){H.set({calc:[],qt:[],ar:[],qd:{seq:1}});ss(BK,{});ss(DK,0)}
+    if(ow&&ow!==uid){H.set({calc:[],qt:[],ar:[],qd:{seq:1,kota:'',ttd:'',jab:'',ket:''},fresh:true});ss(BK,{});ss(DK,0)}
     ss(OK,uid)}
   sync()}
 var prev=window.__onAuth;window.__onAuth=function(){if(prev)prev.apply(this,arguments);onAuth()};
