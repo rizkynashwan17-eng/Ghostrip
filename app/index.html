@@ -2217,6 +2217,11 @@ function tab(id){var i=stack.indexOf('home');if(i<0)return resetTo('home');popTo
 function openSheet(){return Q('.sheet.on')[0]}
 function sheet(n,on){$('sh-'+n).classList.toggle('on',on)}
 window.addEventListener('popstate',function(){HD=Math.max(0,HD-1);var s=openSheet();if(s){s.classList.remove('on');hpush();return}if(stack.length>1)back()});
+/* tombol back HP (Android): perilakunya sama dengan tombol back browser; di layar utama aplikasi diminimalkan */
+(function(){var Cp=window.Capacitor;if(!(Cp&&Cp.isNativePlatform&&Cp.isNativePlatform()))return;var A=Cp.Plugins&&Cp.Plugins.App;if(!A||!A.addListener)return;
+  try{A.addListener('backButton',function(){var s=openSheet();
+    if(s||stack.length>1){if(HD>0){try{history.back();return}catch(e){}}if(s){s.classList.remove('on');return}back();return}
+    try{if(A.minimizeApp)A.minimizeApp();else A.exitApp()}catch(e){}})}catch(e){}})();
 function uiBack(){if(stack.length>1){if(HD>0){try{history.back()}catch(e){back()}}else back()}}
 
 /* ---------- login (modul auth lama memanggil ini) ---------- */
