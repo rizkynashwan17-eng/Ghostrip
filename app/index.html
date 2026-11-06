@@ -2159,7 +2159,7 @@ function qpdf(D){
   if(kt.length){para('Ketentuan:',X0,W,9.5,4.8);kt.forEach(function(t,i){f('normal',9.5);var KL=d.splitTextToSize(t.trim(),W-6);KL.forEach(function(l,j){ens(4.8);if(j===0)d.text((i+1)+'.',X0,y);jl(l,X0+6,y,W-6,j===KL.length-1);y+=4.8})});y+=3}
   var rl=rekLine(F);if(rl){para(rl,X0,W,9.5,4.8);y+=3}
   ptext('tutup').split('\n').forEach(function(t){para(t,X0,W,9.5,4.8,null,true)});y+=3;
-  var sh=ktHp(D),se=ktEm(D),SK=sh||se;ens(SK?46:36);f('normal',9.5);d.text('Hormat kami',X0,y);d.text('Menyetujui,',112,y);y+=4.8;d.text(BRAND.co||'PT. XXX',X0,y);d.text(v('qKpd')||'-',112,y);if(F.qTc!=='0'&&TTD)d.addImage(TTD,'PNG',X0-1,y+1,50,17.6);y+=19;
+  var sh=ktHp(D),se=ktEm(D),SK=sh||se;ens(31+(sh?4.8:0)+(se?4.8:0));f('normal',9.5);d.text('Hormat kami',X0,y);d.text('Menyetujui,',112,y);y+=4.8;d.text(BRAND.co||'PT. XXX',X0,y);d.text(v('qKpd')||'-',112,y);if(F.qTc!=='0'&&TTD)d.addImage(TTD,'PNG',X0-1,y+1,50,17.6);y+=19;
   var nm=v('qTtd');d.text(nm,X0,y);var nw=d.getTextWidth(nm);d.setDrawColor(0,0,0);d.setLineWidth(.3);d.line(X0,y+.9,X0+nw,y+.9);d.text('( ........................................ )',112,y);y+=4.8;d.text(v('qJab'),X0,y);if(sh){y+=4.8;d.text('Hp/WA',X0,y);d.text(': '+KONTAK.hp,X0+12,y)}if(se){y+=4.8;d.text('Email',X0,y);d.text(': '+KONTAK.email,X0+12,y)}
   if(FTR)for(var p=1;p<=d.getNumberOfPages();p++){d.setPage(p);d.addImage(FTR,'JPEG',FD.x,297-FD.h,FD.w,FD.h)}
   return d;
