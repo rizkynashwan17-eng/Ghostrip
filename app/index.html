@@ -271,7 +271,9 @@ h3.t{font-size:15px;font-weight:600;padding:0 4px;margin:20px 0 10px}
 .fld textarea{width:100%;border:0;outline:0;background:none;font-size:15px;font-weight:500;padding:2px 0;resize:none;line-height:1.45;font-family:inherit;color:inherit}
 .hnt{font-size:12px;color:var(--mute);line-height:1.45;margin-top:2px}
 .pv2{font-size:12px;color:var(--teal);font-weight:600;padding:0 16px 12px;margin-top:-6px;min-height:0}.pv2:empty{display:none}
-.hw{display:grid;gap:2px;position:relative}
+.hw{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;position:relative;min-width:0}
+.hw>.it{min-width:0}
+.hw>.it small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* widget beranda */
 .wd-hd{display:flex;align-items:baseline;justify-content:space-between;margin:6px 4px 10px}
 .wd-hd h3{font-size:17px;font-weight:700;margin:0}.wd-hd span{font-size:12.5px;color:var(--mute)}.wd-hd span.bad{color:#c0392b;font-weight:600}.wd-hd span.ok{color:var(--teal);font-weight:600}
